@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema de Gestión - Panel de Administración</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Panel de Administración de Usuarios</h1>
+        </header>
+
+        <!-- Menú principal -->
+        <main id="mainMenu">
+            <section class="main-menu">
+                <h2>Selecciona el tipo de usuario</h2>
+                <div class="menu-buttons">
+                    <button class="btn primary menu-btn" data-role="auxiliar">Auxiliar</button>
+                    <button class="btn primary menu-btn" data-role="tecnico">Técnico</button>
+                    <button class="btn primary menu-btn" data-role="guest">Invitado</button>
+                </div>
+            </section>
+        </main>
+
+        <!-- Sección CRUD de usuarios por tipo -->
+        <main id="userSection" style="display:none;">
+            <section class="user-management">
+                <div class="actions">
+                    <button id="backToMenuBtn" class="btn secondary">Volver al menú</button>
+                    <button id="createUserBtn" class="btn primary">Crear Nuevo Usuario</button>
+                </div>
+                <h2 id="userTypeTitle"></h2>
+                <div class="users-table">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Usuario</th>
+                                <th>Email</th>
+                                <th>Rol</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody id="usersTableBody">
+                            <!-- Los usuarios se cargarán dinámicamente -->
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+        </main>
+
+        <!-- Modal para crear/editar usuario -->
+        <div id="userModal" class="modal">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <h2 id="modalTitle">Crear Nuevo Usuario</h2>
+                <form id="userForm">
+                    <div class="form-group">
+                        <label for="username">Nombre de Usuario:</label>
+                        <input type="text" id="username" name="username" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email:</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="role">Rol:</label>
+                        <select id="role" name="role" required disabled>
+                            <option value="auxiliar">Auxiliar</option>
+                            <option value="tecnico">Técnico</option>
+                            <option value="guest">Invitado</option>
+                        </select>
+                    </div>
+                    <div class="form-actions">
+                        <button type="button" class="btn secondary" id="cancelBtn">Cancelar</button>
+                        <button type="submit" class="btn primary">Guardar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Modal para leer usuario -->
+        <div id="readUserModal" class="modal">
+            <div class="modal-content read-modal-content">
+                <span class="close-read">&times;</span>
+                <h2>Información del Usuario</h2>
+                <div id="readUserInfo"></div>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/script.js"></script>
+</body>
+</html> 
