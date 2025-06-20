@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nosotros - Computec</title>
+    <meta name="description" content="Conoce más sobre Computec: nuestra historia, misión, visión y el equipo que hace posible soluciones informáticas de calidad.">
+    <link rel="stylesheet" href="css/website-styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <nav class="navbar">
+            <div class="nav-container">
+                <div class="nav-logo">
+                    <i class="fas fa-laptop-code"></i>
+                    <span>Computec</span>
+                </div>
+                <ul class="nav-menu">
+                    <li class="nav-item"><a href="index.html" class="nav-link">Inicio</a></li>
+                    <li class="nav-item"><a href="servicios.html" class="nav-link">Servicios</a></li>
+                    <li class="nav-item"><a href="productos.html" class="nav-link">Productos</a></li>
+                    <li class="nav-item"><a href="nosotros.html" class="nav-link">Nosotros</a></li>
+                    <li class="nav-item"><a href="contacto.html" class="nav-link">Contacto</a></li>
+                    <li class="nav-item"><a href="mi-cuenta.html" class="nav-link">Mi Cuenta</a></li>
+                </ul>
+                <div class="header-session">
+                    <a href="#" class="btn-session">Iniciar sesión</a>
+                    <a href="#" class="btn-session secondary">Registrarse</a>
+                </div>
+                <div class="hamburger">
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Slider principal -->
+    <section class="main-slider" style="background: linear-gradient(135deg, #2563eb 0%, #764ba2 100%); color: white; padding: 0;">
+        <div class="slider-container" style="max-width: 1200px; margin: 0 auto; position: relative; min-height: 420px; display: flex; align-items: center;">
+            <div class="slider-slide active" style="display: flex; align-items: center; justify-content: space-between; width: 100%; min-height: 420px;">
+                <div class="slider-content" style="max-width: 600px;">
+                    <h1 style="font-size: 2.5rem; font-weight: 800; margin-bottom: 1.2rem;">Conoce <span style='color: #f59e0b;'>Computec</span></h1>
+                    <p style="font-size: 1.1rem; margin-bottom: 2rem;">Más de 5 años brindando soluciones informáticas profesionales en Bogotá.</p>
+                    <a href="#nuestra-historia" class="btn btn-primary"><i class="fas fa-book"></i> Nuestra Historia</a>
+                </div>
+                <div class="slider-image" style="flex: 1; display: flex; justify-content: flex-end;">
+                    <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?ixlib=rb-4.0.3&auto=format&fit=crop&w=700&q=80" alt="Equipo Computec" style="max-width: 440px; border-radius: 1.5rem; box-shadow: 0 8px 32px rgba(37,99,235,0.15);">
+                </div>
+            </div>
+            <div class="slider-slide" style="display: none; align-items: center; justify-content: space-between; width: 100%; min-height: 420px;">
+                <div class="slider-content" style="max-width: 600px;">
+                    <h1 style="font-size: 2.5rem; font-weight: 800; margin-bottom: 1.2rem;">Nuestro <span style='color: #f59e0b;'>Equipo</span></h1>
+                    <p style="font-size: 1.1rem; margin-bottom: 2rem;">Profesionales apasionados por la tecnología y el servicio al cliente.</p>
+                    <a href="#equipo" class="btn btn-primary"><i class="fas fa-users"></i> Conócenos</a>
+                </div>
+                <div class="slider-image" style="flex: 1; display: flex; justify-content: flex-end;">
+                    <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=700&q=80" alt="Equipo" style="max-width: 440px; border-radius: 1.5rem; box-shadow: 0 8px 32px rgba(37,99,235,0.15);">
+                </div>
+            </div>
+            <div class="slider-slide" style="display: none; align-items: center; justify-content: space-between; width: 100%; min-height: 420px;">
+                <div class="slider-content" style="max-width: 600px;">
+                    <h1 style="font-size: 2.5rem; font-weight: 800; margin-bottom: 1.2rem;">Misión y <span style='color: #f59e0b;'>Visión</span></h1>
+                    <p style="font-size: 1.1rem; margin-bottom: 2rem;">Nuestros valores y compromiso con la excelencia técnica.</p>
+                    <a href="#" class="btn btn-primary"><i class="fas fa-eye"></i> Ver Más</a>
+                </div>
+                <div class="slider-image" style="flex: 1; display: flex; justify-content: flex-end;">
+                    <img src="https://images.unsplash.com/photo-1519125323398-675f0ddb6308?ixlib=rb-4.0.3&auto=format&fit=crop&w=700&q=80" alt="Misión y Visión" style="max-width: 440px; border-radius: 1.5rem; box-shadow: 0 8px 32px rgba(37,99,235,0.15);">
+                </div>
+            </div>
+            <!-- Controles del slider -->
+            <button class="slider-prev" style="position: absolute; left: -3.5rem; top: 45%; transform: translateY(-50%); background: rgba(0,0,0,0.15); border: none; border-radius: 50%; width: 2.5rem; height: 2.5rem; color: white; font-size: 1.3rem; cursor: pointer;"><i class="fas fa-chevron-left"></i></button>
+            <button class="slider-next" style="position: absolute; right: -3.5rem; top: 45%; transform: translateY(-50%); background: rgba(0,0,0,0.15); border: none; border-radius: 50%; width: 2.5rem; height: 2.5rem; color: white; font-size: 1.3rem; cursor: pointer;"><i class="fas fa-chevron-right"></i></button>
+        </div>
+        <!-- Indicadores -->
+        <div class="slider-indicators" style="display: flex; justify-content: center; gap: 0.7rem; margin-top: -2.5rem; margin-bottom: 2.5rem; position: relative; z-index: 2;">
+            <span class="slider-dot active" style="width: 12px; height: 12px; border-radius: 50%; background: #fff; opacity: 0.7; cursor: pointer;"></span>
+            <span class="slider-dot" style="width: 12px; height: 12px; border-radius: 50%; background: #fff; opacity: 0.4; cursor: pointer;"></span>
+            <span class="slider-dot" style="width: 12px; height: 12px; border-radius: 50%; background: #fff; opacity: 0.4; cursor: pointer;"></span>
+        </div>
+    </section>
+
+    <!-- Nuestra Historia -->
+    <section id="nuestra-historia" class="about">
+        <div class="container">
+            <div class="about-content">
+                <div class="about-text">
+                    <h2>Nuestra Historia</h2>
+                    <p>Computec nació en 2019 con una visión clara: democratizar el acceso a servicios informáticos de calidad. Todo comenzó en un pequeño taller en el centro de Bogotá, donde nuestro fundador, Carlos Rodríguez, reparaba computadoras para amigos y familiares.</p>
+                    
+                    <p>Con el tiempo, la demanda creció y decidimos formalizar nuestro negocio. Lo que comenzó como un hobby se convirtió en una empresa comprometida con la excelencia técnica y el servicio al cliente.</p>
+                    
+                    <p>Hoy, después de más de 5 años, hemos atendido a más de 500 clientes satisfechos, reparado más de 1000 equipos y ensamblado más de 50 PCs personalizadas. Nuestro compromiso sigue siendo el mismo: ofrecer soluciones informáticas profesionales con la mejor calidad y garantía.</p>
+                </div>
+                
+                <div class="about-stats">
+                    <div class="stat-item">
+                        <div class="stat-number">2019</div>
+                        <div class="stat-label">Año de Fundación</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">500+</div>
+                        <div class="stat-label">Clientes Satisfechos</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">1000+</div>
+                        <div class="stat-label">Equipos Reparados</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">50+</div>
+                        <div class="stat-label">PCs Ensambladas</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Misión y Visión -->
+    <section class="services">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Misión y Visión</h2>
+                <p class="section-subtitle">Los pilares que guían nuestro trabajo diario</p>
+            </div>
+
+            <div class="services-grid">
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-bullseye"></i>
+                    </div>
+                    <h3>Nuestra Misión</h3>
+                    <p>Brindar soluciones informáticas integrales y profesionales, garantizando la satisfacción total de nuestros clientes a través de un servicio de calidad, precios justos y soporte técnico especializado.</p>
+                    <ul class="service-features">
+                        <li><i class="fas fa-check"></i> Calidad en cada servicio</li>
+                        <li><i class="fas fa-check"></i> Precios competitivos</li>
+                        <li><i class="fas fa-check"></i> Soporte especializado</li>
+                        <li><i class="fas fa-check"></i> Satisfacción garantizada</li>
+                    </ul>
+                </div>
+
+                <div class="service-card featured">
+                    <div class="service-badge">Visión</div>
+                    <div class="service-icon">
+                        <i class="fas fa-eye"></i>
+                    </div>
+                    <h3>Nuestra Visión</h3>
+                    <p>Ser reconocidos como la empresa líder en servicios informáticos en Bogotá, destacando por nuestra innovación, confiabilidad y compromiso con la excelencia técnica y el servicio al cliente.</p>
+                    <ul class="service-features">
+                        <li><i class="fas fa-check"></i> Liderazgo en el sector</li>
+                        <li><i class="fas fa-check"></i> Innovación constante</li>
+                        <li><i class="fas fa-check"></i> Confiabilidad total</li>
+                        <li><i class="fas fa-check"></i> Excelencia técnica</li>
+                    </ul>
+                </div>
+
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-heart"></i>
+                    </div>
+                    <h3>Nuestros Valores</h3>
+                    <p>La honestidad, la responsabilidad, la innovación y el compromiso con el cliente son los valores fundamentales que rigen todas nuestras acciones y decisiones empresariales.</p>
+                    <ul class="service-features">
+                        <li><i class="fas fa-check"></i> Honestidad</li>
+                        <li><i class="fas fa-check"></i> Responsabilidad</li>
+                        <li><i class="fas fa-check"></i> Innovación</li>
+                        <li><i class="fas fa-check"></i> Compromiso</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Equipo -->
+    <section id="equipo" class="about">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Nuestro Equipo</h2>
+                <p class="section-subtitle">Profesionales apasionados por la tecnología</p>
+            </div>
+
+            <div class="team-grid">
+                <div class="team-member">
+                    <div class="member-photo">
+                        <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80" alt="Carlos Rodríguez">
+                    </div>
+                    <div class="member-info">
+                        <h3>Carlos Rodríguez</h3>
+                        <span class="member-role">Fundador & CEO</span>
+                        <p>Ingeniero de Sistemas con más de 8 años de experiencia en reparación y ensamblaje de equipos informáticos. Apasionado por la tecnología y comprometido con la excelencia.</p>
+                        <div class="member-skills">
+                            <span class="skill-tag">Reparación</span>
+                            <span class="skill-tag">Ensamblaje</span>
+                            <span class="skill-tag">Networking</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="team-member">
+                    <div class="member-photo">
+                        <img src="https://images.unsplash.com/photo-1494790108755-2616b612b786?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80" alt="María González">
+                    </div>
+                    <div class="member-info">
+                        <h3>María González</h3>
+                        <span class="member-role">Técnica Senior</span>
+                        <p>Especialista en reparación de laptops y dispositivos móviles. Certificada por las principales marcas del mercado. Experta en recuperación de datos y seguridad informática.</p>
+                        <div class="member-skills">
+                            <span class="skill-tag">Laptops</span>
+                            <span class="skill-tag">Recuperación</span>
+                            <span class="skill-tag">Seguridad</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="team-member">
+                    <div class="member-photo">
+                        <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80" alt="Juan Pérez">
+                    </div>
+                    <div class="member-info">
+                        <h3>Juan Pérez</h3>
+                        <span class="member-role">Especialista Gaming</span>
+                        <p>Experto en ensamblaje de PCs gaming y optimización de rendimiento. Conocedor profundo de componentes y configuraciones para gaming de alto rendimiento.</p>
+                        <div class="member-skills">
+                            <span class="skill-tag">Gaming</span>
+                            <span class="skill-tag">Overclocking</span>
+                            <span class="skill-tag">Optimización</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="team-member">
+                    <div class="member-photo">
+                        <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80" alt="Ana Martínez">
+                    </div>
+                    <div class="member-info">
+                        <h3>Ana Martínez</h3>
+                        <span class="member-role">Soporte Técnico</span>
+                        <p>Especialista en soporte técnico remoto y presencial. Experta en resolución de problemas de software y configuración de sistemas operativos.</p>
+                        <div class="member-skills">
+                            <span class="skill-tag">Soporte</span>
+                            <span class="skill-tag">Software</span>
+                            <span class="skill-tag">Sistemas</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Por qué elegirnos -->
+    <section class="testimonials">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">¿Por qué elegir Computec?</h2>
+                <p class="section-subtitle">Las razones que nos hacen diferentes</p>
+            </div>
+
+            <div class="testimonials-grid">
+                <div class="testimonial-card">
+                    <div class="testimonial-content">
+                        <h3><i class="fas fa-medal"></i> Experiencia Comprobada</h3>
+                        <p>Más de 5 años de experiencia en el sector informático, con cientos de clientes satisfechos y miles de equipos reparados exitosamente.</p>
+                    </div>
+                </div>
+
+                <div class="testimonial-card">
+                    <div class="testimonial-content">
+                        <h3><i class="fas fa-shield-alt"></i> Garantía Total</h3>
+                        <p>Todos nuestros servicios incluyen garantía. Trabajamos con repuestos originales y ofrecemos soporte post-venta para tu tranquilidad.</p>
+                    </div>
+                </div>
+
+                <div class="testimonial-card">
+                    <div class="testimonial-content">
+                        <h3><i class="fas fa-dollar-sign"></i> Precios Justos</h3>
+                        <p>Ofrecemos los mejores precios del mercado sin comprometer la calidad. Presupuestos transparentes sin costos ocultos.</p>
+                    </div>
+                </div>
+
+                <div class="testimonial-card">
+                    <div class="testimonial-content">
+                        <h3><i class="fas fa-clock"></i> Servicio Rápido</h3>
+                        <p>Reparaciones en 24-48 horas para la mayoría de problemas. Servicio de urgencia disponible para casos especiales.</p>
+                    </div>
+                </div>
+
+                <div class="testimonial-card">
+                    <div class="testimonial-content">
+                        <h3><i class="fas fa-headset"></i> Soporte 24/7</h3>
+                        <p>Soporte técnico disponible cuando lo necesites. Atención personalizada y seguimiento completo de tu caso.</p>
+                    </div>
+                </div>
+
+                <div class="testimonial-card">
+                    <div class="testimonial-content">
+                        <h3><i class="fas fa-home"></i> Servicio a Domicilio</h3>
+                        <p>Llevamos nuestro servicio hasta tu casa o empresa. Comodidad y ahorro de tiempo para nuestros clientes.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Certificaciones -->
+    <section class="about">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Certificaciones y Reconocimientos</h2>
+                <p class="section-subtitle">Nuestro compromiso con la excelencia</p>
+            </div>
+
+            <div class="certifications-grid">
+                <div class="certification-item">
+                    <div class="certification-icon">
+                        <i class="fas fa-certificate"></i>
+                    </div>
+                    <h3>Certificación Microsoft</h3>
+                    <p>Certificados oficiales en reparación y mantenimiento de equipos con sistema operativo Windows.</p>
+                </div>
+
+                <div class="certification-item">
+                    <div class="certification-icon">
+                        <i class="fas fa-award"></i>
+                    </div>
+                    <h3>Certificación CompTIA</h3>
+                    <p>Certificación A+ en soporte técnico y reparación de equipos informáticos.</p>
+                </div>
+
+                <div class="certification-item">
+                    <div class="certification-icon">
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <h3>Distribuidor Autorizado</h3>
+                    <p>Distribuidor autorizado de las principales marcas de componentes y accesorios informáticos.</p>
+                </div>
+
+                <div class="certification-item">
+                    <div class="certification-icon">
+                        <i class="fas fa-handshake"></i>
+                    </div>
+                    <h3>Alianzas Estratégicas</h3>
+                    <p>Alianzas con proveedores de confianza para garantizar la calidad de nuestros productos y servicios.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="contact">
+        <div class="container">
+            <div class="cta-content">
+                <h2>¿Listo para trabajar con nosotros?</h2>
+                <p>Contáctanos y descubre por qué somos la mejor opción para tus necesidades informáticas</p>
+                <div class="cta-buttons">
+                    <a href="contacto.html" class="btn btn-primary">
+                        <i class="fas fa-phone"></i>
+                        Contáctanos
+                    </a>
+                    <a href="servicios.html" class="btn btn-secondary">
+                        <i class="fas fa-tools"></i>
+                        Ver Servicios
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <div class="footer-logo">
+                        <i class="fas fa-laptop-code"></i>
+                        <span>Computec</span>
+                    </div>
+                    <p>Soluciones informáticas profesionales con la mejor calidad y garantía del mercado.</p>
+                    <div class="social-links">
+                        <a href="#" class="social-link"><i class="fab fa-facebook"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-whatsapp"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+
+                <div class="footer-section">
+                    <h3>Servicios</h3>
+                    <ul>
+                        <li><a href="servicios.html">Reparación de computadoras</a></li>
+                        <li><a href="servicios.html">Ensamblaje de PCs</a></li>
+                        <li><a href="servicios.html">Soporte técnico</a></li>
+                        <li><a href="servicios.html">Seguridad informática</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-section">
+                    <h3>Productos</h3>
+                    <ul>
+                        <li><a href="productos.html">Laptops Gaming</a></li>
+                        <li><a href="productos.html">PCs Armadas</a></li>
+                        <li><a href="productos.html">Accesorios</a></li>
+                        <li><a href="productos.html">Componentes</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-section">
+                    <h3>Contacto</h3>
+                    <ul>
+                        <li><i class="fas fa-phone"></i> +57 300 123 4567</li>
+                        <li><i class="fas fa-envelope"></i> info@computec.com</li>
+                        <li><i class="fas fa-map-marker-alt"></i> Bogotá, Colombia</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p>&copy; 2024 Computec. Todos los derechos reservados.</p>
+                <div class="footer-links">
+                    <a href="#">Política de privacidad</a>
+                    <a href="#">Términos y condiciones</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- WhatsApp Button -->
+    <a href="https://wa.me/573001234567" class="whatsapp-button" target="_blank">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+
+    <!-- Scripts -->
+    <script src="js/website-scripts.js"></script>
+    <script>
+    (function() {
+        const slides = document.querySelectorAll('.slider-slide');
+        const dots = document.querySelectorAll('.slider-dot');
+        const prev = document.querySelector('.slider-prev');
+        const next = document.querySelector('.slider-next');
+        let current = 0;
+        function showSlide(idx) {
+            slides.forEach((slide, i) => {
+                slide.style.display = i === idx ? 'flex' : 'none';
+                dots[i].classList.toggle('active', i === idx);
+                dots[i].style.opacity = i === idx ? '0.7' : '0.4';
+            });
+            current = idx;
+        }
+        prev.addEventListener('click', () => showSlide((current - 1 + slides.length) % slides.length));
+        next.addEventListener('click', () => showSlide((current + 1) % slides.length));
+        dots.forEach((dot, i) => dot.addEventListener('click', () => showSlide(i)));
+        setInterval(() => showSlide((current + 1) % slides.length), 7000);
+    })();
+    </script>
+</body>
+</html> 

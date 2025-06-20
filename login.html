@@ -3,49 +3,197 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login - Sistema de Gestión</title>
-    <link rel="stylesheet" href="css/styles.css">
+    <title>Login - Sistema de Gestión Computec</title>
     <link rel="stylesheet" href="css/login.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
     <div class="login-container">
-        <div class="login-box">
-            <h1>Sistema de Gestión</h1>
-            <form id="loginForm" class="login-form">
-                <div class="form-group">
-                    <label for="username">Usuario:</label>
-                    <input type="text" id="username" name="username" required>
+        <!-- Fondo animado -->
+        <div class="background-animation">
+            <div class="floating-shapes">
+                <div class="shape shape-1"></div>
+                <div class="shape shape-2"></div>
+                <div class="shape shape-3"></div>
+                <div class="shape shape-4"></div>
+                <div class="shape shape-5"></div>
+            </div>
+        </div>
+
+        <!-- Contenedor principal -->
+        <div class="login-wrapper">
+            <!-- Panel izquierdo - Información -->
+            <div class="login-info">
+                <div class="info-content">
+                    <div class="logo-section">
+                        <div class="logo">
+                            <i class="fas fa-laptop-code"></i>
+                            <span>Computec</span>
+                        </div>
+                        <h1>Sistema de Gestión Integral</h1>
+                        <p>Gestiona reparaciones, ensamblajes y soporte técnico de manera eficiente</p>
+                    </div>
+                    
+                    <div class="features">
+                        <div class="feature-item">
+                            <i class="fas fa-tools"></i>
+                            <div>
+                                <h3>Reparaciones</h3>
+                                <p>Gestión completa de reparaciones de equipos</p>
+                            </div>
+                        </div>
+                        <div class="feature-item">
+                            <i class="fas fa-desktop"></i>
+                            <div>
+                                <h3>Ensamblaje</h3>
+                                <p>Ensamblaje y configuración de equipos</p>
+                            </div>
+                        </div>
+                        <div class="feature-item">
+                            <i class="fas fa-headset"></i>
+                            <div>
+                                <h3>Soporte Técnico</h3>
+                                <p>Atención y soporte a clientes</p>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div class="form-group">
-                    <label for="password">Contraseña:</label>
-                    <input type="password" id="password" name="password" required>
+            </div>
+
+            <!-- Panel derecho - Formulario -->
+            <div class="login-form-container">
+                <div class="form-wrapper">
+                    <div class="form-header">
+                        <h2>Iniciar Sesión</h2>
+                        <p>Ingresa tus credenciales para acceder al sistema</p>
+                    </div>
+
+                    <form id="loginForm" class="login-form">
+                        <div class="form-group">
+                            <label for="username">
+                                <i class="fas fa-user"></i>
+                                Usuario
+                            </label>
+                            <input 
+                                type="text" 
+                                id="username" 
+                                name="username" 
+                                placeholder="Ingresa tu nombre de usuario"
+                                required
+                                autocomplete="username"
+                            >
+                            <div class="input-focus-border"></div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="password">
+                                <i class="fas fa-lock"></i>
+                                Contraseña
+                            </label>
+                            <div class="password-input">
+                                <input 
+                                    type="password" 
+                                    id="password" 
+                                    name="password" 
+                                    placeholder="Ingresa tu contraseña"
+                                    required
+                                    autocomplete="current-password"
+                                >
+                                <button type="button" class="password-toggle" id="passwordToggle">
+                                    <i class="fas fa-eye"></i>
+                                </button>
+                            </div>
+                            <div class="input-focus-border"></div>
+                        </div>
+
+                        <div class="form-options">
+                            <label class="checkbox-container">
+                                <input type="checkbox" id="rememberMe" name="rememberMe">
+                                <span class="checkmark"></span>
+                                Recordarme
+                            </label>
+                            <a href="#" id="forgotPasswordLink" class="forgot-link">
+                                ¿Olvidaste tu contraseña?
+                            </a>
+                        </div>
+
+                        <button type="submit" class="login-btn" id="loginBtn">
+                            <span class="btn-text">Iniciar Sesión</span>
+                            <span class="btn-loading">
+                                <i class="fas fa-spinner fa-spin"></i>
+                                Iniciando...
+                            </span>
+                        </button>
+                    </form>
+
+                    <div class="form-footer">
+                        <p>¿Problemas para acceder? <a href="#" class="support-link">Contacta soporte</a></p>
+                    </div>
                 </div>
-                <button type="submit" class="btn primary login-btn">Iniciar Sesión</button>
-                <div class="forgot-password">
-                    <a href="#" id="forgotPasswordLink">¿Olvidaste tu contraseña?</a>
-                </div>
-            </form>
+            </div>
         </div>
     </div>
 
     <!-- Modal de Recuperación de Contraseña -->
     <div id="recoveryModal" class="modal">
-        <div class="modal-content recovery-modal">
-            <span class="close">&times;</span>
-            <h2>Recuperar Contraseña</h2>
-            <form id="recoveryForm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Recuperar Contraseña</h2>
+                <button class="modal-close" id="closeRecoveryModal">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            
+            <form id="recoveryForm" class="recovery-form">
                 <div class="form-group">
-                    <label for="recoveryEmail">Correo Electrónico:</label>
-                    <input type="email" id="recoveryEmail" name="recoveryEmail" required>
+                    <label for="recoveryEmail">
+                        <i class="fas fa-envelope"></i>
+                        Correo Electrónico
+                    </label>
+                    <input 
+                        type="email" 
+                        id="recoveryEmail" 
+                        name="recoveryEmail" 
+                        placeholder="Ingresa tu correo electrónico"
+                        required
+                    >
+                    <div class="input-focus-border"></div>
                 </div>
+
                 <div class="form-group">
-                    <label for="recoveryUsername">Usuario:</label>
-                    <input type="text" id="recoveryUsername" name="recoveryUsername" required>
+                    <label for="recoveryUsername">
+                        <i class="fas fa-user"></i>
+                        Usuario
+                    </label>
+                    <input 
+                        type="text" 
+                        id="recoveryUsername" 
+                        name="recoveryUsername" 
+                        placeholder="Ingresa tu nombre de usuario"
+                        required
+                    >
+                    <div class="input-focus-border"></div>
                 </div>
-                <button type="submit" class="btn primary">Enviar Solicitud</button>
+
+                <div class="form-actions">
+                    <button type="button" class="btn-secondary" id="cancelRecovery">
+                        Cancelar
+                    </button>
+                    <button type="submit" class="btn-primary">
+                        <span class="btn-text">Enviar Solicitud</span>
+                        <span class="btn-loading">
+                            <i class="fas fa-spinner fa-spin"></i>
+                            Enviando...
+                        </span>
+                    </button>
+                </div>
             </form>
         </div>
     </div>
+
+    <!-- Notificaciones -->
+    <div id="notificationContainer" class="notification-container"></div>
 
     <script src="js/login.js"></script>
 </body>

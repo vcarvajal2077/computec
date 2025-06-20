@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Servicios - Computec</title>
+    <meta name="description" content="Servicios informáticos profesionales: reparación, ensamblaje, soporte técnico y seguridad. Garantía y precios competitivos.">
+    <link rel="stylesheet" href="css/website-styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <nav class="navbar">
+            <div class="nav-container">
+                <div class="nav-logo">
+                    <i class="fas fa-laptop-code"></i>
+                    <span>Computec</span>
+                </div>
+                <ul class="nav-menu">
+                    <li class="nav-item"><a href="index.html" class="nav-link">Inicio</a></li>
+                    <li class="nav-item"><a href="servicios.html" class="nav-link">Servicios</a></li>
+                    <li class="nav-item"><a href="productos.html" class="nav-link">Productos</a></li>
+                    <li class="nav-item"><a href="nosotros.html" class="nav-link">Nosotros</a></li>
+                    <li class="nav-item"><a href="contacto.html" class="nav-link">Contacto</a></li>
+                    <li class="nav-item"><a href="mi-cuenta.html" class="nav-link">Mi Cuenta</a></li>
+                </ul>
+                <div class="header-session">
+                    <a href="#" class="btn-session">Iniciar sesión</a>
+                    <a href="#" class="btn-session secondary">Registrarse</a>
+                </div>
+                <div class="hamburger">
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Slider principal -->
+    <section class="main-slider" style="background: linear-gradient(135deg, #2563eb 0%, #764ba2 100%); color: white; padding: 0;">
+        <div class="slider-container" style="max-width: 1200px; margin: 0 auto; position: relative; min-height: 420px; display: flex; align-items: center;">
+            <div class="slider-slide active" style="display: flex; align-items: center; justify-content: space-between; width: 100%; min-height: 420px;">
+                <div class="slider-content" style="max-width: 600px;">
+                    <h1 style="font-size: 2.5rem; font-weight: 800; margin-bottom: 1.2rem;">Reparación y <span style='color: #f59e0b;'>Soporte Técnico</span></h1>
+                    <p style="font-size: 1.1rem; margin-bottom: 2rem;">Soluciones rápidas y garantizadas para tus equipos informáticos. Atención personalizada.</p>
+                    <a href="#servicios-detallados" class="btn btn-primary"><i class="fas fa-tools"></i> Ver Servicios</a>
+                </div>
+                <div class="slider-image" style="flex: 1; display: flex; justify-content: flex-end;">
+                    <img src="https://images.unsplash.com/photo-1518709268805-4e9042af2176?ixlib=rb-4.0.3&auto=format&fit=crop&w=700&q=80" alt="Servicios Computec" style="max-width: 440px; border-radius: 1.5rem; box-shadow: 0 8px 32px rgba(37,99,235,0.15);">
+                </div>
+            </div>
+            <div class="slider-slide" style="display: none; align-items: center; justify-content: space-between; width: 100%; min-height: 420px;">
+                <div class="slider-content" style="max-width: 600px;">
+                    <h1 style="font-size: 2.5rem; font-weight: 800; margin-bottom: 1.2rem;">Ensamblaje de <span style='color: #f59e0b;'>PCs a Medida</span></h1>
+                    <p style="font-size: 1.1rem; margin-bottom: 2rem;">Arma tu equipo ideal para gaming, oficina o diseño. Componentes de calidad y asesoría experta.</p>
+                    <a href="#servicios-detallados" class="btn btn-primary"><i class="fas fa-desktop"></i> Ver Ensamblaje</a>
+                </div>
+                <div class="slider-image" style="flex: 1; display: flex; justify-content: flex-end;">
+                    <img src="https://images.unsplash.com/photo-1593642632823-8f785ba67e45?ixlib=rb-4.0.3&auto=format&fit=crop&w=700&q=80" alt="PCs Computec" style="max-width: 440px; border-radius: 1.5rem; box-shadow: 0 8px 32px rgba(37,99,235,0.15);">
+                </div>
+            </div>
+            <div class="slider-slide" style="display: none; align-items: center; justify-content: space-between; width: 100%; min-height: 420px;">
+                <div class="slider-content" style="max-width: 600px;">
+                    <h1 style="font-size: 2.5rem; font-weight: 800; margin-bottom: 1.2rem;">Seguridad <span style='color: #f59e0b;'>Informática</span></h1>
+                    <p style="font-size: 1.1rem; margin-bottom: 2rem;">Protege tus datos y equipos con antivirus, firewall y backup profesional.</p>
+                    <a href="#servicios-detallados" class="btn btn-primary"><i class="fas fa-shield-alt"></i> Ver Seguridad</a>
+                </div>
+                <div class="slider-image" style="flex: 1; display: flex; justify-content: flex-end;">
+                    <img src="https://images.unsplash.com/photo-1519125323398-675f0ddb6308?ixlib=rb-4.0.3&auto=format&fit=crop&w=700&q=80" alt="Seguridad" style="max-width: 440px; border-radius: 1.5rem; box-shadow: 0 8px 32px rgba(37,99,235,0.15);">
+                </div>
+            </div>
+            <!-- Controles del slider -->
+            <button class="slider-prev" style="position: absolute; left: -3.5rem; top: 45%; transform: translateY(-50%); background: rgba(0,0,0,0.15); border: none; border-radius: 50%; width: 2.5rem; height: 2.5rem; color: white; font-size: 1.3rem; cursor: pointer;"><i class="fas fa-chevron-left"></i></button>
+            <button class="slider-next" style="position: absolute; right: -3.5rem; top: 45%; transform: translateY(-50%); background: rgba(0,0,0,0.15); border: none; border-radius: 50%; width: 2.5rem; height: 2.5rem; color: white; font-size: 1.3rem; cursor: pointer;"><i class="fas fa-chevron-right"></i></button>
+        </div>
+        <!-- Indicadores -->
+        <div class="slider-indicators" style="display: flex; justify-content: center; gap: 0.7rem; margin-top: -2.5rem; margin-bottom: 2.5rem; position: relative; z-index: 2;">
+            <span class="slider-dot active" style="width: 12px; height: 12px; border-radius: 50%; background: #fff; opacity: 0.7; cursor: pointer;"></span>
+            <span class="slider-dot" style="width: 12px; height: 12px; border-radius: 50%; background: #fff; opacity: 0.4; cursor: pointer;"></span>
+            <span class="slider-dot" style="width: 12px; height: 12px; border-radius: 50%; background: #fff; opacity: 0.4; cursor: pointer;"></span>
+        </div>
+    </section>
+
+    <!-- Servicios Detallados -->
+    <section id="servicios-detallados" class="services">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Catálogo Completo de Servicios</h2>
+                <p class="section-subtitle">Soluciones especializadas para todos tus problemas informáticos</p>
+            </div>
+
+            <div class="services-grid">
+                <!-- Reparación de Computadoras -->
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-tools"></i>
+                    </div>
+                    <h3>Reparación de Computadoras</h3>
+                    <p>Diagnóstico y reparación profesional de laptops y computadoras de escritorio. Solucionamos problemas de hardware y software con garantía.</p>
+                    <ul class="service-features">
+                        <li><i class="fas fa-check"></i> Diagnóstico gratuito</li>
+                        <li><i class="fas fa-check"></i> Reparación de hardware</li>
+                        <li><i class="fas fa-check"></i> Instalación de software</li>
+                        <li><i class="fas fa-check"></i> Limpieza y mantenimiento</li>
+                        <li><i class="fas fa-check"></i> Repuestos originales</li>
+                        <li><i class="fas fa-check"></i> Garantía de 3 meses</li>
+                        <li><i class="fas fa-check"></i> Servicio a domicilio</li>
+                        <li><i class="fas fa-check"></i> Presupuesto sin compromiso</li>
+                    </ul>
+                    <div class="service-price">
+                        <span class="price">Desde $50.000</span>
+                        <span class="price-note">*Precio base - varía según el problema</span>
+                    </div>
+                    <div class="service-actions">
+                        <a href="contacto.html" class="btn btn-primary">
+                            <i class="fas fa-phone"></i>
+                            Solicitar Reparación
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Ensamblaje de PCs -->
+                <div class="service-card featured">
+                    <div class="service-badge">Más Popular</div>
+                    <div class="service-icon">
+                        <i class="fas fa-desktop"></i>
+                    </div>
+                    <h3>Ensamblaje de PCs</h3>
+                    <p>Diseñamos y ensamblamos computadoras personalizadas según tus necesidades específicas. Gaming, trabajo, diseño gráfico y más.</p>
+                    <ul class="service-features">
+                        <li><i class="fas fa-check"></i> Configuración personalizada</li>
+                        <li><i class="fas fa-check"></i> Componentes de calidad</li>
+                        <li><i class="fas fa-check"></i> Instalación de sistema operativo</li>
+                        <li><i class="fas fa-check"></i> Instalación de drivers</li>
+                        <li><i class="fas fa-check"></i> Software básico incluido</li>
+                        <li><i class="fas fa-check"></i> Pruebas de rendimiento</li>
+                        <li><i class="fas fa-check"></i> Garantía de 1 año</li>
+                        <li><i class="fas fa-check"></i> Soporte post-venta</li>
+                    </ul>
+                    <div class="service-price">
+                        <span class="price">Desde $800.000</span>
+                        <span class="price-note">*Configuración básica - personalizable</span>
+                    </div>
+                    <div class="service-actions">
+                        <a href="contacto.html" class="btn btn-primary">
+                            <i class="fas fa-cog"></i>
+                            Cotizar PC Personalizada
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Soporte Técnico -->
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-headset"></i>
+                    </div>
+                    <h3>Soporte Técnico</h3>
+                    <p>Soporte técnico remoto y presencial para empresas y hogares. Mantenimiento preventivo y soluciones rápidas a problemas informáticos.</p>
+                    <ul class="service-features">
+                        <li><i class="fas fa-check"></i> Soporte remoto 24/7</li>
+                        <li><i class="fas fa-check"></i> Mantenimiento preventivo</li>
+                        <li><i class="fas fa-check"></i> Instalación de programas</li>
+                        <li><i class="fas fa-check"></i> Recuperación de datos</li>
+                        <li><i class="fas fa-check"></i> Optimización del sistema</li>
+                        <li><i class="fas fa-check"></i> Configuración de redes</li>
+                        <li><i class="fas fa-check"></i> Respaldo de información</li>
+                        <li><i class="fas fa-check"></i> Capacitación básica</li>
+                    </ul>
+                    <div class="service-price">
+                        <span class="price">Desde $30.000</span>
+                        <span class="price-note">*Por visita - planes mensuales disponibles</span>
+                    </div>
+                    <div class="service-actions">
+                        <a href="contacto.html" class="btn btn-primary">
+                            <i class="fas fa-headset"></i>
+                            Contratar Soporte
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Seguridad Informática -->
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h3>Seguridad Informática</h3>
+                    <p>Protección completa de tus equipos con antivirus, firewall y backup automático. Mantén tus datos seguros y protegidos.</p>
+                    <ul class="service-features">
+                        <li><i class="fas fa-check"></i> Instalación de antivirus</li>
+                        <li><i class="fas fa-check"></i> Configuración de firewall</li>
+                        <li><i class="fas fa-check"></i> Backup automático</li>
+                        <li><i class="fas fa-check"></i> Monitoreo de seguridad</li>
+                        <li><i class="fas fa-check"></i> Cifrado de datos</li>
+                        <li><i class="fas fa-check"></i> Auditoría de seguridad</li>
+                        <li><i class="fas fa-check"></i> Actualizaciones automáticas</li>
+                        <li><i class="fas fa-check"></i> Respuesta a incidentes</li>
+                    </ul>
+                    <div class="service-price">
+                        <span class="price">Desde $80.000</span>
+                        <span class="price-note">*Anual - incluye mantenimiento</span>
+                    </div>
+                    <div class="service-actions">
+                        <a href="contacto.html" class="btn btn-primary">
+                            <i class="fas fa-shield-alt"></i>
+                            Proteger Mi Equipo
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Recuperación de Datos -->
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-database"></i>
+                    </div>
+                    <h3>Recuperación de Datos</h3>
+                    <p>Recuperamos información perdida de discos duros, memorias USB, tarjetas SD y otros dispositivos de almacenamiento.</p>
+                    <ul class="service-features">
+                        <li><i class="fas fa-check"></i> Recuperación de archivos borrados</li>
+                        <li><i class="fas fa-check"></i> Recuperación de particiones</li>
+                        <li><i class="fas fa-check"></i> Recuperación de discos dañados</li>
+                        <li><i class="fas fa-check"></i> Recuperación de memorias USB</li>
+                        <li><i class="fas fa-check"></i> Recuperación de tarjetas SD</li>
+                        <li><i class="fas fa-check"></i> Análisis previo gratuito</li>
+                        <li><i class="fas fa-check"></i> Confidencialidad garantizada</li>
+                        <li><i class="fas fa-check"></i> Solo pagas si recuperamos</li>
+                    </ul>
+                    <div class="service-price">
+                        <span class="price">Desde $100.000</span>
+                        <span class="price-note">*Varía según complejidad y dispositivo</span>
+                    </div>
+                    <div class="service-actions">
+                        <a href="contacto.html" class="btn btn-primary">
+                            <i class="fas fa-database"></i>
+                            Recuperar Mis Datos
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Redes y WiFi -->
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-wifi"></i>
+                    </div>
+                    <h3>Redes y WiFi</h3>
+                    <p>Instalación, configuración y mantenimiento de redes domésticas y empresariales. Optimización de señal WiFi y seguridad.</p>
+                    <ul class="service-features">
+                        <li><i class="fas fa-check"></i> Instalación de routers</li>
+                        <li><i class="fas fa-check"></i> Configuración de WiFi</li>
+                        <li><i class="fas fa-check"></i> Optimización de señal</li>
+                        <li><i class="fas fa-check"></i> Configuración de seguridad</li>
+                        <li><i class="fas fa-check"></i> Instalación de repetidores</li>
+                        <li><i class="fas fa-check"></i> Configuración de VPN</li>
+                        <li><i class="fas fa-check"></i> Monitoreo de red</li>
+                        <li><i class="fas fa-check"></i> Solución de problemas</li>
+                    </ul>
+                    <div class="service-price">
+                        <span class="price">Desde $60.000</span>
+                        <span class="price-note">*Incluye visita y configuración básica</span>
+                    </div>
+                    <div class="service-actions">
+                        <a href="contacto.html" class="btn btn-primary">
+                            <i class="fas fa-wifi"></i>
+                            Configurar Mi Red
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Proceso de Trabajo -->
+    <section class="about">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Nuestro Proceso de Trabajo</h2>
+                <p class="section-subtitle">Cómo trabajamos para brindarte el mejor servicio</p>
+            </div>
+
+            <div class="process-steps">
+                <div class="process-step">
+                    <div class="step-number">1</div>
+                    <div class="step-content">
+                        <h3>Contacto y Diagnóstico</h3>
+                        <p>Nos contactas y realizamos un diagnóstico inicial de tu problema o necesidad.</p>
+                    </div>
+                </div>
+
+                <div class="process-step">
+                    <div class="step-number">2</div>
+                    <div class="step-content">
+                        <h3>Cotización</h3>
+                        <p>Te proporcionamos una cotización detallada con precios y tiempos de entrega.</p>
+                    </div>
+                </div>
+
+                <div class="process-step">
+                    <div class="step-number">3</div>
+                    <div class="step-content">
+                        <h3>Aprobación</h3>
+                        <p>Una vez aprobada la cotización, procedemos con el trabajo.</p>
+                    </div>
+                </div>
+
+                <div class="process-step">
+                    <div class="step-number">4</div>
+                    <div class="step-content">
+                        <h3>Ejecución</h3>
+                        <p>Realizamos el trabajo con la máxima calidad y profesionalismo.</p>
+                    </div>
+                </div>
+
+                <div class="process-step">
+                    <div class="step-number">5</div>
+                    <div class="step-content">
+                        <h3>Entrega y Garantía</h3>
+                        <p>Entregamos el trabajo terminado con garantía y soporte post-venta.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="contact">
+        <div class="container">
+            <div class="cta-content">
+                <h2>¿Necesitas ayuda con tu equipo?</h2>
+                <p>Contáctanos hoy mismo y obtén una cotización gratuita para cualquier servicio</p>
+                <div class="cta-buttons">
+                    <a href="contacto.html" class="btn btn-primary">
+                        <i class="fas fa-phone"></i>
+                        Solicitar Cotización
+                    </a>
+                    <a href="https://wa.me/573001234567" class="btn btn-secondary" target="_blank">
+                        <i class="fab fa-whatsapp"></i>
+                        Consultar por WhatsApp
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <div class="footer-logo">
+                        <i class="fas fa-laptop-code"></i>
+                        <span>Computec</span>
+                    </div>
+                    <p>Soluciones informáticas profesionales con la mejor calidad y garantía del mercado.</p>
+                    <div class="social-links">
+                        <a href="#" class="social-link"><i class="fab fa-facebook"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-whatsapp"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+
+                <div class="footer-section">
+                    <h3>Servicios</h3>
+                    <ul>
+                        <li><a href="servicios.html">Reparación de computadoras</a></li>
+                        <li><a href="servicios.html">Ensamblaje de PCs</a></li>
+                        <li><a href="servicios.html">Soporte técnico</a></li>
+                        <li><a href="servicios.html">Seguridad informática</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-section">
+                    <h3>Productos</h3>
+                    <ul>
+                        <li><a href="productos.html">Laptops Gaming</a></li>
+                        <li><a href="productos.html">PCs Armadas</a></li>
+                        <li><a href="productos.html">Accesorios</a></li>
+                        <li><a href="productos.html">Componentes</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-section">
+                    <h3>Contacto</h3>
+                    <ul>
+                        <li><i class="fas fa-phone"></i> +57 300 123 4567</li>
+                        <li><i class="fas fa-envelope"></i> info@computec.com</li>
+                        <li><i class="fas fa-map-marker-alt"></i> Bogotá, Colombia</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p>&copy; 2024 Computec. Todos los derechos reservados.</p>
+                <div class="footer-links">
+                    <a href="#">Política de privacidad</a>
+                    <a href="#">Términos y condiciones</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- WhatsApp Button -->
+    <a href="https://wa.me/573001234567" class="whatsapp-button" target="_blank">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+
+    <!-- Scripts -->
+    <script src="js/website-scripts.js"></script>
+    <script>
+    (function() {
+        const slides = document.querySelectorAll('.slider-slide');
+        const dots = document.querySelectorAll('.slider-dot');
+        const prev = document.querySelector('.slider-prev');
+        const next = document.querySelector('.slider-next');
+        let current = 0;
+        function showSlide(idx) {
+            slides.forEach((slide, i) => {
+                slide.style.display = i === idx ? 'flex' : 'none';
+                dots[i].classList.toggle('active', i === idx);
+                dots[i].style.opacity = i === idx ? '0.7' : '0.4';
+            });
+            current = idx;
+        }
+        prev.addEventListener('click', () => showSlide((current - 1 + slides.length) % slides.length));
+        next.addEventListener('click', () => showSlide((current + 1) % slides.length));
+        dots.forEach((dot, i) => dot.addEventListener('click', () => showSlide(i)));
+        setInterval(() => showSlide((current + 1) % slides.length), 7000);
+    })();
+    </script>
+</body>
+</html> 

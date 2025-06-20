@@ -3,94 +3,385 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sistema de Gestión - Panel de Administración</title>
-    <link rel="stylesheet" href="css/styles.css">
+    <title>Sistema de Gestión - Computec</title>
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
-    <div class="container">
-        <header>
-            <h1>Panel de Administración de Usuarios</h1>
-        </header>
-
-        <!-- Menú principal -->
-        <main id="mainMenu">
-            <section class="main-menu">
-                <h2>Selecciona el tipo de usuario</h2>
-                <div class="menu-buttons">
-                    <button class="btn primary menu-btn" data-role="auxiliar">Auxiliar</button>
-                    <button class="btn primary menu-btn" data-role="tecnico">Técnico</button>
-                    <button class="btn primary menu-btn" data-role="guest">Invitado</button>
+    <!-- Header Principal -->
+    <header class="main-header">
+        <div class="header-container">
+            <div class="logo-section">
+                <div class="logo">
+                    <i class="fas fa-laptop-code"></i>
+                    <span>Computec</span>
                 </div>
-            </section>
-        </main>
-
-        <!-- Sección CRUD de usuarios por tipo -->
-        <main id="userSection" style="display:none;">
-            <section class="user-management">
-                <div class="actions">
-                    <button id="backToMenuBtn" class="btn secondary">Volver al menú</button>
-                    <button id="createUserBtn" class="btn primary">Crear Nuevo Usuario</button>
+                <p class="tagline">Sistema de Gestión Integral</p>
+            </div>
+            <nav class="main-nav">
+                <ul>
+                    <li><a href="#dashboard" class="nav-link active">Dashboard</a></li>
+                    <li><a href="#servicios" class="nav-link">Servicios</a></li>
+                    <li><a href="#usuarios" class="nav-link">Usuarios</a></li>
+                    <li><a href="#reportes" class="nav-link">Reportes</a></li>
+                </ul>
+            </nav>
+            <div class="user-section">
+                <div class="notifications">
+                    <i class="fas fa-bell"></i>
+                    <span class="notification-badge">3</span>
                 </div>
-                <h2 id="userTypeTitle"></h2>
-                <div class="users-table">
-                    <table>
+                <div class="user-profile">
+                    <img src="https://via.placeholder.com/40x40/007bff/ffffff?text=U" alt="Usuario" class="user-avatar">
+                    <span class="user-name">Admin</span>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Contenido Principal -->
+    <main class="main-content">
+        <!-- Dashboard -->
+        <section id="dashboard" class="content-section active">
+            <div class="section-header">
+                <h1>Dashboard Principal</h1>
+                <p>Visión general del sistema y estadísticas</p>
+            </div>
+
+            <!-- Tarjetas de Estadísticas -->
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <div class="stat-content">
+                        <h3>Usuarios Activos</h3>
+                        <p class="stat-number">1,247</p>
+                        <span class="stat-change positive">+12% este mes</span>
+                    </div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-tools"></i>
+                    </div>
+                    <div class="stat-content">
+                        <h3>Reparaciones</h3>
+                        <p class="stat-number">89</p>
+                        <span class="stat-change positive">+5% esta semana</span>
+                    </div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-desktop"></i>
+                    </div>
+                    <div class="stat-content">
+                        <h3>Equipos Ensamblados</h3>
+                        <p class="stat-number">23</p>
+                        <span class="stat-change positive">+8% este mes</span>
+                    </div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <div class="stat-content">
+                        <h3>Ingresos</h3>
+                        <p class="stat-number">$45,230</p>
+                        <span class="stat-change positive">+15% este mes</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Gráficos y Tablas -->
+            <div class="dashboard-grid">
+                <div class="chart-container">
+                    <div class="chart-header">
+                        <h3>Actividad Reciente</h3>
+                        <div class="chart-controls">
+                            <button class="btn-chart active">7 días</button>
+                            <button class="btn-chart">30 días</button>
+                            <button class="btn-chart">90 días</button>
+                        </div>
+                    </div>
+                    <div class="chart-placeholder">
+                        <canvas id="activityChart"></canvas>
+                    </div>
+                </div>
+
+                <div class="recent-activity">
+                    <h3>Actividad Reciente</h3>
+                    <div class="activity-list">
+                        <div class="activity-item">
+                            <div class="activity-icon">
+                                <i class="fas fa-user-plus"></i>
+                            </div>
+                            <div class="activity-content">
+                                <p>Nuevo usuario registrado: <strong>Juan Pérez</strong></p>
+                                <span class="activity-time">Hace 5 minutos</span>
+                            </div>
+                        </div>
+
+                        <div class="activity-item">
+                            <div class="activity-icon">
+                                <i class="fas fa-tools"></i>
+                            </div>
+                            <div class="activity-content">
+                                <p>Reparación completada: <strong>Laptop Dell XPS</strong></p>
+                                <span class="activity-time">Hace 1 hora</span>
+                            </div>
+                        </div>
+
+                        <div class="activity-item">
+                            <div class="activity-icon">
+                                <i class="fas fa-desktop"></i>
+                            </div>
+                            <div class="activity-content">
+                                <p>Ensamblaje iniciado: <strong>PC Gaming Pro</strong></p>
+                                <span class="activity-time">Hace 2 horas</span>
+                            </div>
+                        </div>
+
+                        <div class="activity-item">
+                            <div class="activity-icon">
+                                <i class="fas fa-file-invoice"></i>
+                            </div>
+                            <div class="activity-content">
+                                <p>Factura generada: <strong>#INV-2024-001</strong></p>
+                                <span class="activity-time">Hace 3 horas</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Servicios -->
+        <section id="servicios" class="content-section">
+            <div class="section-header">
+                <h1>Gestión de Servicios</h1>
+                <p>Administración de reparaciones y ensamblajes</p>
+            </div>
+
+            <div class="services-grid">
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-tools"></i>
+                    </div>
+                    <h3>Reparaciones</h3>
+                    <p>Gestión de reparaciones de equipos informáticos</p>
+                    <div class="service-stats">
+                        <span>En proceso: 15</span>
+                        <span>Completadas: 89</span>
+                    </div>
+                    <button class="btn-primary" onclick="window.location.href='tecnico-pc.html'">
+                        <i class="fas fa-arrow-right"></i> Acceder
+                    </button>
+                </div>
+
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-desktop"></i>
+                    </div>
+                    <h3>Ensamblaje</h3>
+                    <p>Ensamblaje y configuración de equipos personalizados</p>
+                    <div class="service-stats">
+                        <span>En proceso: 8</span>
+                        <span>Completados: 23</span>
+                    </div>
+                    <button class="btn-primary" onclick="window.location.href='tecnico-accesorios.html'">
+                        <i class="fas fa-arrow-right"></i> Acceder
+                    </button>
+                </div>
+
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-headset"></i>
+                    </div>
+                    <h3>Soporte Técnico</h3>
+                    <p>Atención y soporte técnico a clientes</p>
+                    <div class="service-stats">
+                        <span>Pendientes: 12</span>
+                        <span>Resueltos: 156</span>
+                    </div>
+                    <button class="btn-primary" onclick="window.location.href='auxiliar.html'">
+                        <i class="fas fa-arrow-right"></i> Acceder
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Usuarios -->
+        <section id="usuarios" class="content-section">
+            <div class="section-header">
+                <h1>Gestión de Usuarios</h1>
+                <p>Administración de usuarios del sistema</p>
+            </div>
+
+            <div class="users-management">
+                <div class="actions-bar">
+                    <button class="btn-primary" id="createUserBtn">
+                        <i class="fas fa-plus"></i> Crear Usuario
+                    </button>
+                    <div class="search-container">
+                        <input type="text" placeholder="Buscar usuarios..." class="search-input">
+                        <i class="fas fa-search search-icon"></i>
+                    </div>
+                </div>
+
+                <div class="users-table-container">
+                    <table class="users-table">
                         <thead>
                             <tr>
                                 <th>ID</th>
                                 <th>Usuario</th>
                                 <th>Email</th>
                                 <th>Rol</th>
+                                <th>Estado</th>
+                                <th>Último Acceso</th>
                                 <th>Acciones</th>
                             </tr>
                         </thead>
-                        <tbody id="usersTableBody">
-                            <!-- Los usuarios se cargarán dinámicamente -->
+                        <tbody>
+                            <tr>
+                                <td>001</td>
+                                <td>admin</td>
+                                <td>admin@computec.com</td>
+                                <td><span class="role-badge admin">Administrador</span></td>
+                                <td><span class="status-badge active">Activo</span></td>
+                                <td>Hace 5 min</td>
+                                <td>
+                                    <div class="action-buttons">
+                                        <button class="btn-icon" title="Ver"><i class="fas fa-eye"></i></button>
+                                        <button class="btn-icon" title="Editar"><i class="fas fa-edit"></i></button>
+                                        <button class="btn-icon" title="Eliminar"><i class="fas fa-trash"></i></button>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>002</td>
+                                <td>tecnico1</td>
+                                <td>tecnico1@computec.com</td>
+                                <td><span class="role-badge tecnico">Técnico</span></td>
+                                <td><span class="status-badge active">Activo</span></td>
+                                <td>Hace 1 hora</td>
+                                <td>
+                                    <div class="action-buttons">
+                                        <button class="btn-icon" title="Ver"><i class="fas fa-eye"></i></button>
+                                        <button class="btn-icon" title="Editar"><i class="fas fa-edit"></i></button>
+                                        <button class="btn-icon" title="Eliminar"><i class="fas fa-trash"></i></button>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>003</td>
+                                <td>auxiliar1</td>
+                                <td>auxiliar1@computec.com</td>
+                                <td><span class="role-badge auxiliar">Auxiliar</span></td>
+                                <td><span class="status-badge inactive">Inactivo</span></td>
+                                <td>Hace 2 días</td>
+                                <td>
+                                    <div class="action-buttons">
+                                        <button class="btn-icon" title="Ver"><i class="fas fa-eye"></i></button>
+                                        <button class="btn-icon" title="Editar"><i class="fas fa-edit"></i></button>
+                                        <button class="btn-icon" title="Eliminar"><i class="fas fa-trash"></i></button>
+                                    </div>
+                                </td>
+                            </tr>
                         </tbody>
                     </table>
                 </div>
-            </section>
-        </main>
-
-        <!-- Modal para crear/editar usuario -->
-        <div id="userModal" class="modal">
-            <div class="modal-content">
-                <span class="close">&times;</span>
-                <h2 id="modalTitle">Crear Nuevo Usuario</h2>
-                <form id="userForm">
-                    <div class="form-group">
-                        <label for="username">Nombre de Usuario:</label>
-                        <input type="text" id="username" name="username" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="email">Email:</label>
-                        <input type="email" id="email" name="email" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="role">Rol:</label>
-                        <select id="role" name="role" required disabled>
-                            <option value="auxiliar">Auxiliar</option>
-                            <option value="tecnico">Técnico</option>
-                            <option value="guest">Invitado</option>
-                        </select>
-                    </div>
-                    <div class="form-actions">
-                        <button type="button" class="btn secondary" id="cancelBtn">Cancelar</button>
-                        <button type="submit" class="btn primary">Guardar</button>
-                    </div>
-                </form>
             </div>
-        </div>
+        </section>
 
-        <!-- Modal para leer usuario -->
-        <div id="readUserModal" class="modal">
-            <div class="modal-content read-modal-content">
-                <span class="close-read">&times;</span>
-                <h2>Información del Usuario</h2>
-                <div id="readUserInfo"></div>
+        <!-- Reportes -->
+        <section id="reportes" class="content-section">
+            <div class="section-header">
+                <h1>Reportes y Estadísticas</h1>
+                <p>Análisis y reportes del sistema</p>
             </div>
+
+            <div class="reports-grid">
+                <div class="report-card">
+                    <h3>Reporte de Ventas</h3>
+                    <div class="report-chart">
+                        <canvas id="salesChart"></canvas>
+                    </div>
+                    <div class="report-summary">
+                        <div class="summary-item">
+                            <span>Total Ventas</span>
+                            <strong>$125,430</strong>
+                        </div>
+                        <div class="summary-item">
+                            <span>Promedio</span>
+                            <strong>$4,181</strong>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="report-card">
+                    <h3>Servicios por Categoría</h3>
+                    <div class="report-chart">
+                        <canvas id="servicesChart"></canvas>
+                    </div>
+                    <div class="report-summary">
+                        <div class="summary-item">
+                            <span>Reparaciones</span>
+                            <strong>45%</strong>
+                        </div>
+                        <div class="summary-item">
+                            <span>Ensamblajes</span>
+                            <strong>30%</strong>
+                        </div>
+                        <div class="summary-item">
+                            <span>Soporte</span>
+                            <strong>25%</strong>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Modales -->
+    <div id="userModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Crear Usuario</h2>
+                <button class="modal-close">&times;</button>
+            </div>
+            <form class="modal-form">
+                <div class="form-group">
+                    <label for="username">Nombre de Usuario</label>
+                    <input type="text" id="username" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="role">Rol</label>
+                    <select id="role" required>
+                        <option value="">Seleccionar rol</option>
+                        <option value="admin">Administrador</option>
+                        <option value="tecnico">Técnico</option>
+                        <option value="auxiliar">Auxiliar</option>
+                    </select>
+                </div>
+                <div class="form-actions">
+                    <button type="button" class="btn-secondary">Cancelar</button>
+                    <button type="submit" class="btn-primary">Guardar</button>
+                </div>
+            </form>
         </div>
     </div>
 
-    <script src="js/script.js"></script>
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="js/main.js"></script>
 </body>
-</html> 
+</html>

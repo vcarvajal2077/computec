@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contacto - Computec</title>
+    <meta name="description" content="Contáctanos para cualquier consulta sobre nuestros servicios informáticos. Estamos aquí para ayudarte con todos tus problemas tecnológicos.">
+    <link rel="stylesheet" href="css/website-styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <nav class="navbar">
+            <div class="nav-container">
+                <div class="nav-logo">
+                    <i class="fas fa-laptop-code"></i>
+                    <span>Computec</span>
+                </div>
+                <ul class="nav-menu">
+                    <li class="nav-item"><a href="index.html" class="nav-link">Inicio</a></li>
+                    <li class="nav-item"><a href="servicios.html" class="nav-link">Servicios</a></li>
+                    <li class="nav-item"><a href="productos.html" class="nav-link">Productos</a></li>
+                    <li class="nav-item"><a href="nosotros.html" class="nav-link">Nosotros</a></li>
+                    <li class="nav-item"><a href="contacto.html" class="nav-link">Contacto</a></li>
+                    <li class="nav-item"><a href="mi-cuenta.html" class="nav-link">Mi Cuenta</a></li>
+                </ul>
+                <div class="header-session">
+                    <a href="#" class="btn-session">Iniciar sesión</a>
+                    <a href="#" class="btn-session secondary">Registrarse</a>
+                </div>
+                <div class="hamburger">
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Slider principal -->
+    <section class="main-slider" style="background: linear-gradient(135deg, #2563eb 0%, #764ba2 100%); color: white; padding: 0;">
+        <div class="slider-container" style="max-width: 1200px; margin: 0 auto; position: relative; min-height: 420px; display: flex; align-items: center;">
+            <div class="slider-slide active" style="display: flex; align-items: center; justify-content: space-between; width: 100%; min-height: 420px;">
+                <div class="slider-content" style="max-width: 600px;">
+                    <h1 style="font-size: 2.5rem; font-weight: 800; margin-bottom: 1.2rem;">¿Necesitas <span style='color: #f59e0b;'>Ayuda?</span></h1>
+                    <p style="font-size: 1.1rem; margin-bottom: 2rem;">Contáctanos para soporte, cotizaciones o consultas. Respuesta rápida y profesional.</p>
+                    <a href="#formulario" class="btn btn-primary"><i class="fas fa-envelope"></i> Escribir Mensaje</a>
+                </div>
+                <div class="slider-image" style="flex: 1; display: flex; justify-content: flex-end;">
+                    <img src="https://images.unsplash.com/photo-1553877522-43269d4ea984?ixlib=rb-4.0.3&auto=format&fit=crop&w=700&q=80" alt="Contacto Computec" style="max-width: 440px; border-radius: 1.5rem; box-shadow: 0 8px 32px rgba(37,99,235,0.15);">
+                </div>
+            </div>
+            <div class="slider-slide" style="display: none; align-items: center; justify-content: space-between; width: 100%; min-height: 420px;">
+                <div class="slider-content" style="max-width: 600px;">
+                    <h1 style="font-size: 2.5rem; font-weight: 800; margin-bottom: 1.2rem;">Atención <span style='color: #f59e0b;'>Personalizada</span></h1>
+                    <p style="font-size: 1.1rem; margin-bottom: 2rem;">Llámanos, escríbenos o visítanos. Estamos para ayudarte en todo momento.</p>
+                    <a href="#formulario" class="btn btn-primary"><i class="fas fa-phone"></i> Llamar Ahora</a>
+                </div>
+                <div class="slider-image" style="flex: 1; display: flex; justify-content: flex-end;">
+                    <img src="https://images.unsplash.com/photo-1519125323398-675f0ddb6308?ixlib=rb-4.0.3&auto=format&fit=crop&w=700&q=80" alt="Atención personalizada" style="max-width: 440px; border-radius: 1.5rem; box-shadow: 0 8px 32px rgba(37,99,235,0.15);">
+                </div>
+            </div>
+            <div class="slider-slide" style="display: none; align-items: center; justify-content: space-between; width: 100%; min-height: 420px;">
+                <div class="slider-content" style="max-width: 600px;">
+                    <h1 style="font-size: 2.5rem; font-weight: 800; margin-bottom: 1.2rem;">Visítanos en <span style='color: #f59e0b;'>Bogotá</span></h1>
+                    <p style="font-size: 1.1rem; margin-bottom: 2rem;">Estamos ubicados en el centro de la ciudad. ¡Te esperamos!</p>
+                    <a href="#" class="btn btn-primary"><i class="fas fa-map-marker-alt"></i> Ver Ubicación</a>
+                </div>
+                <div class="slider-image" style="flex: 1; display: flex; justify-content: flex-end;">
+                    <img src="https://images.unsplash.com/photo-1464983953574-0892a716854b?ixlib=rb-4.0.3&auto=format&fit=crop&w=700&q=80" alt="Ubicación Computec" style="max-width: 440px; border-radius: 1.5rem; box-shadow: 0 8px 32px rgba(37,99,235,0.15);">
+                </div>
+            </div>
+            <!-- Controles del slider -->
+            <button class="slider-prev" style="position: absolute; left: -3.5rem; top: 45%; transform: translateY(-50%); background: rgba(0,0,0,0.15); border: none; border-radius: 50%; width: 2.5rem; height: 2.5rem; color: white; font-size: 1.3rem; cursor: pointer;"><i class="fas fa-chevron-left"></i></button>
+            <button class="slider-next" style="position: absolute; right: -3.5rem; top: 45%; transform: translateY(-50%); background: rgba(0,0,0,0.15); border: none; border-radius: 50%; width: 2.5rem; height: 2.5rem; color: white; font-size: 1.3rem; cursor: pointer;"><i class="fas fa-chevron-right"></i></button>
+        </div>
+        <!-- Indicadores -->
+        <div class="slider-indicators" style="display: flex; justify-content: center; gap: 0.7rem; margin-top: -2.5rem; margin-bottom: 2.5rem; position: relative; z-index: 2;">
+            <span class="slider-dot active" style="width: 12px; height: 12px; border-radius: 50%; background: #fff; opacity: 0.7; cursor: pointer;"></span>
+            <span class="slider-dot" style="width: 12px; height: 12px; border-radius: 50%; background: #fff; opacity: 0.4; cursor: pointer;"></span>
+            <span class="slider-dot" style="width: 12px; height: 12px; border-radius: 50%; background: #fff; opacity: 0.4; cursor: pointer;"></span>
+        </div>
+    </section>
+
+    <!-- Información de Contacto -->
+    <section class="contact">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Información de Contacto</h2>
+                <p class="section-subtitle">Múltiples formas de contactarnos</p>
+            </div>
+
+            <div class="contact-content">
+                <div class="contact-info">
+                    <div class="contact-item">
+                        <div class="contact-icon">
+                            <i class="fas fa-map-marker-alt"></i>
+                        </div>
+                        <div>
+                            <h3>Dirección</h3>
+                            <p>Calle 123 #45-67<br>Centro Comercial Plaza Central<br>Local 15, Segundo Piso<br>Bogotá, Colombia</p>
+                        </div>
+                    </div>
+
+                    <div class="contact-item">
+                        <div class="contact-icon">
+                            <i class="fas fa-phone"></i>
+                        </div>
+                        <div>
+                            <h3>Teléfonos</h3>
+                            <p>+57 300 123 4567 (Celular)<br>+57 1 234 5678 (Fijo)<br>+57 1 234 5679 (WhatsApp)</p>
+                        </div>
+                    </div>
+
+                    <div class="contact-item">
+                        <div class="contact-icon">
+                            <i class="fas fa-envelope"></i>
+                        </div>
+                        <div>
+                            <h3>Email</h3>
+                            <p>info@computec.com<br>soporte@computec.com<br>ventas@computec.com</p>
+                        </div>
+                    </div>
+
+                    <div class="contact-item">
+                        <div class="contact-icon">
+                            <i class="fas fa-clock"></i>
+                        </div>
+                        <div>
+                            <h3>Horarios de Atención</h3>
+                            <p>Lunes - Viernes: 8:00 AM - 6:00 PM<br>Sábados: 9:00 AM - 2:00 PM<br>Domingos: Cerrado</p>
+                        </div>
+                    </div>
+
+                    <div class="contact-item">
+                        <div class="contact-icon">
+                            <i class="fas fa-car"></i>
+                        </div>
+                        <div>
+                            <h3>Servicio a Domicilio</h3>
+                            <p>Disponible en toda Bogotá<br>Sin costo adicional<br>Agenda tu cita con anticipación</p>
+                        </div>
+                    </div>
+
+                    <div class="contact-item">
+                        <div class="contact-icon">
+                            <i class="fas fa-credit-card"></i>
+                        </div>
+                        <div>
+                            <h3>Métodos de Pago</h3>
+                            <p>Efectivo<br>Tarjetas de crédito/débito<br>Transferencias bancarias<br>PSE</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="contact-form" id="formulario">
+                    <h3>Envíanos un Mensaje</h3>
+                    <p>Completa el formulario y te responderemos en menos de 24 horas</p>
+                    
+                    <form id="contactForm">
+                        <div class="form-group">
+                            <label for="name">Nombre completo *</label>
+                            <input type="text" id="name" name="name" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="email">Email *</label>
+                            <input type="email" id="email" name="email" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="phone">Teléfono *</label>
+                            <input type="tel" id="phone" name="phone" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="service">Servicio de interés</label>
+                            <select id="service" name="service">
+                                <option value="">Selecciona un servicio</option>
+                                <option value="reparacion">Reparación de computadoras</option>
+                                <option value="ensamblaje">Ensamblaje de PCs</option>
+                                <option value="soporte">Soporte técnico</option>
+                                <option value="seguridad">Seguridad informática</option>
+                                <option value="recuperacion">Recuperación de datos</option>
+                                <option value="redes">Redes y WiFi</option>
+                                <option value="productos">Compra de productos</option>
+                                <option value="otro">Otro</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="urgency">Urgencia</label>
+                            <select id="urgency" name="urgency">
+                                <option value="normal">Normal</option>
+                                <option value="urgente">Urgente</option>
+                                <option value="muy-urgente">Muy urgente</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="message">Mensaje *</label>
+                            <textarea id="message" name="message" rows="5" placeholder="Cuéntanos sobre tu problema o consulta..."></textarea>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="checkbox-label">
+                                <input type="checkbox" id="terms" name="terms" required>
+                                <span class="checkmark"></span>
+                                Acepto los términos y condiciones y la política de privacidad
+                            </label>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="checkbox-label">
+                                <input type="checkbox" id="newsletter" name="newsletter">
+                                <span class="checkmark"></span>
+                                Quiero recibir ofertas y novedades por email
+                            </label>
+                        </div>
+                        
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-paper-plane"></i>
+                            Enviar Mensaje
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Mapa -->
+    <section class="map-section">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Ubicación</h2>
+                <p class="section-subtitle">Encuéntranos fácilmente en el centro de Bogotá</p>
+            </div>
+            
+            <div class="map-container">
+                <div class="map-placeholder">
+                    <i class="fas fa-map-marked-alt"></i>
+                    <h3>Centro Comercial Plaza Central</h3>
+                    <p>Calle 123 #45-67, Local 15, Segundo Piso<br>Bogotá, Colombia</p>
+                    <a href="https://maps.google.com" target="_blank" class="btn btn-primary">
+                        <i class="fas fa-directions"></i>
+                        Ver en Google Maps
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Preguntas Frecuentes -->
+    <section class="services">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Preguntas Frecuentes</h2>
+                <p class="section-subtitle">Resolvemos tus dudas más comunes</p>
+            </div>
+
+            <div class="faq-grid">
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <h3>¿Cuánto tiempo toma una reparación?</h3>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>La mayoría de reparaciones se completan en 24-48 horas. Para problemas más complejos, te daremos un tiempo estimado durante el diagnóstico.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <h3>¿Ofrecen garantía en sus servicios?</h3>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Sí, todos nuestros servicios incluyen garantía. Reparaciones: 3 meses, Ensamblajes: 1 año, Soporte técnico: 6 meses.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <h3>¿Realizan servicio a domicilio?</h3>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Sí, ofrecemos servicio a domicilio en toda Bogotá sin costo adicional. Agenda tu cita con anticipación.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <h3>¿Aceptan tarjetas de crédito?</h3>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Sí, aceptamos efectivo, tarjetas de crédito/débito, transferencias bancarias y PSE.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <h3>¿Pueden recuperar datos perdidos?</h3>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Sí, somos especialistas en recuperación de datos. Primero realizamos un análisis gratuito para evaluar las posibilidades.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <h3>¿Trabajan con repuestos originales?</h3>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Sí, utilizamos repuestos originales o de alta calidad certificada para garantizar la durabilidad de nuestras reparaciones.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="about">
+        <div class="container">
+            <div class="cta-content">
+                <h2>¿Necesitas ayuda urgente?</h2>
+                <p>Para emergencias técnicas, contáctanos inmediatamente</p>
+                <div class="cta-buttons">
+                    <a href="tel:+573001234567" class="btn btn-primary">
+                        <i class="fas fa-phone"></i>
+                        Llamar Ahora
+                    </a>
+                    <a href="https://wa.me/573001234567" class="btn btn-secondary" target="_blank">
+                        <i class="fab fa-whatsapp"></i>
+                        WhatsApp Urgente
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <div class="footer-logo">
+                        <i class="fas fa-laptop-code"></i>
+                        <span>Computec</span>
+                    </div>
+                    <p>Soluciones informáticas profesionales con la mejor calidad y garantía del mercado.</p>
+                    <div class="social-links">
+                        <a href="#" class="social-link"><i class="fab fa-facebook"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-whatsapp"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+
+                <div class="footer-section">
+                    <h3>Servicios</h3>
+                    <ul>
+                        <li><a href="servicios.html">Reparación de computadoras</a></li>
+                        <li><a href="servicios.html">Ensamblaje de PCs</a></li>
+                        <li><a href="servicios.html">Soporte técnico</a></li>
+                        <li><a href="servicios.html">Seguridad informática</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-section">
+                    <h3>Productos</h3>
+                    <ul>
+                        <li><a href="productos.html">Laptops Gaming</a></li>
+                        <li><a href="productos.html">PCs Armadas</a></li>
+                        <li><a href="productos.html">Accesorios</a></li>
+                        <li><a href="productos.html">Componentes</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-section">
+                    <h3>Contacto</h3>
+                    <ul>
+                        <li><i class="fas fa-phone"></i> +57 300 123 4567</li>
+                        <li><i class="fas fa-envelope"></i> info@computec.com</li>
+                        <li><i class="fas fa-map-marker-alt"></i> Bogotá, Colombia</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p>&copy; 2024 Computec. Todos los derechos reservados.</p>
+                <div class="footer-links">
+                    <a href="#">Política de privacidad</a>
+                    <a href="#">Términos y condiciones</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- WhatsApp Button -->
+    <a href="https://wa.me/573001234567" class="whatsapp-button" target="_blank">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+
+    <!-- Scripts -->
+    <script src="js/website-scripts.js"></script>
+    <script>
+    (function() {
+        const slides = document.querySelectorAll('.slider-slide');
+        const dots = document.querySelectorAll('.slider-dot');
+        const prev = document.querySelector('.slider-prev');
+        const next = document.querySelector('.slider-next');
+        let current = 0;
+        function showSlide(idx) {
+            slides.forEach((slide, i) => {
+                slide.style.display = i === idx ? 'flex' : 'none';
+                dots[i].classList.toggle('active', i === idx);
+                dots[i].style.opacity = i === idx ? '0.7' : '0.4';
+            });
+            current = idx;
+        }
+        prev.addEventListener('click', () => showSlide((current - 1 + slides.length) % slides.length));
+        next.addEventListener('click', () => showSlide((current + 1) % slides.length));
+        dots.forEach((dot, i) => dot.addEventListener('click', () => showSlide(i)));
+        setInterval(() => showSlide((current + 1) % slides.length), 7000);
+    })();
+    </script>
+</body>
+</html> 
