@@ -27,7 +27,6 @@
                     <li class="nav-item"><a href="productos.html" class="nav-link">Productos</a></li>
                     <li class="nav-item"><a href="nosotros.html" class="nav-link">Nosotros</a></li>
                     <li class="nav-item"><a href="contacto.html" class="nav-link">Contacto</a></li>
-                    <li class="nav-item"><a href="mi-cuenta.html" class="nav-link">Mi Cuenta</a></li>
                 </ul>
 
                 <div class="header-session">
@@ -566,9 +565,6 @@
                 e.preventDefault();
                 secciones.forEach(sec => sec.style.display = 'none');
                 seccionProductos.style.display = 'block';
-            }
-            if (this.textContent.trim() === 'Mi Cuenta') {
-                e.preventDefault();
             }
         });
     });

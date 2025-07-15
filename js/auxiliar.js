@@ -93,25 +93,7 @@ class NavigationManager {
                         </button>
                     </div>
                 </div>
-                <form id="recepcionForm" class="form-container">
-                    <div class="form-group">
-                        <label for="cliente">Cliente</label>
-                        <input type="text" id="cliente" class="form-control" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="equipo">Equipo</label>
-                        <input type="text" id="equipo" class="form-control" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="descripcion">Descripción del Problema</label>
-                        <textarea id="descripcion" class="form-control" rows="3" required></textarea>
-                    </div>
-                    <div class="form-group">
-                        <label for="fecha">Fecha de Recepción</label>
-                        <input type="date" id="fecha" class="form-control" required>
-                    </div>
-                    <button type="submit" class="btn primary">Registrar Recepción</button>
-                </form>
+                <div id="recepcionFormContainer"></div>
             </div>
         `;
     }
@@ -359,17 +341,57 @@ class NavigationManager {
         if (entregaForm) {
             entregaForm.addEventListener('submit', (e) => {
                 e.preventDefault();
-                // Lógica para procesar el formulario de entrega
-                console.log('Formulario de entrega enviado');
+                // Validaciones
+                let valido = true;
+                // Limpiar errores previos
+                entregaForm.querySelectorAll('.error-message').forEach(el => el.remove());
+                entregaForm.querySelectorAll('.form-control').forEach(el => el.classList.remove('input-error'));
+
+                // Helper para mostrar error
+                function mostrarError(id, mensaje) {
+                    const input = document.getElementById(id);
+                    input.classList.add('input-error');
+                    let error = document.createElement('div');
+                    error.className = 'error-message';
+                    error.style.color = '#f44336';
+                    error.style.fontSize = '0.9em';
+                    error.style.marginTop = '0.2em';
+                    error.textContent = mensaje;
+                    input.parentNode.appendChild(error);
+                    valido = false;
+                }
+
+                // Validar Número de Orden
+                const orden = entregaForm.ordenEntrega.value.trim();
+                if (!orden) mostrarError('ordenEntrega', 'El número de orden es obligatorio.');
+                // Validar Cliente
+                const cliente = entregaForm.clienteEntrega.value.trim();
+                if (!cliente) mostrarError('clienteEntrega', 'El cliente es obligatorio.');
+                // Validar Fecha de Entrega
+                const fecha = entregaForm.fechaEntrega.value;
+                if (!fecha) {
+                    mostrarError('fechaEntrega', 'La fecha de entrega es obligatoria.');
+                } else {
+                    const hoy = new Date();
+                    const fechaIngresada = new Date(fecha);
+                    hoy.setHours(0,0,0,0);
+                    if (fechaIngresada > hoy) {
+                        mostrarError('fechaEntrega', 'La fecha no puede ser futura.');
+                    }
+                }
+                // Si no es válido, no enviar
+                if (!valido) return;
+                // Si todo está bien, simular guardado
+                alert('Entrega registrada (simulado)');
+                entregaForm.reset();
             });
         }
 
-        // Botones de acción
+        // Botón Nueva Recepción
         const nuevaRecepcionBtn = document.getElementById('nuevaRecepcionBtn');
         if (nuevaRecepcionBtn) {
             nuevaRecepcionBtn.addEventListener('click', () => {
-                // Lógica para nueva recepción
-                console.log('Nueva recepción');
+                this.mostrarFormularioRecepcion();
             });
         }
 
@@ -380,6 +402,391 @@ class NavigationManager {
                 console.log('Exportar datos');
             });
         }
+
+        // Botón Nuevo Mensaje
+        const nuevoMensajeBtn = document.getElementById('nuevoMensajeBtn');
+        if (nuevoMensajeBtn) {
+            nuevoMensajeBtn.addEventListener('click', () => {
+                mostrarModalNuevoMensaje();
+            });
+        }
+
+        // Botón Nuevo Pago
+        const nuevoPagoBtn = document.getElementById('nuevoPagoBtn');
+        if (nuevoPagoBtn) {
+            nuevoPagoBtn.addEventListener('click', () => {
+                mostrarModalNuevoPago();
+            });
+        }
+
+        // Función para mostrar el modal de nuevo mensaje
+        function mostrarModalNuevoMensaje() {
+            // Crear modal si no existe
+            let modal = document.getElementById('modalNuevoMensaje');
+            if (!modal) {
+                modal = document.createElement('div');
+                modal.id = 'modalNuevoMensaje';
+                modal.className = 'modal';
+                modal.innerHTML = `
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h2>Nuevo Mensaje</h2>
+                            <span class="close" id="cerrarModalNuevoMensaje">&times;</span>
+                        </div>
+                        <form id="formNuevoMensaje">
+                            <div class="form-group">
+                                <label for="destinatario">Destinatario</label>
+                                <input type="text" id="destinatario" class="form-control" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="mensaje">Mensaje</label>
+                                <textarea id="mensaje" class="form-control" rows="3" required></textarea>
+                            </div>
+                            <div class="form-actions">
+                                <button type="submit" class="btn primary"><i class="fas fa-paper-plane"></i> Enviar</button>
+                                <button type="button" class="btn secondary" id="cancelarNuevoMensaje"><i class="fas fa-times"></i> Cancelar</button>
+                            </div>
+                        </form>
+                    </div>
+                `;
+                document.body.appendChild(modal);
+            }
+            modal.style.display = 'flex';
+
+            // Cerrar modal
+            document.getElementById('cerrarModalNuevoMensaje').onclick = () => { modal.style.display = 'none'; };
+            document.getElementById('cancelarNuevoMensaje').onclick = () => { modal.style.display = 'none'; };
+
+            // Validación y envío
+            document.getElementById('formNuevoMensaje').onsubmit = function(e) {
+                e.preventDefault();
+                let valido = true;
+                this.querySelectorAll('.error-message').forEach(el => el.remove());
+                this.querySelectorAll('.form-control').forEach(el => el.classList.remove('input-error'));
+                function mostrarError(id, mensaje) {
+                    const input = document.getElementById(id);
+                    input.classList.add('input-error');
+                    let error = document.createElement('div');
+                    error.className = 'error-message';
+                    error.style.color = '#f44336';
+                    error.style.fontSize = '0.9em';
+                    error.style.marginTop = '0.2em';
+                    error.textContent = mensaje;
+                    input.parentNode.appendChild(error);
+                    valido = false;
+                }
+                const destinatario = this.destinatario.value.trim();
+                const mensaje = this.mensaje.value.trim();
+                if (!destinatario) mostrarError('destinatario', 'El destinatario es obligatorio.');
+                if (!mensaje) mostrarError('mensaje', 'El mensaje no puede estar vacío.');
+                if (!valido) return;
+                // Agregar mensaje simulado a la lista
+                const lista = document.querySelector('.mensajes-list');
+                if (lista) {
+                    const nuevo = document.createElement('div');
+                    nuevo.className = 'mensaje';
+                    nuevo.innerHTML = `<h3>Mensaje a ${destinatario}</h3><p>${mensaje}</p><small>Enviado: ${new Date().toLocaleString()}</small>`;
+                    lista.prepend(nuevo);
+                }
+                modal.style.display = 'none';
+            };
+        }
+
+        // Función para mostrar el modal de nuevo pago
+        function mostrarModalNuevoPago() {
+            let modal = document.getElementById('modalNuevoPago');
+            if (!modal) {
+                modal = document.createElement('div');
+                modal.id = 'modalNuevoPago';
+                modal.className = 'modal';
+                modal.innerHTML = `
+                    <div class="modal-content modal-pago-ancho">
+                        <div class="modal-header">
+                            <h2>Nuevo Pago</h2>
+                            <span class="close" id="cerrarModalNuevoPago">&times;</span>
+                        </div>
+                        <form id="formNuevoPago">
+                            <div class="form-group">
+                                <label for="clientePago">Cliente</label>
+                                <input type="text" id="clientePago" class="form-control" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="montoPago">Monto</label>
+                                <input type="number" id="montoPago" class="form-control" min="0.01" step="0.01" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="fechaPago">Fecha</label>
+                                <input type="date" id="fechaPago" class="form-control" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="metodoPago">Método de pago</label>
+                                <select id="metodoPago" class="form-control" required>
+                                    <option value="">Seleccione...</option>
+                                    <option value="efectivo">Efectivo</option>
+                                    <option value="tarjeta">Tarjeta</option>
+                                    <option value="transferencia">Transferencia</option>
+                                    <option value="credito">Crédito</option>
+                                </select>
+                            </div>
+                            <div class="form-group" id="referenciaPagoGroup" style="display:none;">
+                                <label for="referenciaPago">Referencia</label>
+                                <input type="text" id="referenciaPago" class="form-control">
+                            </div>
+                            <div class="form-group">
+                                <label for="estadoPago">Estado</label>
+                                <select id="estadoPago" class="form-control" required>
+                                    <option value="">Seleccione...</option>
+                                    <option value="pagado">Pagado</option>
+                                    <option value="pendiente">Pendiente</option>
+                                    <option value="cancelado">Cancelado</option>
+                                    <option value="devuelto">Devuelto</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="observacionesPago">Observaciones</label>
+                                <textarea id="observacionesPago" class="form-control" rows="2" maxlength="250"></textarea>
+                            </div>
+                            <div class="form-actions">
+                                <button type="submit" class="btn primary"><i class="fas fa-save"></i> Registrar Pago</button>
+                                <button type="button" class="btn secondary" id="cancelarNuevoPago"><i class="fas fa-times"></i> Cancelar</button>
+                            </div>
+                        </form>
+                    </div>
+                `;
+                document.body.appendChild(modal);
+            }
+            modal.style.display = 'flex';
+            document.getElementById('cerrarModalNuevoPago').onclick = () => { modal.style.display = 'none'; };
+            document.getElementById('cancelarNuevoPago').onclick = () => { modal.style.display = 'none'; };
+            // Mostrar/ocultar referencia según método
+            const metodoPagoSelect = document.getElementById('metodoPago');
+            const referenciaGroup = document.getElementById('referenciaPagoGroup');
+            metodoPagoSelect.onchange = function() {
+                if (this.value === 'tarjeta' || this.value === 'transferencia') {
+                    referenciaGroup.style.display = '';
+                } else {
+                    referenciaGroup.style.display = 'none';
+                }
+            };
+            document.getElementById('formNuevoPago').onsubmit = function(e) {
+                e.preventDefault();
+                let valido = true;
+                this.querySelectorAll('.error-message').forEach(el => el.remove());
+                this.querySelectorAll('.form-control').forEach(el => el.classList.remove('input-error'));
+                function mostrarError(id, mensaje) {
+                    const input = document.getElementById(id);
+                    input.classList.add('input-error');
+                    let error = document.createElement('div');
+                    error.className = 'error-message';
+                    error.style.color = '#f44336';
+                    error.style.fontSize = '0.9em';
+                    error.style.marginTop = '0.2em';
+                    error.textContent = mensaje;
+                    input.parentNode.appendChild(error);
+                    valido = false;
+                }
+                const cliente = this.clientePago.value.trim();
+                const monto = parseFloat(this.montoPago.value);
+                const montoStr = this.montoPago.value.trim();
+                const fecha = this.fechaPago.value;
+                const metodo = this.metodoPago.value;
+                const referencia = this.referenciaPago ? this.referenciaPago.value.trim() : '';
+                const estado = this.estadoPago.value;
+                const observaciones = this.observacionesPago.value.trim();
+                // Cliente solo letras y espacios
+                if (!cliente) mostrarError('clientePago', 'El cliente es obligatorio.');
+                else if (!/^[a-zA-ZáéíóúÁÉÍÓÚñÑ ]+$/.test(cliente)) mostrarError('clientePago', 'El nombre solo debe contener letras y espacios.');
+                // Monto máximo y dos decimales
+                if (!monto || monto <= 0) mostrarError('montoPago', 'El monto debe ser mayor a 0.');
+                else if (monto > 1000000) mostrarError('montoPago', 'El monto no puede superar $1,000,000.');
+                else if (!/^(\d+)(\.\d{1,2})?$/.test(montoStr)) mostrarError('montoPago', 'Máximo dos decimales.');
+                // Fecha no anterior a 2020-01-01
+                if (!fecha) {
+                    mostrarError('fechaPago', 'La fecha es obligatoria.');
+                } else {
+                    const hoy = new Date();
+                    const fechaIngresada = new Date(fecha);
+                    hoy.setHours(0,0,0,0);
+                    const minFecha = new Date('2020-01-01');
+                    if (fechaIngresada > hoy) {
+                        mostrarError('fechaPago', 'La fecha no puede ser futura.');
+                    } else if (fechaIngresada < minFecha) {
+                        mostrarError('fechaPago', 'No se permiten pagos antes de 2020.');
+                    }
+                }
+                // Método de pago
+                if (!metodo) mostrarError('metodoPago', 'Seleccione el método de pago.');
+                // Referencia obligatoria si tarjeta o transferencia
+                if ((metodo === 'tarjeta' || metodo === 'transferencia') && !referencia) {
+                    mostrarError('referenciaPago', 'La referencia es obligatoria para este método.');
+                }
+                // Estado
+                if (!estado) mostrarError('estadoPago', 'Seleccione el estado del pago.');
+                // Observaciones obligatorias si devuelto/cancelado
+                if ((estado === 'devuelto' || estado === 'cancelado') && !observaciones) {
+                    mostrarError('observacionesPago', 'Debe indicar el motivo en observaciones.');
+                }
+                // Observaciones máximo 250 caracteres
+                if (observaciones.length > 250) {
+                    mostrarError('observacionesPago', 'Máximo 250 caracteres.');
+                }
+                if (!valido) return;
+                // Agregar pago simulado a la tabla
+                const tabla = document.querySelector('.data-table tbody');
+                if (tabla) {
+                    const fila = document.createElement('tr');
+                    fila.innerHTML = `
+                        <td>Nuevo</td>
+                        <td>${cliente}</td>
+                        <td>$${monto.toFixed(2)}</td>
+                        <td>${fecha}</td>
+                        <td>${estado.charAt(0).toUpperCase() + estado.slice(1)}</td>
+                        <td><button class='btn secondary'>Ver Detalles</button></td>
+                    `;
+                    tabla.prepend(fila);
+                }
+                modal.style.display = 'none';
+            };
+        }
+    }
+
+    mostrarFormularioRecepcion() {
+        const container = document.getElementById('recepcionFormContainer');
+        if (!container) return;
+        container.innerHTML = `
+            <form id="recepcionForm" class="form-container">
+                <div class="form-group">
+                    <label for="cliente">Cliente</label>
+                    <input type="text" id="cliente" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label for="equipo">Equipo</label>
+                    <input type="text" id="equipo" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label for="tipoEquipo">Tipo de equipo</label>
+                    <select id="tipoEquipo" class="form-control" required>
+                        <option value="">Seleccione...</option>
+                        <option value="Laptop">Laptop</option>
+                        <option value="PC">PC</option>
+                        <option value="Tablet">Tablet</option>
+                        <option value="Impresora">Impresora</option>
+                        <option value="Otro">Otro</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="marca">Marca</label>
+                    <input type="text" id="marca" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label for="modelo">Modelo</label>
+                    <input type="text" id="modelo" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label for="descripcion">Descripción del Problema</label>
+                    <textarea id="descripcion" class="form-control" rows="3" required></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="fecha">Fecha de Recepción</label>
+                    <input type="date" id="fecha" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label for="estadoInicial">Estado inicial</label>
+                    <select id="estadoInicial" class="form-control" required>
+                        <option value="">Seleccione...</option>
+                        <option value="Bueno">Bueno</option>
+                        <option value="Regular">Regular</option>
+                        <option value="Malo">Malo</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Accesorios entregados</label>
+                    <div>
+                        <label><input type="checkbox" name="accesorios" value="Cargador"> Cargador</label>
+                        <label><input type="checkbox" name="accesorios" value="Mouse"> Mouse</label>
+                        <label><input type="checkbox" name="accesorios" value="Bolso"> Bolso</label>
+                        <label><input type="checkbox" name="accesorios" value="Cable USB"> Cable USB</label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="observaciones">Observaciones</label>
+                    <textarea id="observaciones" class="form-control" rows="2"></textarea>
+                </div>
+                <div class="form-actions">
+                    <button type="submit" class="btn primary"><i class="fas fa-save"></i> Guardar Recepción</button>
+                    <button type="button" class="btn secondary" id="cancelarRecepcionBtn"><i class="fas fa-times"></i> Cancelar</button>
+                </div>
+            </form>
+        `;
+        // Evento cancelar
+        document.getElementById('cancelarRecepcionBtn').onclick = () => {
+            container.innerHTML = '';
+        };
+        // Evento submit
+        document.getElementById('recepcionForm').onsubmit = (e) => {
+            e.preventDefault();
+            // Validaciones
+            let valido = true;
+            const form = document.getElementById('recepcionForm');
+            // Limpiar errores previos
+            form.querySelectorAll('.error-message').forEach(el => el.remove());
+            form.querySelectorAll('.form-control').forEach(el => el.classList.remove('input-error'));
+
+            // Helper para mostrar error
+            function mostrarError(id, mensaje) {
+                const input = document.getElementById(id);
+                input.classList.add('input-error');
+                let error = document.createElement('div');
+                error.className = 'error-message';
+                error.style.color = '#f44336';
+                error.style.fontSize = '0.9em';
+                error.style.marginTop = '0.2em';
+                error.textContent = mensaje;
+                input.parentNode.appendChild(error);
+                valido = false;
+            }
+
+            // Validar Cliente
+            const cliente = form.cliente.value.trim();
+            if (!cliente) mostrarError('cliente', 'El cliente es obligatorio.');
+            // Validar Equipo
+            const equipo = form.equipo.value.trim();
+            if (!equipo) mostrarError('equipo', 'El equipo es obligatorio.');
+            // Validar Tipo de equipo
+            const tipoEquipo = form.tipoEquipo.value;
+            if (!tipoEquipo) mostrarError('tipoEquipo', 'Seleccione el tipo de equipo.');
+            // Validar Marca
+            const marca = form.marca.value.trim();
+            if (!marca) mostrarError('marca', 'La marca es obligatoria.');
+            // Validar Modelo
+            const modelo = form.modelo.value.trim();
+            if (!modelo) mostrarError('modelo', 'El modelo es obligatorio.');
+            // Validar Descripción
+            const descripcion = form.descripcion.value.trim();
+            if (!descripcion) mostrarError('descripcion', 'La descripción es obligatoria.');
+            // Validar Fecha
+            const fecha = form.fecha.value;
+            if (!fecha) {
+                mostrarError('fecha', 'La fecha es obligatoria.');
+            } else {
+                const hoy = new Date();
+                const fechaIngresada = new Date(fecha);
+                hoy.setHours(0,0,0,0);
+                if (fechaIngresada > hoy) {
+                    mostrarError('fecha', 'La fecha no puede ser futura.');
+                }
+            }
+            // Validar Estado inicial
+            const estadoInicial = form.estadoInicial.value;
+            if (!estadoInicial) mostrarError('estadoInicial', 'Seleccione el estado inicial.');
+
+            // Si no es válido, no enviar
+            if (!valido) return;
+
+            // Si todo está bien, simular guardado
+            alert('Recepción registrada (simulado)');
+            container.innerHTML = '';
+        };
     }
 
     toggleModal(modalId) {

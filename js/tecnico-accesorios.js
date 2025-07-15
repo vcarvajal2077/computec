@@ -42,6 +42,9 @@ let calendario = [
 // --- Vistas dinámicas ---
 function reparacionesView() {
   const section = document.getElementById('reparaciones');
+  // Eliminar botón anterior si existe
+  const oldBtn = document.getElementById('btnNuevaReparacion');
+  if (oldBtn) oldBtn.remove();
   section.innerHTML = `
     <h2>Gestión de Reparaciones</h2>
     <button class="btn primary" id="btnNuevaReparacion"><i class="fas fa-plus"></i> Nueva Reparación</button>
@@ -74,36 +77,116 @@ function reparacionesView() {
         `).join('')}
       </tbody>
     </table>
-    <div id="formNuevaReparacion" style="display:none;">
-      <h3>Nueva Reparación</h3>
-      <form id="nuevaReparacionForm">
-        <label>Cliente<input name="cliente" required></label>
-        <label>Equipo<input name="equipo" required></label>
-        <label>Problema<input name="problema" required></label>
-        <label>Fecha<input name="fecha" type="date" required></label>
-        <label>Técnico<input name="tecnico" required></label>
-        <button class="btn primary" type="submit">Registrar</button>
-        <button class="btn secondary" type="button" id="cancelarNuevaReparacion">Cancelar</button>
-      </form>
-    </div>
   `;
-  // Eventos
-  document.getElementById('btnNuevaReparacion').onclick = () => {
-    document.getElementById('formNuevaReparacion').style.display = 'block';
-  };
-  document.getElementById('cancelarNuevaReparacion').onclick = () => {
-    document.getElementById('formNuevaReparacion').style.display = 'none';
-  };
-  document.getElementById('nuevaReparacionForm').onsubmit = function(e) {
-    e.preventDefault();
-    const data = Object.fromEntries(new FormData(this));
-    reparaciones.push({
-      id: reparaciones.length+1,
-      ...data,
-      estado: "pendiente"
-    });
-    reparacionesView();
-  };
+  // Añadir y asociar evento al botón
+  const btnNuevaReparacion = document.getElementById('btnNuevaReparacion');
+  btnNuevaReparacion.onclick = () => { mostrarModalNuevaReparacion(); };
+  function mostrarModalNuevaReparacion() {
+    // Eliminar modal anterior si existe
+    let oldModal = document.getElementById('modalNuevaReparacion');
+    if (oldModal) oldModal.remove();
+    let modal = document.createElement('div');
+    modal.id = 'modalNuevaReparacion';
+    modal.className = 'modal';
+    modal.innerHTML = `
+      <div class='modal-content' style='max-width:500px;width:95%;overflow-y:auto;'>
+        <div class='modal-header'>
+          <h2>Nueva Reparación</h2>
+          <span class='close' id='cerrarModalNuevaReparacion'>&times;</span>
+        </div>
+        <form id='formNuevaReparacionModal'>
+          <div class='form-group' style='width:100%'>
+            <label for='clienteModal'>Cliente</label>
+            <input type='text' id='clienteModal' name='cliente' class='form-control' required style='width:100%'>
+          </div>
+          <div class='form-group' style='width:100%'>
+            <label for='equipoModal'>Equipo</label>
+            <input type='text' id='equipoModal' name='equipo' class='form-control' required style='width:100%'>
+          </div>
+          <div class='form-group' style='width:100%'>
+            <label for='problemaModal'>Problema</label>
+            <input type='text' id='problemaModal' name='problema' class='form-control' required style='width:100%'>
+          </div>
+          <div class='form-group' style='width:100%'>
+            <label for='descripcionModal'>Descripción</label>
+            <textarea id='descripcionModal' name='descripcion' class='form-control' required style='width:100%' rows='3'></textarea>
+          </div>
+          <div class='form-group' style='width:100%'>
+            <label for='fechaModal'>Fecha</label>
+            <input type='date' id='fechaModal' name='fecha' class='form-control' required style='width:100%'>
+          </div>
+          <div class='form-group' style='width:100%'>
+            <label for='tecnicoModal'>Técnico</label>
+            <input type='text' id='tecnicoModal' name='tecnico' class='form-control' required style='width:100%'>
+          </div>
+          <div class='form-actions' style='width:100%;display:flex;gap:1rem;justify-content:flex-end;'>
+            <button type='submit' class='btn primary' style='flex:1'><i class='fas fa-save'></i> Registrar</button>
+            <button type='button' class='btn secondary' id='cancelarNuevaReparacionModal' style='flex:1'><i class='fas fa-times'></i> Cancelar</button>
+          </div>
+        </form>
+      </div>
+    `;
+    document.body.appendChild(modal);
+    modal.style.display = 'flex';
+    document.getElementById('cerrarModalNuevaReparacion').onclick = () => { modal.style.display = 'none'; };
+    document.getElementById('cancelarNuevaReparacionModal').onclick = () => { modal.style.display = 'none'; };
+    document.getElementById('formNuevaReparacionModal').onsubmit = function(e) {
+      e.preventDefault();
+      let valido = true;
+      this.querySelectorAll('.error-message').forEach(el => el.remove());
+      this.querySelectorAll('.form-control').forEach(el => el.classList.remove('input-error'));
+      function mostrarError(nombre, mensaje) {
+        const input = document.getElementById(nombre+'Modal');
+        input.classList.add('input-error');
+        let error = document.createElement('div');
+        error.className = 'error-message';
+        error.textContent = mensaje;
+        error.style.marginLeft = '2px';
+        input.parentNode.appendChild(error);
+        valido = false;
+      }
+      const cliente = this.cliente.value.trim();
+      const equipo = this.equipo.value.trim();
+      const problema = this.problema.value.trim();
+      const descripcion = this.descripcion.value.trim();
+      const fecha = this.fecha.value;
+      const tecnico = this.tecnico.value.trim();
+      // Cliente: solo letras y espacios
+      if (!cliente) mostrarError('cliente', 'El cliente es obligatorio.');
+      else if (!/^[a-zA-ZáéíóúÁÉÍÓÚñÑ ]+$/.test(cliente)) mostrarError('cliente', 'Solo letras y espacios.');
+      // Equipo: mínimo 3 caracteres
+      if (!equipo) mostrarError('equipo', 'El equipo es obligatorio.');
+      else if (equipo.length < 3) mostrarError('equipo', 'Mínimo 3 caracteres.');
+      // Problema: mínimo 3 caracteres
+      if (!problema) mostrarError('problema', 'El problema es obligatorio.');
+      else if (problema.length < 3) mostrarError('problema', 'Mínimo 3 caracteres.');
+      // Descripción: mínimo 5 caracteres
+      if (!descripcion) mostrarError('descripcion', 'La descripción es obligatoria.');
+      else if (descripcion.length < 5) mostrarError('descripcion', 'Mínimo 5 caracteres.');
+      // Fecha: no futura ni anterior a 2020-01-01
+      if (!fecha) mostrarError('fecha', 'La fecha es obligatoria.');
+      else {
+        const hoy = new Date();
+        const fechaIngresada = new Date(fecha);
+        hoy.setHours(0,0,0,0);
+        const minFecha = new Date('2020-01-01');
+        if (fechaIngresada > hoy) mostrarError('fecha', 'La fecha no puede ser futura.');
+        else if (fechaIngresada < minFecha) mostrarError('fecha', 'No se permiten fechas antes de 2020.');
+      }
+      // Técnico: solo letras y espacios
+      if (!tecnico) mostrarError('tecnico', 'El técnico es obligatorio.');
+      else if (!/^[a-zA-ZáéíóúÁÉÍÓÚñÑ ]+$/.test(tecnico)) mostrarError('tecnico', 'Solo letras y espacios.');
+      if (!valido) return;
+      const data = Object.fromEntries(new FormData(this));
+      reparaciones.push({
+        id: reparaciones.length+1,
+        ...data,
+        estado: "pendiente"
+      });
+      modal.style.display = 'none';
+      reparacionesView();
+    };
+  }
   document.querySelectorAll('.estado-select').forEach(sel => {
     sel.onchange = function() {
       const id = +this.getAttribute('data-id');
@@ -140,33 +223,106 @@ function inventarioView() {
         `).join('')}
       </tbody>
     </table>
-    <div id="formNuevoAccesorio" style="display:none;">
-      <h3>Nuevo Accesorio</h3>
-      <form id="nuevoAccesorioForm">
-        <label>Nombre<input name="nombre" required></label>
-        <label>Tipo<input name="tipo" required></label>
-        <label>Cantidad<input name="cantidad" type="number" required></label>
-        <label>Proveedor<input name="proveedor" required></label>
-        <label>Precio<input name="precio" type="number" required></label>
-        <button class="btn primary" type="submit">Registrar</button>
-        <button class="btn secondary" type="button" id="cancelarNuevoAccesorio">Cancelar</button>
-      </form>
-    </div>
   `;
   document.getElementById('btnNuevoAccesorio').onclick = () => {
-    document.getElementById('formNuevoAccesorio').style.display = 'block';
-  };
-  document.getElementById('cancelarNuevoAccesorio').onclick = () => {
-    document.getElementById('formNuevoAccesorio').style.display = 'none';
-  };
-  document.getElementById('nuevoAccesorioForm').onsubmit = function(e) {
-    e.preventDefault();
-    const data = Object.fromEntries(new FormData(this));
-    inventario.push({
-      id: inventario.length+1,
-      ...data
-    });
-    inventarioView();
+    // Eliminar modal anterior si existe
+    let oldModal = document.getElementById('modalNuevoAccesorio');
+    if (oldModal) oldModal.remove();
+    let modal = document.createElement('div');
+    modal.id = 'modalNuevoAccesorio';
+    modal.className = 'modal';
+    modal.innerHTML = `
+      <div class='modal-content' style='max-width:500px;width:95%;overflow-y:auto;'>
+        <div class='modal-header'>
+          <h2>Nuevo Accesorio</h2>
+          <span class='close' id='cerrarModalNuevoAccesorio'>&times;</span>
+        </div>
+        <form id='formNuevoAccesorioModal'>
+          <style>
+            #formNuevoAccesorioModal .form-control {
+              width: 100%;
+              max-width: 100%;
+              box-sizing: border-box;
+            }
+          </style>
+          <div class='form-group' style='width:100%'>
+            <label for='nombreAccesorio'>Nombre</label>
+            <input type='text' id='nombreAccesorio' name='nombre' class='form-control' required>
+          </div>
+          <div class='form-group' style='width:100%'>
+            <label for='tipoAccesorio'>Tipo</label>
+            <input type='text' id='tipoAccesorio' name='tipo' class='form-control' required>
+          </div>
+          <div class='form-group' style='width:100%'>
+            <label for='cantidadAccesorio'>Cantidad</label>
+            <input type='number' id='cantidadAccesorio' name='cantidad' class='form-control' required>
+          </div>
+          <div class='form-group' style='width:100%'>
+            <label for='proveedorAccesorio'>Proveedor</label>
+            <input type='text' id='proveedorAccesorio' name='proveedor' class='form-control' required>
+          </div>
+          <div class='form-group' style='width:100%'>
+            <label for='precioAccesorio'>Precio</label>
+            <input type='number' id='precioAccesorio' name='precio' class='form-control' required>
+          </div>
+          <div class='form-actions' style='width:100%;display:flex;gap:1rem;justify-content:flex-end;'>
+            <button type='submit' class='btn primary' style='flex:1'><i class='fas fa-save'></i> Registrar</button>
+            <button type='button' class='btn secondary' id='cancelarNuevoAccesorioModal' style='flex:1'><i class='fas fa-times'></i> Cancelar</button>
+          </div>
+        </form>
+      </div>
+    `;
+    document.body.appendChild(modal);
+    modal.style.display = 'flex';
+    document.getElementById('cerrarModalNuevoAccesorio').onclick = () => { modal.style.display = 'none'; };
+    document.getElementById('cancelarNuevoAccesorioModal').onclick = () => { modal.style.display = 'none'; };
+    document.getElementById('formNuevoAccesorioModal').onsubmit = function(e) {
+      e.preventDefault();
+      let valido = true;
+      this.querySelectorAll('.error-message').forEach(el => el.remove());
+      this.querySelectorAll('.form-control').forEach(el => el.classList.remove('input-error'));
+      function mostrarError(nombre, mensaje) {
+        const input = document.getElementById(nombre+'Accesorio');
+        input.classList.add('input-error');
+        let error = document.createElement('div');
+        error.className = 'error-message';
+        error.textContent = mensaje;
+        error.style.marginLeft = '2px';
+        input.parentNode.appendChild(error);
+        valido = false;
+      }
+      const nombre = this.nombre.value.trim();
+      const tipo = this.tipo.value.trim();
+      const cantidad = this.cantidad.value.trim();
+      const proveedor = this.proveedor.value.trim();
+      const precio = this.precio.value.trim();
+      // Nombre: mínimo 3, solo letras/números/espacios
+      if (!nombre) mostrarError('nombre', 'El nombre es obligatorio.');
+      else if (nombre.length < 3) mostrarError('nombre', 'Mínimo 3 caracteres.');
+      else if (!/^[\wáéíóúÁÉÍÓÚñÑ0-9 ]+$/i.test(nombre)) mostrarError('nombre', 'Solo letras, números y espacios.');
+      // Tipo: mínimo 3, solo letras/números/espacios
+      if (!tipo) mostrarError('tipo', 'El tipo es obligatorio.');
+      else if (tipo.length < 3) mostrarError('tipo', 'Mínimo 3 caracteres.');
+      else if (!/^[\wáéíóúÁÉÍÓÚñÑ0-9 ]+$/i.test(tipo)) mostrarError('tipo', 'Solo letras, números y espacios.');
+      // Cantidad: entero positivo
+      if (!cantidad) mostrarError('cantidad', 'La cantidad es obligatoria.');
+      else if (!/^\d+$/.test(cantidad) || parseInt(cantidad) <= 0) mostrarError('cantidad', 'Debe ser un número entero positivo.');
+      // Proveedor: mínimo 3 caracteres
+      if (!proveedor) mostrarError('proveedor', 'El proveedor es obligatorio.');
+      else if (proveedor.length < 3) mostrarError('proveedor', 'Mínimo 3 caracteres.');
+      // Precio: mayor a 0, máximo dos decimales
+      if (!precio) mostrarError('precio', 'El precio es obligatorio.');
+      else if (isNaN(precio) || parseFloat(precio) <= 0) mostrarError('precio', 'Debe ser mayor a 0.');
+      else if (!/^\d+(\.\d{1,2})?$/.test(precio)) mostrarError('precio', 'Máximo dos decimales.');
+      if (!valido) return;
+      const data = Object.fromEntries(new FormData(this));
+      inventario.push({
+        id: inventario.length+1,
+        ...data
+      });
+      modal.style.display = 'none';
+      inventarioView();
+    };
   };
   document.querySelectorAll('.btnEliminarAccesorio').forEach(btn => {
     btn.onclick = function() {
@@ -288,4 +444,4 @@ function comunicacionView() {
   };
 }
 // Inicializar la vista por defecto
-reparacionesView(); 
+reparacionesView();

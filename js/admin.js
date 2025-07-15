@@ -1,758 +1,287 @@
-// Variables globales
-let currentSection = 'dashboard';
-let charts = {};
+// Tipos de usuario de ejemplo
+const tiposUsuario = [
+    { id: 1, nombre: 'Admin', icono: 'fa-user-shield', desc: 'Control total del sistema' },
+    { id: 2, nombre: 'Auxiliar', icono: 'fa-user-cog', desc: 'Soporte y asistencia' },
+    { id: 4, nombre: 'Técnico PC', icono: 'fa-desktop', desc: 'Especialista en PC' },
+    { id: 5, nombre: 'Técnico Accesorios', icono: 'fa-keyboard', desc: 'Especialista en accesorios' }
+];
 
-// Inicialización cuando el DOM esté listo
-document.addEventListener('DOMContentLoaded', function() {
-    initializeApp();
-});
+// Usuarios simulados
+const usuarios = [
+    { id_usuario: 1, nombre: 'Juan', apellido: 'Pérez', email: 'juan@admin.com', telefono: '123456789', fecha_registro: '2024-06-01', ultimo_acceso: '2024-06-17', activo: true, id_tipo_usuario: 1 },
+    { id_usuario: 2, nombre: 'Ana', apellido: 'Gómez', email: 'ana@aux.com', telefono: '987654321', fecha_registro: '2024-06-02', ultimo_acceso: '2024-06-16', activo: true, id_tipo_usuario: 2 },
+    { id_usuario: 4, nombre: 'Marta', apellido: 'Ruiz', email: 'marta@pc.com', telefono: '444555666', fecha_registro: '2024-06-04', ultimo_acceso: '2024-06-14', activo: true, id_tipo_usuario: 4 },
+    { id_usuario: 5, nombre: 'Carlos', apellido: 'Díaz', email: 'carlos@accesorios.com', telefono: '333222111', fecha_registro: '2024-06-05', ultimo_acceso: '2024-06-13', activo: true, id_tipo_usuario: 5 }
+];
 
-// Función principal de inicialización
-function initializeApp() {
-    setupNavigation();
-    setupModals();
-    setupCharts();
-    setupUserManagement();
-    setupSearchFunctionality();
-    setupNotifications();
-    loadDashboardData();
+// Menú lateral colapsable
+const sidebar = document.querySelector('.sidebar');
+const sidebarToggle = document.getElementById('sidebarToggle');
+const sidebarToggleMain = document.getElementById('sidebarToggleMain');
+if (sidebar && sidebarToggle) {
+    sidebarToggle.addEventListener('click', () => {
+        sidebar.classList.toggle('collapsed');
+    });
 }
-
-// Configuración de navegación
-function setupNavigation() {
-    const navLinks = document.querySelectorAll('.nav-link');
-    const sections = document.querySelectorAll('.content-section');
-
-    navLinks.forEach(link => {
-        link.addEventListener('click', function(e) {
-            e.preventDefault();
-            
-            // Remover clase active de todos los enlaces
-            navLinks.forEach(l => l.classList.remove('active'));
-            
-            // Agregar clase active al enlace clickeado
-            this.classList.add('active');
-            
-            // Obtener la sección objetivo
-            const targetSection = this.getAttribute('href').substring(1);
-            
-            // Ocultar todas las secciones
-            sections.forEach(section => {
-                section.classList.remove('active');
-            });
-            
-            // Mostrar la sección objetivo
-            const targetElement = document.getElementById(targetSection);
-            if (targetElement) {
-                targetElement.classList.add('active');
-                currentSection = targetSection;
-                
-                // Cargar datos específicos de la sección
-                loadSectionData(targetSection);
-            }
-        });
+if (sidebar && sidebarToggleMain) {
+    sidebarToggleMain.addEventListener('click', () => {
+        sidebar.classList.toggle('collapsed');
     });
 }
 
-// Configuración de modales
-function setupModals() {
-    const modals = document.querySelectorAll('.modal');
-    const modalCloseButtons = document.querySelectorAll('.modal-close, .btn-secondary');
-    const createUserBtn = document.getElementById('createUserBtn');
-
-    // Abrir modal de crear usuario
-    if (createUserBtn) {
-        createUserBtn.addEventListener('click', function() {
-            openModal('userModal');
-        });
-    }
-
-    // Cerrar modales
-    modalCloseButtons.forEach(button => {
-        button.addEventListener('click', function() {
-            closeAllModals();
-        });
-    });
-
-    // Cerrar modal al hacer clic fuera
-    modals.forEach(modal => {
-        modal.addEventListener('click', function(e) {
-            if (e.target === this) {
-                closeAllModals();
-            }
-        });
-    });
-
-    // Configurar formularios de modales
-    setupModalForms();
-}
-
-// Abrir modal específico
-function openModal(modalId) {
-    const modal = document.getElementById(modalId);
-    if (modal) {
-        modal.classList.add('active');
-        document.body.style.overflow = 'hidden';
-    }
-}
-
-// Cerrar todos los modales
-function closeAllModals() {
-    const modals = document.querySelectorAll('.modal');
-    modals.forEach(modal => {
-        modal.classList.remove('active');
-    });
-    document.body.style.overflow = 'auto';
-}
-
-// Configurar formularios de modales
-function setupModalForms() {
-    const userForm = document.querySelector('#userModal form');
-    if (userForm) {
-        userForm.addEventListener('submit', function(e) {
-            e.preventDefault();
-            handleUserFormSubmit(this);
-        });
-    }
-}
-
-// Manejar envío del formulario de usuario
-function handleUserFormSubmit(form) {
-    const formData = new FormData(form);
-    const userData = {
-        username: formData.get('username') || document.getElementById('username').value,
-        email: formData.get('email') || document.getElementById('email').value,
-        role: formData.get('role') || document.getElementById('role').value
-    };
-
-    // Validar datos
-    if (!userData.username || !userData.email || !userData.role) {
-        showNotification('Por favor completa todos los campos', 'error');
-        return;
-    }
-
-    // Simular envío de datos
-    console.log('Creando usuario:', userData);
-    
-    // Aquí iría la lógica real de creación de usuario
-    showNotification('Usuario creado exitosamente', 'success');
-    closeAllModals();
-    form.reset();
-    
-    // Recargar tabla de usuarios
-    loadUsersTable();
-}
-
-// Configuración de gráficos
-function setupCharts() {
-    // Gráfico de actividad
-    const activityCtx = document.getElementById('activityChart');
-    if (activityCtx) {
-        charts.activity = new Chart(activityCtx, {
-            type: 'line',
-            data: {
-                labels: ['Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb', 'Dom'],
-                datasets: [{
-                    label: 'Reparaciones',
-                    data: [12, 19, 15, 25, 22, 18, 24],
-                    borderColor: '#2563eb',
-                    backgroundColor: 'rgba(37, 99, 235, 0.1)',
-                    tension: 0.4,
-                    fill: true
-                }, {
-                    label: 'Ensamblajes',
-                    data: [8, 12, 10, 15, 18, 14, 20],
-                    borderColor: '#10b981',
-                    backgroundColor: 'rgba(16, 185, 129, 0.1)',
-                    tension: 0.4,
-                    fill: true
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: {
-                    legend: {
-                        position: 'top',
-                    }
-                },
-                scales: {
-                    y: {
-                        beginAtZero: true
-                    }
-                }
-            }
-        });
-    }
-
-    // Gráfico de ventas
-    const salesCtx = document.getElementById('salesChart');
-    if (salesCtx) {
-        charts.sales = new Chart(salesCtx, {
-            type: 'bar',
-            data: {
-                labels: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun'],
-                datasets: [{
-                    label: 'Ventas ($)',
-                    data: [35000, 42000, 38000, 45000, 48000, 52000],
-                    backgroundColor: [
-                        'rgba(37, 99, 235, 0.8)',
-                        'rgba(16, 185, 129, 0.8)',
-                        'rgba(245, 158, 11, 0.8)',
-                        'rgba(239, 68, 68, 0.8)',
-                        'rgba(139, 92, 246, 0.8)',
-                        'rgba(6, 182, 212, 0.8)'
-                    ]
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: {
-                    legend: {
-                        display: false
-                    }
-                },
-                scales: {
-                    y: {
-                        beginAtZero: true
-                    }
-                }
-            }
-        });
-    }
-
-    // Gráfico de servicios
-    const servicesCtx = document.getElementById('servicesChart');
-    if (servicesCtx) {
-        charts.services = new Chart(servicesCtx, {
-            type: 'doughnut',
-            data: {
-                labels: ['Reparaciones', 'Ensamblajes', 'Soporte'],
-                datasets: [{
-                    data: [45, 30, 25],
-                    backgroundColor: [
-                        '#2563eb',
-                        '#10b981',
-                        '#f59e0b'
-                    ],
-                    borderWidth: 0
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: {
-                    legend: {
-                        position: 'bottom'
-                    }
-                }
-            }
-        });
-    }
-}
-
-// Configuración de gestión de usuarios
-function setupUserManagement() {
-    // Configurar botones de acción en la tabla
-    document.addEventListener('click', function(e) {
-        if (e.target.closest('.btn-icon')) {
-            const button = e.target.closest('.btn-icon');
-            const action = button.getAttribute('title')?.toLowerCase();
-            const row = button.closest('tr');
-            
-            if (row) {
-                const userId = row.cells[0].textContent;
-                const username = row.cells[1].textContent;
-                
-                switch(action) {
-                    case 'ver':
-                        viewUser(userId, username);
-                        break;
-                    case 'editar':
-                        editUser(userId, username);
-                        break;
-                    case 'eliminar':
-                        deleteUser(userId, username);
-                        break;
-                }
-            }
-        }
-    });
-}
-
-// Ver usuario
-function viewUser(userId, username) {
-    const modal = document.getElementById('readUserModal');
-    if (modal) {
-        const userInfo = document.getElementById('readUserInfo');
-        userInfo.innerHTML = `
-            <div class="user-details">
-                <p><strong>ID:</strong> ${userId}</p>
-                <p><strong>Usuario:</strong> ${username}</p>
-                <p><strong>Email:</strong> ${username}@computec.com</p>
-                <p><strong>Rol:</strong> Técnico</p>
-                <p><strong>Estado:</strong> Activo</p>
-                <p><strong>Último acceso:</strong> Hace 1 hora</p>
+// Mostrar tarjetas de tipos de usuario en el main
+const btnTiposUsuario = document.getElementById('btn-tipos-usuario');
+const mainTitle = document.getElementById('main-title');
+const mainContentPlaceholder = document.getElementById('main-content-placeholder');
+if (btnTiposUsuario && mainContentPlaceholder && mainTitle) {
+    btnTiposUsuario.addEventListener('click', () => {
+        mainTitle.textContent = 'Tipos de usuario';
+        mainContentPlaceholder.innerHTML = `
+            <div class="tipos-usuario-grid">
+                ${tiposUsuario.map(tipo => {
+                    const cantidad = usuarios.filter(u => u.id_tipo_usuario === tipo.id).length;
+                    return `
+                    <button class="tipo-usuario-btn-card" data-tipo-id="${tipo.id}">
+                        <div class="icono"><i class="fa ${tipo.icono}"></i></div>
+                        <div class="info">
+                            <div class="titulo">${tipo.nombre}</div>
+                            <div class="desc">${tipo.desc}</div>
+                        </div>
+                        <span class="badge">${cantidad}</span>
+                    </button>
+                    `;
+                }).join('')}
             </div>
         `;
-        openModal('readUserModal');
-    }
-}
-
-// Editar usuario
-function editUser(userId, username) {
-    const modal = document.getElementById('userModal');
-    if (modal) {
-        const modalTitle = modal.querySelector('#modalTitle');
-        const usernameInput = modal.querySelector('#username');
-        const emailInput = modal.querySelector('#email');
-        const roleSelect = modal.querySelector('#role');
-        
-        modalTitle.textContent = 'Editar Usuario';
-        usernameInput.value = username;
-        emailInput.value = `${username}@computec.com`;
-        roleSelect.value = 'tecnico';
-        roleSelect.disabled = false;
-        
-        openModal('userModal');
-    }
-}
-
-// Eliminar usuario
-function deleteUser(userId, username) {
-    if (confirm(`¿Estás seguro de que quieres eliminar al usuario "${username}"?`)) {
-        console.log('Eliminando usuario:', userId);
-        showNotification('Usuario eliminado exitosamente', 'success');
-        // Aquí iría la lógica real de eliminación
-    }
-}
-
-// Configuración de búsqueda
-function setupSearchFunctionality() {
-    const searchInput = document.querySelector('.search-input');
-    if (searchInput) {
-        searchInput.addEventListener('input', function() {
-            const searchTerm = this.value.toLowerCase();
-            filterUsersTable(searchTerm);
+        document.querySelectorAll('.tipo-usuario-btn-card').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                const tipoId = parseInt(e.currentTarget.getAttribute('data-tipo-id'));
+                mostrarUsuariosPorTipo(tipoId);
+            });
         });
-    }
+    });
 }
 
-// Filtrar tabla de usuarios
-function filterUsersTable(searchTerm) {
-    const tableRows = document.querySelectorAll('.users-table tbody tr');
-    
-    tableRows.forEach(row => {
-        const username = row.cells[1].textContent.toLowerCase();
-        const email = row.cells[2].textContent.toLowerCase();
-        const role = row.cells[3].textContent.toLowerCase();
-        
-        if (username.includes(searchTerm) || email.includes(searchTerm) || role.includes(searchTerm)) {
-            row.style.display = '';
+function mostrarUsuariosPorTipo(tipoId) {
+    const tipo = tiposUsuario.find(t => t.id === tipoId);
+    mainTitle.textContent = `Usuarios: ${tipo.nombre}`;
+    const usuariosFiltrados = usuarios.filter(u => u.id_tipo_usuario === tipoId);
+    mainContentPlaceholder.innerHTML = `
+        <button class="crear-usuario-btn">+ Crear usuario</button>
+        <div class="tabla-usuarios-container">
+            <table class="tabla-usuarios">
+                <thead>
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Apellido</th>
+                        <th>Email</th>
+                        <th>Teléfono</th>
+                        <th>Fecha registro</th>
+                        <th>Último acceso</th>
+                        <th>Estado</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    ${usuariosFiltrados.length === 0 ? `<tr><td colspan='8'>No hay usuarios de este tipo.</td></tr>` : usuariosFiltrados.map(u => `
+                        <tr>
+                            <td>${u.nombre}</td>
+                            <td>${u.apellido}</td>
+                            <td>${u.email}</td>
+                            <td>${u.telefono || '-'}</td>
+                            <td>${u.fecha_registro}</td>
+                            <td>${u.ultimo_acceso || '-'}</td>
+                            <td>${u.activo ? 'Activo' : 'Inactivo'}</td>
+                            <td>
+                                <button class="leer-btn" title="Ver" data-id="${u.id_usuario}"><i class="fa fa-eye"></i></button>
+                                <button class="editar-btn" title="Editar" data-id="${u.id_usuario}"><i class="fa fa-edit"></i></button>
+                                <button class="eliminar-btn" title="Eliminar" data-id="${u.id_usuario}"><i class="fa fa-trash"></i></button>
+                            </td>
+                        </tr>
+                    `).join('')}
+                </tbody>
+            </table>
+        </div>
+    `;
+    // CRUD events
+    document.querySelector('.crear-usuario-btn').onclick = () => abrirModalUsuario('crear', tipoId);
+    document.querySelectorAll('.leer-btn').forEach(btn => {
+        btn.onclick = () => abrirModalLeerUsuario(parseInt(btn.getAttribute('data-id')));
+    });
+    document.querySelectorAll('.editar-btn').forEach(btn => {
+        btn.onclick = () => abrirModalUsuario('editar', tipoId, parseInt(btn.getAttribute('data-id')));
+    });
+    document.querySelectorAll('.eliminar-btn').forEach(btn => {
+        btn.onclick = () => eliminarUsuario(parseInt(btn.getAttribute('data-id')), tipoId);
+    });
+}
+
+function abrirModalLeerUsuario(idUsuario) {
+    const usuario = usuarios.find(u => u.id_usuario === idUsuario);
+    const modal = document.createElement('div');
+    modal.className = 'modal-usuario';
+    modal.innerHTML = `
+        <div class="modal-contenido">
+            <span class="cerrar-modal">&times;</span>
+            <h3>Información del usuario</h3>
+            <div class="info-usuario-modal">
+                <p><strong>Nombre:</strong> ${usuario.nombre}</p>
+                <p><strong>Apellido:</strong> ${usuario.apellido}</p>
+                <p><strong>Email:</strong> ${usuario.email}</p>
+                <p><strong>Teléfono:</strong> ${usuario.telefono || '-'}</p>
+                <p><strong>Fecha de registro:</strong> ${usuario.fecha_registro}</p>
+                <p><strong>Último acceso:</strong> ${usuario.ultimo_acceso || '-'}</p>
+                <p><strong>Estado:</strong> ${usuario.activo ? 'Activo' : 'Inactivo'}</p>
+            </div>
+            <div class="modal-acciones">
+                <button type="button" id="cancelar-modal">Cerrar</button>
+            </div>
+        </div>
+    `;
+    document.body.appendChild(modal);
+    modal.querySelector('.cerrar-modal').onclick = () => modal.remove();
+    modal.querySelector('#cancelar-modal').onclick = () => modal.remove();
+}
+
+function abrirModalUsuario(modo, tipoId, idUsuario = null) {
+    let usuario = { nombre: '', apellido: '', email: '', telefono: '', activo: true };
+    if (modo === 'editar') {
+        usuario = usuarios.find(u => u.id_usuario === idUsuario);
+    }
+    const modal = document.createElement('div');
+    modal.className = 'modal-usuario';
+    modal.innerHTML = `
+        <div class="modal-contenido">
+            <span class="cerrar-modal">&times;</span>
+            <h3>${modo === 'crear' ? 'Crear' : 'Editar'} usuario</h3>
+            <form id="form-usuario-modal" novalidate>
+                <label>Nombre:
+                    <input type="text" name="nombre" value="${usuario.nombre || ''}" required>
+                    <div class="error-msg" data-error="nombre"></div>
+                </label>
+                <label>Apellido:
+                    <input type="text" name="apellido" value="${usuario.apellido || ''}" required>
+                    <div class="error-msg" data-error="apellido"></div>
+                </label>
+                <label>Email:
+                    <input type="email" name="email" value="${usuario.email || ''}" required>
+                    <div class="error-msg" data-error="email"></div>
+                </label>
+                <label>Teléfono:
+                    <input type="text" name="telefono" value="${usuario.telefono || ''}">
+                    <div class="error-msg" data-error="telefono"></div>
+                </label>
+                <label>Estado:
+                    <select name="activo">
+                        <option value="true" ${usuario.activo ? 'selected' : ''}>Activo</option>
+                        <option value="false" ${!usuario.activo ? 'selected' : ''}>Inactivo</option>
+                    </select>
+                </label>
+                <div class="modal-acciones">
+                    <button type="submit"><i class="fa fa-save"></i> ${modo === 'crear' ? 'Crear' : 'Guardar'}</button>
+                    <button type="button" id="cancelar-modal"><i class="fa fa-times"></i> Cancelar</button>
+                </div>
+            </form>
+        </div>
+    `;
+    document.body.appendChild(modal);
+    modal.querySelector('.cerrar-modal').onclick = () => modal.remove();
+    modal.querySelector('#cancelar-modal').onclick = () => modal.remove();
+    modal.querySelector('#form-usuario-modal').onsubmit = (e) => {
+        e.preventDefault();
+        const form = e.target;
+        let valido = true;
+        // Limpiar errores previos
+        form.querySelectorAll('.error-msg').forEach(div => div.textContent = '');
+        form.nombre.classList.remove('error');
+        form.apellido.classList.remove('error');
+        form.email.classList.remove('error');
+        form.telefono.classList.remove('error');
+        // Validación nombre
+        if (!form.nombre.value.trim() || !/^[A-Za-zÁÉÍÓÚáéíóúÑñ ]+$/.test(form.nombre.value.trim())) {
+            form.nombre.classList.add('error');
+            form.querySelector('[data-error="nombre"]').textContent = 'Nombre obligatorio (solo letras y espacios)';
+            valido = false;
+        }
+        // Validación apellido
+        if (!form.apellido.value.trim() || !/^[A-Za-zÁÉÍÓÚáéíóúÑñ ]+$/.test(form.apellido.value.trim())) {
+            form.apellido.classList.add('error');
+            form.querySelector('[data-error="apellido"]').textContent = 'Apellido obligatorio (solo letras y espacios)';
+            valido = false;
+        }
+        // Validación email
+        const emailVal = form.email.value.trim();
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailVal || !emailRegex.test(emailVal)) {
+            form.email.classList.add('error');
+            form.querySelector('[data-error="email"]').textContent = 'Email obligatorio y válido';
+            valido = false;
         } else {
-            row.style.display = 'none';
+            // Unicidad de email
+            const emailRepetido = usuarios.some(u => u.email === emailVal && (modo === 'crear' || (modo === 'editar' && u.id_usuario !== idUsuario)));
+            if (emailRepetido) {
+                form.email.classList.add('error');
+                form.querySelector('[data-error="email"]').textContent = 'Este email ya está registrado';
+                mostrarMensaje('El email ya existe', 'error');
+                valido = false;
+            }
         }
-    });
-}
-
-// Configuración de notificaciones
-function setupNotifications() {
-    const notificationBell = document.querySelector('.notifications');
-    if (notificationBell) {
-        notificationBell.addEventListener('click', function() {
-            showNotificationPanel();
-        });
-    }
-}
-
-// Mostrar panel de notificaciones
-function showNotificationPanel() {
-    // Crear panel de notificaciones
-    const panel = document.createElement('div');
-    panel.className = 'notification-panel';
-    panel.innerHTML = `
-        <div class="notification-header">
-            <h3>Notificaciones</h3>
-            <button class="close-notifications">&times;</button>
-        </div>
-        <div class="notification-list">
-            <div class="notification-item">
-                <i class="fas fa-tools"></i>
-                <div class="notification-content">
-                    <p>Nueva reparación asignada</p>
-                    <span>Hace 5 minutos</span>
-                </div>
-            </div>
-            <div class="notification-item">
-                <i class="fas fa-user-plus"></i>
-                <div class="notification-content">
-                    <p>Usuario registrado: Juan Pérez</p>
-                    <span>Hace 1 hora</span>
-                </div>
-            </div>
-            <div class="notification-item">
-                <i class="fas fa-desktop"></i>
-                <div class="notification-content">
-                    <p>Ensamblaje completado</p>
-                    <span>Hace 2 horas</span>
-                </div>
-            </div>
-        </div>
-    `;
-    
-    // Agregar estilos
-    panel.style.cssText = `
-        position: absolute;
-        top: 100%;
-        right: 0;
-        width: 350px;
-        background: white;
-        border-radius: 8px;
-        box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-        z-index: 1000;
-        border: 1px solid #e2e8f0;
-    `;
-    
-    document.querySelector('.notifications').appendChild(panel);
-    
-    // Cerrar panel
-    panel.querySelector('.close-notifications').addEventListener('click', function() {
-        panel.remove();
-    });
-    
-    // Cerrar al hacer clic fuera
-    document.addEventListener('click', function closePanel(e) {
-        if (!panel.contains(e.target) && !e.target.closest('.notifications')) {
-            panel.remove();
-            document.removeEventListener('click', closePanel);
+        // Validación teléfono
+        if (form.telefono.value.trim() && (!/^\d{1,15}$/.test(form.telefono.value.trim()))) {
+            form.telefono.classList.add('error');
+            form.querySelector('[data-error="telefono"]').textContent = 'Solo números, máximo 15 dígitos';
+            valido = false;
         }
-    });
-}
-
-// Mostrar notificación
-function showNotification(message, type = 'info') {
-    const notification = document.createElement('div');
-    notification.className = `notification notification-${type}`;
-    notification.innerHTML = `
-        <i class="fas fa-${getNotificationIcon(type)}"></i>
-        <span>${message}</span>
-        <button class="notification-close">&times;</button>
-    `;
-    
-    // Agregar estilos
-    notification.style.cssText = `
-        position: fixed;
-        top: 20px;
-        right: 20px;
-        background: ${getNotificationColor(type)};
-        color: white;
-        padding: 1rem 1.5rem;
-        border-radius: 8px;
-        box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-        z-index: 10000;
-        display: flex;
-        align-items: center;
-        gap: 0.75rem;
-        max-width: 400px;
-        animation: slideInRight 0.3s ease-out;
-    `;
-    
-    document.body.appendChild(notification);
-    
-    // Cerrar notificación
-    notification.querySelector('.notification-close').addEventListener('click', function() {
-        notification.remove();
-    });
-    
-    // Auto-cerrar después de 5 segundos
-    setTimeout(() => {
-        if (notification.parentNode) {
-            notification.style.animation = 'slideOutRight 0.3s ease-in';
-            setTimeout(() => notification.remove(), 300);
+        if (!valido) return;
+        const datos = {
+            nombre: form.nombre.value,
+            apellido: form.apellido.value,
+            email: form.email.value,
+            telefono: form.telefono.value,
+            activo: form.activo.value === 'true',
+            id_tipo_usuario: tipoId
+        };
+        if (modo === 'crear') {
+            datos.id_usuario = Date.now();
+            datos.fecha_registro = new Date().toISOString().slice(0,10);
+            datos.ultimo_acceso = '-';
+            usuarios.push(datos);
+            mostrarMensaje('Usuario creado', 'success');
+        } else {
+            const idx = usuarios.findIndex(u => u.id_usuario === idUsuario);
+            usuarios[idx] = { ...usuarios[idx], ...datos };
+            mostrarMensaje('Usuario actualizado', 'success');
         }
-    }, 5000);
-}
-
-// Obtener icono de notificación
-function getNotificationIcon(type) {
-    const icons = {
-        success: 'check-circle',
-        error: 'exclamation-circle',
-        warning: 'exclamation-triangle',
-        info: 'info-circle'
+        modal.remove();
+        mostrarUsuariosPorTipo(tipoId);
     };
-    return icons[type] || 'info-circle';
 }
 
-// Obtener color de notificación
-function getNotificationColor(type) {
-    const colors = {
-        success: '#10b981',
-        error: '#ef4444',
-        warning: '#f59e0b',
-        info: '#06b6d4'
-    };
-    return colors[type] || '#06b6d4';
-}
-
-// Cargar datos del dashboard
-function loadDashboardData() {
-    // Simular carga de datos
-    console.log('Cargando datos del dashboard...');
-    
-    // Actualizar estadísticas
-    updateStats();
-    
-    // Actualizar actividad reciente
-    updateRecentActivity();
-}
-
-// Cargar datos específicos de sección
-function loadSectionData(section) {
-    switch(section) {
-        case 'usuarios':
-            loadUsersTable();
-            break;
-        case 'servicios':
-            loadServicesData();
-            break;
-        case 'reportes':
-            loadReportsData();
-            break;
-    }
-}
-
-// Actualizar estadísticas
-function updateStats() {
-    // Simular actualización de estadísticas
-    const statNumbers = document.querySelectorAll('.stat-number');
-    statNumbers.forEach(stat => {
-        const currentValue = parseInt(stat.textContent.replace(/[^\d]/g, ''));
-        animateNumber(stat, 0, currentValue, 1000);
-    });
-}
-
-// Animar números
-function animateNumber(element, start, end, duration) {
-    const startTime = performance.now();
-    const startValue = start;
-    const endValue = end;
-    
-    function updateNumber(currentTime) {
-        const elapsed = currentTime - startTime;
-        const progress = Math.min(elapsed / duration, 1);
-        
-        const currentValue = Math.floor(startValue + (endValue - startValue) * progress);
-        element.textContent = element.textContent.replace(/\d+/, currentValue);
-        
-        if (progress < 1) {
-            requestAnimationFrame(updateNumber);
+function eliminarUsuario(id, tipoId) {
+    if (confirm('¿Seguro que deseas eliminar este usuario?')) {
+        const idx = usuarios.findIndex(u => u.id_usuario === id);
+        if (idx !== -1) {
+            usuarios.splice(idx, 1);
+            mostrarMensaje('Usuario eliminado', 'success');
+            mostrarUsuariosPorTipo(tipoId);
         }
     }
-    
-    requestAnimationFrame(updateNumber);
 }
 
-// Actualizar actividad reciente
-function updateRecentActivity() {
-    // Simular actualización de actividad
-    console.log('Actualizando actividad reciente...');
-}
-
-// Cargar tabla de usuarios
-function loadUsersTable() {
-    // Simular carga de usuarios
-    console.log('Cargando tabla de usuarios...');
-}
-
-// Cargar datos de servicios
-function loadServicesData() {
-    // Simular carga de datos de servicios
-    console.log('Cargando datos de servicios...');
-}
-
-// Cargar datos de reportes
-function loadReportsData() {
-    // Simular carga de datos de reportes
-    console.log('Cargando datos de reportes...');
-}
-
-// Función para exportar datos
-function exportData(type) {
-    console.log(`Exportando datos de tipo: ${type}`);
-    showNotification('Exportación iniciada', 'info');
-}
-
-// Función para imprimir reportes
-function printReport(reportId) {
-    console.log(`Imprimiendo reporte: ${reportId}`);
-    showNotification('Reporte enviado a impresora', 'success');
-}
-
-// Función para generar PDF
-function generatePDF(content) {
-    console.log('Generando PDF...');
-    showNotification('PDF generado exitosamente', 'success');
-}
-
-// Función para validar formularios
-function validateForm(formData) {
-    const errors = [];
-    
-    for (let [key, value] of formData.entries()) {
-        if (!value.trim()) {
-            errors.push(`El campo ${key} es requerido`);
-        }
-    }
-    
-    return errors;
-}
-
-// Función para formatear fechas
-function formatDate(date) {
-    return new Intl.DateTimeFormat('es-ES', {
-        year: 'numeric',
-        month: 'long',
-        day: 'numeric',
-        hour: '2-digit',
-        minute: '2-digit'
-    }).format(date);
-}
-
-// Función para formatear moneda
-function formatCurrency(amount) {
-    return new Intl.NumberFormat('es-CO', {
-        style: 'currency',
-        currency: 'COP'
-    }).format(amount);
-}
-
-// Event listeners adicionales
-document.addEventListener('keydown', function(e) {
-    // Cerrar modales con Escape
-    if (e.key === 'Escape') {
-        closeAllModals();
-    }
-    
-    // Navegación con teclado
-    if (e.ctrlKey || e.metaKey) {
-        switch(e.key) {
-            case '1':
-                e.preventDefault();
-                document.querySelector('[href="#dashboard"]').click();
-                break;
-            case '2':
-                e.preventDefault();
-                document.querySelector('[href="#servicios"]').click();
-                break;
-            case '3':
-                e.preventDefault();
-                document.querySelector('[href="#usuarios"]').click();
-                break;
-            case '4':
-                e.preventDefault();
-                document.querySelector('[href="#reportes"]').click();
-                break;
-        }
-    }
+// Al cargar la página, mostrar solo el mensaje de bienvenida
+window.addEventListener('DOMContentLoaded', () => {
+    if (mainTitle) mainTitle.textContent = 'Bienvenido, admin';
+    if (mainContentPlaceholder) mainContentPlaceholder.innerHTML = '';
 });
 
-// Agregar estilos CSS dinámicos
-const dynamicStyles = document.createElement('style');
-dynamicStyles.textContent = `
-    @keyframes slideInRight {
-        from {
-            transform: translateX(100%);
-            opacity: 0;
-        }
-        to {
-            transform: translateX(0);
-            opacity: 1;
-        }
-    }
-    
-    @keyframes slideOutRight {
-        from {
-            transform: translateX(0);
-            opacity: 1;
-        }
-        to {
-            transform: translateX(100%);
-            opacity: 0;
-        }
-    }
-    
-    .notification-panel {
-        max-height: 400px;
-        overflow-y: auto;
-    }
-    
-    .notification-header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding: 1rem;
-        border-bottom: 1px solid #e2e8f0;
-    }
-    
-    .notification-list {
-        padding: 0;
-    }
-    
-    .notification-item {
-        display: flex;
-        align-items: flex-start;
-        gap: 0.75rem;
-        padding: 1rem;
-        border-bottom: 1px solid #f1f5f9;
-        transition: background-color 0.2s;
-    }
-    
-    .notification-item:hover {
-        background-color: #f8fafc;
-    }
-    
-    .notification-item i {
-        color: #64748b;
-        margin-top: 0.25rem;
-    }
-    
-    .notification-content p {
-        margin: 0;
-        font-weight: 500;
-        color: #1e293b;
-    }
-    
-    .notification-content span {
-        font-size: 0.875rem;
-        color: #64748b;
-    }
-    
-    .close-notifications {
-        background: none;
-        border: none;
-        font-size: 1.25rem;
-        color: #64748b;
-        cursor: pointer;
-        padding: 0.25rem;
-        border-radius: 4px;
-        transition: background-color 0.2s;
-    }
-    
-    .close-notifications:hover {
-        background-color: #f1f5f9;
-    }
-    
-    .notification-close {
-        background: none;
-        border: none;
-        color: white;
-        font-size: 1.25rem;
-        cursor: pointer;
-        padding: 0;
-        margin-left: auto;
-    }
-`;
-
-document.head.appendChild(dynamicStyles);
+// Helper para mostrar mensajes flotantes con icono
+function mostrarMensaje(texto, tipo = 'success') {
+    const msg = document.createElement('div');
+    msg.className = `mensaje-flotante ${tipo}`;
+    msg.textContent = texto;
+    document.body.appendChild(msg);
+    setTimeout(() => {
+        msg.style.opacity = '0';
+        setTimeout(() => msg.remove(), 400);
+    }, 2000);
+} 

@@ -72,33 +72,44 @@ app.post('/api/contacto', (req, res) => {
   });
 });
 
-// Endpoint de login
-app.post('/api/login', (req, res) => {
-  const { usuario, password } = req.body;
-
-  if (!usuario || !password) {
-    return res.status(400).json({ error: 'Usuario y contraseña son obligatorios.' });
+// Ruta de login con async/await y validación de usuario y tipo
+app.post('/api/login', async (req, res) => {
+  const { correo, password } = req.body;
+  if (!correo || !password) {
+    return res.status(400).json({ success: false, message: 'Correo y contraseña son obligatorios.' });
   }
 
-  // Buscar el usuario en la base de datos
-  const sql = 'SELECT * FROM usuarios WHERE usuario = ? LIMIT 1';
-  db.query(sql, [usuario], (err, results) => {
-    if (err) {
-      console.error('Error en consulta de login:', err);
-      return res.status(500).json({ error: 'Error en el servidor.' });
+  try {
+    // Consulta el usuario y su tipo
+    const sql = `SELECT u.id, u.correo, u.contraseña, t.tipo
+                 FROM usuarios u
+                 JOIN tipo_usuario t ON u.tipo_usuario_id = t.id
+                 WHERE u.correo = ? LIMIT 1`;
+    const [rows] = await db.promise().query(sql, [correo]);
+
+    if (rows.length === 0) {
+      return res.status(401).json({ success: false, message: 'Correo o contraseña incorrectos.' });
     }
-    if (results.length === 0) {
-      return res.status(401).json({ error: 'Usuario o contraseña incorrectos.' });
-    }
-    const user = results[0];
+    const user = rows[0];
+
     // Comparar contraseñas (en producción usar hash)
-    if (user.password !== password) {
-      return res.status(401).json({ error: 'Usuario o contraseña incorrectos.' });
+    if (user.contraseña !== password) {
+      return res.status(401).json({ success: false, message: 'Correo o contraseña incorrectos.' });
     }
+
     // Devolver datos del usuario (sin la contraseña)
-    const { password: _, ...userData } = user;
-    res.json({ success: true, user: userData });
-  });
+    return res.json({
+      success: true,
+      user: {
+        id: user.id,
+        correo: user.correo,
+        tipo: user.tipo
+      }
+    });
+  } catch (err) {
+    console.error('Error en login:', err);
+    return res.status(500).json({ success: false, message: 'Error en el servidor.' });
+  }
 });
 
 app.listen(4000, () => {

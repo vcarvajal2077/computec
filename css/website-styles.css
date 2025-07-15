@@ -145,8 +145,7 @@ body {
     gap: 1.1rem;
 }
 
-.header-session .btn-session,
-.nav-item .nav-link[href*="mi-cuenta"] {
+.header-session .btn-session {
     border: none !important;
     background: transparent !important;
     color: var(--primary-color);
@@ -156,8 +155,7 @@ body {
     box-shadow: none !important;
 }
 
-.header-session .btn-session:not(.secondary):hover,
-.nav-item .nav-link[href*="mi-cuenta"]:hover {
+.header-session .btn-session:not(.secondary):hover {
     background: var(--primary-light);
     color: var(--primary-dark);
     border-color: var(--primary-dark);

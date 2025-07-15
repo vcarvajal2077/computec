@@ -202,26 +202,73 @@ document.addEventListener('DOMContentLoaded', function() {
         cont.innerHTML = mensajes.map(m => `
             <div class="mensaje-card">
                 <div class="mensaje-header">
-                    <span class="mensaje-cliente">${m.cliente}</span>
+                    <span class="mensaje-cliente"><i class="fas fa-user"></i> ${m.cliente}</span>
                     <span class="mensaje-fecha">${m.fecha}</span>
                 </div>
                 <div class="mensaje-contenido">${m.contenido}</div>
                 <div class="mensaje-acciones">
-                    <button class="btn primary" onclick="responderMensaje(${m.id})"><i class='fas fa-reply'></i> Responder</button>
-                    <button class="btn secondary" onclick="verMensaje(${m.id})"><i class='fas fa-eye'></i> Ver</button>
+                    <button class="btn primary" onclick="responderMensaje(${m.id})"><i class="fas fa-reply"></i> Responder</button>
                 </div>
             </div>
         `).join('');
     }
     window.responderMensaje = function(id) {
-        alert('Función de respuesta simulada para mensaje ID ' + id);
-    }
-    window.verMensaje = function(id) {
         const m = mensajes.find(x => x.id === id);
         if (!m) return;
-        document.getElementById('detalleMensaje').innerHTML = `
-            <b>Cliente:</b> ${m.cliente}<br><b>Fecha:</b> ${m.fecha}<br><b>Mensaje:</b> ${m.contenido}`;
-        openModal('modalMensaje');
+        let modal = document.getElementById('modalResponderMensaje');
+        if (!modal) {
+            modal = document.createElement('div');
+            modal.id = 'modalResponderMensaje';
+            modal.className = 'modal';
+            modal.innerHTML = `
+                <div class='modal-content' style='max-width:500px;width:95%;overflow-y:auto;'>
+                    <div class='modal-header'>
+                        <h2>Responder a ${m.cliente}</h2>
+                        <span class='close' id='cerrarModalResponderMensaje'>&times;</span>
+                    </div>
+                    <form id='formResponderMensaje'>
+                        <div class='form-group'>
+                            <label for='respuestaMensaje'>Respuesta</label>
+                            <textarea id='respuestaMensaje' class='form-control' rows='3' required></textarea>
+                        </div>
+                        <div class='form-actions'>
+                            <button type='submit' class='btn primary'><i class='fas fa-paper-plane'></i> Enviar</button>
+                            <button type='button' class='btn secondary' id='cancelarResponderMensaje'><i class='fas fa-times'></i> Cancelar</button>
+                        </div>
+                    </form>
+                </div>
+            `;
+            document.body.appendChild(modal);
+        }
+        modal.style.display = 'flex';
+        document.getElementById('cerrarModalResponderMensaje').onclick = () => { modal.style.display = 'none'; };
+        document.getElementById('cancelarResponderMensaje').onclick = () => { modal.style.display = 'none'; };
+        document.getElementById('formResponderMensaje').onsubmit = function(e) {
+            e.preventDefault();
+            let valido = true;
+            this.querySelectorAll('.error-message').forEach(el => el.remove());
+            this.querySelectorAll('.form-control').forEach(el => el.classList.remove('input-error'));
+            function mostrarError(id, mensaje) {
+                const input = document.getElementById(id);
+                input.classList.add('input-error');
+                let error = document.createElement('div');
+                error.className = 'error-message';
+                error.style.color = '#f44336';
+                error.style.fontSize = '0.9em';
+                error.style.marginTop = '0.2em';
+                error.textContent = mensaje;
+                input.parentNode.appendChild(error);
+                valido = false;
+            }
+            const respuesta = this.respuestaMensaje.value.trim();
+            if (!respuesta) mostrarError('respuestaMensaje', 'La respuesta es obligatoria.');
+            else if (respuesta.length < 5) mostrarError('respuestaMensaje', 'Debe tener al menos 5 caracteres.');
+            if (!valido) return;
+            m.estado = 'respondido';
+            m.respuesta = respuesta;
+            cargarMensajes();
+            modal.style.display = 'none';
+        };
     }
 
     // Utilidades
@@ -236,5 +283,441 @@ document.addEventListener('DOMContentLoaded', function() {
             case 'respondido': return 'Respondido';
             default: return estado;
         }
+    }
+
+    // Nueva Reparación
+    const btnNuevaReparacion = document.getElementById('btnNuevaReparacion');
+    if (btnNuevaReparacion) {
+        btnNuevaReparacion.addEventListener('click', mostrarModalNuevaReparacion);
+    }
+
+    function mostrarModalNuevaReparacion() {
+        let modal = document.getElementById('modalNuevaReparacion');
+        if (!modal) {
+            modal = document.createElement('div');
+            modal.id = 'modalNuevaReparacion';
+            modal.className = 'modal';
+            modal.innerHTML = `
+                <div class='modal-content' style='max-width:600px;width:95%;overflow-y:auto;'>
+                    <div class='modal-header'>
+                        <h2>Nueva Reparación</h2>
+                        <span class='close' id='cerrarModalNuevaReparacion'>&times;</span>
+                    </div>
+                    <form id='formNuevaReparacion'>
+                        <div class='form-group'>
+                            <label for='clienteReparacion'>Cliente</label>
+                            <input type='text' id='clienteReparacion' class='form-control' required>
+                        </div>
+                        <div class='form-group'>
+                            <label for='tipoReparacion'>Tipo de reparación</label>
+                            <select id='tipoReparacion' class='form-control' required>
+                                <option value=''>Seleccione...</option>
+                                <option value='Hardware'>Hardware</option>
+                                <option value='Software'>Software</option>
+                                <option value='Mantenimiento'>Mantenimiento</option>
+                                <option value='Otro'>Otro</option>
+                            </select>
+                        </div>
+                        <div class='form-group'>
+                            <label for='problemaReparacion'>Problema</label>
+                            <input type='text' id='problemaReparacion' class='form-control' required>
+                        </div>
+                        <div class='form-group'>
+                            <label for='descripcionReparacion'>Descripción</label>
+                            <textarea id='descripcionReparacion' class='form-control' rows='3' required></textarea>
+                        </div>
+                        <div class='form-group'>
+                            <label for='estadoReparacion'>Estado</label>
+                            <select id='estadoReparacion' class='form-control' required>
+                                <option value='pendiente'>Pendiente</option>
+                                <option value='diagnostico'>Diagnóstico</option>
+                                <option value='reparacion'>En reparación</option>
+                                <option value='completado'>Completado</option>
+                                <option value='cancelado'>Cancelado</option>
+                            </select>
+                        </div>
+                        <div class='form-group'>
+                            <label for='fechaReparacion'>Fecha</label>
+                            <input type='date' id='fechaReparacion' class='form-control' required>
+                        </div>
+                        <div class='form-actions'>
+                            <button type='submit' class='btn primary'><i class='fas fa-save'></i> Guardar</button>
+                            <button type='button' class='btn secondary' id='cancelarNuevaReparacion'><i class='fas fa-times'></i> Cancelar</button>
+                        </div>
+                    </form>
+                </div>
+            `;
+            document.body.appendChild(modal);
+        }
+        modal.style.display = 'flex';
+        document.getElementById('cerrarModalNuevaReparacion').onclick = () => { modal.style.display = 'none'; };
+        document.getElementById('cancelarNuevaReparacion').onclick = () => { modal.style.display = 'none'; };
+        document.getElementById('formNuevaReparacion').onsubmit = function(e) {
+            e.preventDefault();
+            let valido = true;
+            this.querySelectorAll('.error-message').forEach(el => el.remove());
+            this.querySelectorAll('.form-control').forEach(el => el.classList.remove('input-error'));
+            function mostrarError(id, mensaje) {
+                const input = document.getElementById(id);
+                input.classList.add('input-error');
+                let error = document.createElement('div');
+                error.className = 'error-message';
+                error.style.color = '#f44336';
+                error.style.fontSize = '0.9em';
+                error.style.marginTop = '0.2em';
+                error.textContent = mensaje;
+                input.parentNode.appendChild(error);
+                valido = false;
+            }
+            const cliente = this.clienteReparacion.value.trim();
+            const tipo = this.tipoReparacion.value;
+            const problema = this.problemaReparacion.value.trim();
+            const descripcion = this.descripcionReparacion.value.trim();
+            const estado = this.estadoReparacion.value;
+            const fecha = this.fechaReparacion.value;
+            // Cliente: solo letras y espacios
+            if (!cliente) mostrarError('clienteReparacion', 'El cliente es obligatorio.');
+            else if (!/^[a-zA-ZáéíóúÁÉÍÓÚñÑ ]+$/.test(cliente)) mostrarError('clienteReparacion', 'Solo letras y espacios.');
+            // Tipo
+            if (!tipo) mostrarError('tipoReparacion', 'Seleccione el tipo de reparación.');
+            // Problema: mínimo 5 caracteres
+            if (!problema) mostrarError('problemaReparacion', 'El problema es obligatorio.');
+            else if (problema.length < 5) mostrarError('problemaReparacion', 'Debe tener al menos 5 caracteres.');
+            // Descripción: mínimo 5, máximo 500 caracteres
+            if (!descripcion) mostrarError('descripcionReparacion', 'La descripción es obligatoria.');
+            else if (descripcion.length < 5) mostrarError('descripcionReparacion', 'Debe tener al menos 5 caracteres.');
+            else if (descripcion.length > 500) mostrarError('descripcionReparacion', 'Máximo 500 caracteres.');
+            // Estado
+            if (!estado) mostrarError('estadoReparacion', 'Seleccione el estado.');
+            // Fecha: no futura ni anterior a 2020-01-01
+            if (!fecha) {
+                mostrarError('fechaReparacion', 'La fecha es obligatoria.');
+            } else {
+                const hoy = new Date();
+                const fechaIngresada = new Date(fecha);
+                hoy.setHours(0,0,0,0);
+                const minFecha = new Date('2020-01-01');
+                if (fechaIngresada > hoy) {
+                    mostrarError('fechaReparacion', 'La fecha no puede ser futura.');
+                } else if (fechaIngresada < minFecha) {
+                    mostrarError('fechaReparacion', 'No se permiten fechas antes de 2020.');
+                }
+            }
+            if (!valido) return;
+            // Agregar reparación simulada
+            reparaciones.push({
+                id: reparaciones.length ? Math.max(...reparaciones.map(r=>r.id))+1 : 1,
+                tipo,
+                problema,
+                estado,
+                cliente,
+                fecha,
+                descripcion
+            });
+            cargarReparaciones();
+            modal.style.display = 'none';
+        };
+    }
+
+    // Nuevo Ensamblaje
+    const btnNuevoEnsamblaje = document.getElementById('btnNuevoEnsamblaje');
+    if (btnNuevoEnsamblaje) {
+        btnNuevoEnsamblaje.addEventListener('click', mostrarModalNuevoEnsamblaje);
+    }
+
+    function mostrarModalNuevoEnsamblaje() {
+        let modal = document.getElementById('modalNuevoEnsamblaje');
+        if (!modal) {
+            modal = document.createElement('div');
+            modal.id = 'modalNuevoEnsamblaje';
+            modal.className = 'modal';
+            modal.innerHTML = `
+                <div class='modal-content' style='max-width:600px;width:95%;overflow-y:auto;'>
+                    <div class='modal-header'>
+                        <h2>Nuevo Ensamblaje</h2>
+                        <span class='close' id='cerrarModalNuevoEnsamblaje'>&times;</span>
+                    </div>
+                    <form id='formNuevoEnsamblaje'>
+                        <div class='form-group'>
+                            <label for='clienteEnsamblaje'>Cliente</label>
+                            <input type='text' id='clienteEnsamblaje' class='form-control' required>
+                        </div>
+                        <div class='form-group'>
+                            <label for='tipoEnsamblaje'>Tipo de PC</label>
+                            <select id='tipoEnsamblaje' class='form-control' required>
+                                <option value=''>Seleccione...</option>
+                                <option value='Gaming'>Gaming</option>
+                                <option value='Oficina'>Oficina</option>
+                                <option value='Diseño'>Diseño</option>
+                                <option value='Servidor'>Servidor</option>
+                                <option value='Otro'>Otro</option>
+                            </select>
+                        </div>
+                        <div class='form-group'>
+                            <label for='fechaEnsamblaje'>Fecha</label>
+                            <input type='date' id='fechaEnsamblaje' class='form-control' required>
+                        </div>
+                        <div class='form-group'>
+                            <label for='estadoEnsamblaje'>Estado</label>
+                            <select id='estadoEnsamblaje' class='form-control' required>
+                                <option value='enproceso'>En proceso</option>
+                                <option value='completado'>Completado</option>
+                                <option value='cancelado'>Cancelado</option>
+                            </select>
+                        </div>
+                        <div class='form-group'>
+                            <label for='componentesEnsamblaje'>Componentes (uno por línea)</label>
+                            <textarea id='componentesEnsamblaje' class='form-control' rows='4' required placeholder='Ej: Intel i7\nRTX 3070\n16GB RAM'></textarea>
+                        </div>
+                        <div class='form-actions'>
+                            <button type='submit' class='btn primary'><i class='fas fa-save'></i> Guardar</button>
+                            <button type='button' class='btn secondary' id='cancelarNuevoEnsamblaje'><i class='fas fa-times'></i> Cancelar</button>
+                        </div>
+                    </form>
+                </div>
+            `;
+            document.body.appendChild(modal);
+        }
+        modal.style.display = 'flex';
+        document.getElementById('cerrarModalNuevoEnsamblaje').onclick = () => { modal.style.display = 'none'; };
+        document.getElementById('cancelarNuevoEnsamblaje').onclick = () => { modal.style.display = 'none'; };
+        document.getElementById('formNuevoEnsamblaje').onsubmit = function(e) {
+            e.preventDefault();
+            let valido = true;
+            this.querySelectorAll('.error-message').forEach(el => el.remove());
+            this.querySelectorAll('.form-control').forEach(el => el.classList.remove('input-error'));
+            function mostrarError(id, mensaje) {
+                const input = document.getElementById(id);
+                input.classList.add('input-error');
+                let error = document.createElement('div');
+                error.className = 'error-message';
+                error.style.color = '#f44336';
+                error.style.fontSize = '0.9em';
+                error.style.marginTop = '0.2em';
+                error.textContent = mensaje;
+                input.parentNode.appendChild(error);
+                valido = false;
+            }
+            const cliente = this.clienteEnsamblaje.value.trim();
+            const tipo = this.tipoEnsamblaje.value;
+            const fecha = this.fechaEnsamblaje.value;
+            const estado = this.estadoEnsamblaje.value;
+            const componentes = this.componentesEnsamblaje.value.trim().split('\n').map(c=>c.trim()).filter(c=>c);
+            // Cliente: solo letras y espacios
+            if (!cliente) mostrarError('clienteEnsamblaje', 'El cliente es obligatorio.');
+            else if (!/^[a-zA-ZáéíóúÁÉÍÓÚñÑ ]+$/.test(cliente)) mostrarError('clienteEnsamblaje', 'Solo letras y espacios.');
+            // Tipo
+            if (!tipo) mostrarError('tipoEnsamblaje', 'Seleccione el tipo de PC.');
+            // Fecha: no futura ni anterior a 2020-01-01
+            if (!fecha) {
+                mostrarError('fechaEnsamblaje', 'La fecha es obligatoria.');
+            } else {
+                const hoy = new Date();
+                const fechaIngresada = new Date(fecha);
+                hoy.setHours(0,0,0,0);
+                const minFecha = new Date('2020-01-01');
+                if (fechaIngresada > hoy) {
+                    mostrarError('fechaEnsamblaje', 'La fecha no puede ser futura.');
+                } else if (fechaIngresada < minFecha) {
+                    mostrarError('fechaEnsamblaje', 'No se permiten fechas antes de 2020.');
+                }
+            }
+            // Estado
+            if (!estado) mostrarError('estadoEnsamblaje', 'Seleccione el estado.');
+            // Componentes: mínimo 2
+            if (!componentes.length) mostrarError('componentesEnsamblaje', 'Debe ingresar al menos 2 componentes.');
+            else if (componentes.length < 2) mostrarError('componentesEnsamblaje', 'Ingrese al menos 2 componentes.');
+            else if (componentes.some(c => c.length < 3)) mostrarError('componentesEnsamblaje', 'Cada componente debe tener al menos 3 caracteres.');
+            if (!valido) return;
+            // Agregar ensamblaje simulado
+            ensamblajes.push({
+                id: ensamblajes.length ? Math.max(...ensamblajes.map(e=>e.id))+1 : 1,
+                tipo,
+                cliente,
+                estado,
+                fecha,
+                componentes
+            });
+            cargarEnsamblajes();
+            modal.style.display = 'none';
+        };
+    }
+
+    // Nuevo Componente
+    const btnNuevoComponente = document.getElementById('btnNuevoComponente');
+    if (btnNuevoComponente) {
+        btnNuevoComponente.addEventListener('click', mostrarModalNuevoComponente);
+    }
+
+    function mostrarModalNuevoComponente() {
+        let modal = document.getElementById('modalNuevoComponente');
+        if (!modal) {
+            modal = document.createElement('div');
+            modal.id = 'modalNuevoComponente';
+            modal.className = 'modal';
+            modal.innerHTML = `
+                <div class='modal-content' style='max-width:500px;width:95%;overflow-y:auto;'>
+                    <div class='modal-header'>
+                        <h2>Nuevo Componente</h2>
+                        <span class='close' id='cerrarModalNuevoComponente'>&times;</span>
+                    </div>
+                    <form id='formNuevoComponente'>
+                        <div class='form-group'>
+                            <label for='nombreComponente'>Nombre</label>
+                            <input type='text' id='nombreComponente' class='form-control' required>
+                        </div>
+                        <div class='form-group'>
+                            <label for='categoriaComponente'>Categoría</label>
+                            <select id='categoriaComponente' class='form-control' required>
+                                <option value=''>Seleccione...</option>
+                                <option value='Procesador'>Procesador</option>
+                                <option value='Motherboard'>Motherboard</option>
+                                <option value='RAM'>RAM</option>
+                                <option value='Almacenamiento'>Almacenamiento</option>
+                                <option value='Tarjeta Gráfica'>Tarjeta Gráfica</option>
+                                <option value='Fuente'>Fuente</option>
+                                <option value='Gabinete'>Gabinete</option>
+                                <option value='Otro'>Otro</option>
+                            </select>
+                        </div>
+                        <div class='form-group'>
+                            <label for='stockComponente'>Stock</label>
+                            <input type='number' id='stockComponente' class='form-control' min='0' required>
+                        </div>
+                        <div class='form-group'>
+                            <label for='precioComponente'>Precio</label>
+                            <input type='number' id='precioComponente' class='form-control' min='0.01' step='0.01' required>
+                        </div>
+                        <div class='form-actions'>
+                            <button type='submit' class='btn primary'><i class='fas fa-save'></i> Guardar</button>
+                            <button type='button' class='btn secondary' id='cancelarNuevoComponente'><i class='fas fa-times'></i> Cancelar</button>
+                        </div>
+                    </form>
+                </div>
+            `;
+            document.body.appendChild(modal);
+        }
+        modal.style.display = 'flex';
+        document.getElementById('cerrarModalNuevoComponente').onclick = () => { modal.style.display = 'none'; };
+        document.getElementById('cancelarNuevoComponente').onclick = () => { modal.style.display = 'none'; };
+        document.getElementById('formNuevoComponente').onsubmit = function(e) {
+            e.preventDefault();
+            let valido = true;
+            this.querySelectorAll('.error-message').forEach(el => el.remove());
+            this.querySelectorAll('.form-control').forEach(el => el.classList.remove('input-error'));
+            function mostrarError(id, mensaje) {
+                const input = document.getElementById(id);
+                input.classList.add('input-error');
+                let error = document.createElement('div');
+                error.className = 'error-message';
+                error.style.color = '#f44336';
+                error.style.fontSize = '0.9em';
+                error.style.marginTop = '0.2em';
+                error.textContent = mensaje;
+                input.parentNode.appendChild(error);
+                valido = false;
+            }
+            const nombre = this.nombreComponente.value.trim();
+            const categoria = this.categoriaComponente.value;
+            const stock = parseInt(this.stockComponente.value);
+            const precio = parseFloat(this.precioComponente.value);
+            // Nombre: mínimo 3, solo letras/números/espacios
+            if (!nombre) mostrarError('nombreComponente', 'El nombre es obligatorio.');
+            else if (nombre.length < 3) mostrarError('nombreComponente', 'Mínimo 3 caracteres.');
+            else if (!/^[\wáéíóúÁÉÍÓÚñÑ0-9 ]+$/i.test(nombre)) mostrarError('nombreComponente', 'Solo letras, números y espacios.');
+            // Categoría
+            if (!categoria) mostrarError('categoriaComponente', 'Seleccione la categoría.');
+            // Stock
+            if (isNaN(stock) || stock < 0) mostrarError('stockComponente', 'Stock debe ser 0 o mayor.');
+            // Precio
+            if (isNaN(precio) || precio <= 0) mostrarError('precioComponente', 'El precio debe ser mayor a 0.');
+            else if (!/^\d+(\.\d{1,2})?$/.test(this.precioComponente.value.trim())) mostrarError('precioComponente', 'Máximo dos decimales.');
+            if (!valido) return;
+            // Agregar componente simulado
+            componentes.push({
+                id: componentes.length ? Math.max(...componentes.map(c=>c.id))+1 : 1,
+                nombre,
+                categoria,
+                stock,
+                precio
+            });
+            cargarComponentes();
+            modal.style.display = 'none';
+        };
+    }
+
+    // Nuevo Mensaje
+    const btnNuevoMensaje = document.getElementById('btnNuevoMensaje');
+    if (btnNuevoMensaje) {
+        btnNuevoMensaje.addEventListener('click', mostrarModalNuevoMensaje);
+    }
+
+    function mostrarModalNuevoMensaje() {
+        let modal = document.getElementById('modalNuevoMensaje');
+        if (!modal) {
+            modal = document.createElement('div');
+            modal.id = 'modalNuevoMensaje';
+            modal.className = 'modal';
+            modal.innerHTML = `
+                <div class='modal-content' style='max-width:500px;width:95%;overflow-y:auto;'>
+                    <div class='modal-header'>
+                        <h2>Nuevo Mensaje</h2>
+                        <span class='close' id='cerrarModalNuevoMensaje'>&times;</span>
+                    </div>
+                    <form id='formNuevoMensaje'>
+                        <div class='form-group'>
+                            <label for='clienteMensaje'>Cliente</label>
+                            <input type='text' id='clienteMensaje' class='form-control' required>
+                        </div>
+                        <div class='form-group'>
+                            <label for='contenidoMensaje'>Mensaje</label>
+                            <textarea id='contenidoMensaje' class='form-control' rows='3' required></textarea>
+                        </div>
+                        <div class='form-actions'>
+                            <button type='submit' class='btn primary'><i class='fas fa-paper-plane'></i> Enviar</button>
+                            <button type='button' class='btn secondary' id='cancelarNuevoMensaje'><i class='fas fa-times'></i> Cancelar</button>
+                        </div>
+                    </form>
+                </div>
+            `;
+            document.body.appendChild(modal);
+        }
+        modal.style.display = 'flex';
+        document.getElementById('cerrarModalNuevoMensaje').onclick = () => { modal.style.display = 'none'; };
+        document.getElementById('cancelarNuevoMensaje').onclick = () => { modal.style.display = 'none'; };
+        document.getElementById('formNuevoMensaje').onsubmit = function(e) {
+            e.preventDefault();
+            let valido = true;
+            this.querySelectorAll('.error-message').forEach(el => el.remove());
+            this.querySelectorAll('.form-control').forEach(el => el.classList.remove('input-error'));
+            function mostrarError(id, mensaje) {
+                const input = document.getElementById(id);
+                input.classList.add('input-error');
+                let error = document.createElement('div');
+                error.className = 'error-message';
+                error.style.color = '#f44336';
+                error.style.fontSize = '0.9em';
+                error.style.marginTop = '0.2em';
+                error.textContent = mensaje;
+                input.parentNode.appendChild(error);
+                valido = false;
+            }
+            const cliente = this.clienteMensaje.value.trim();
+            const contenido = this.contenidoMensaje.value.trim();
+            if (!cliente) mostrarError('clienteMensaje', 'El cliente es obligatorio.');
+            else if (!/^[a-zA-ZáéíóúÁÉÍÓÚñÑ ]+$/.test(cliente)) mostrarError('clienteMensaje', 'Solo letras y espacios.');
+            if (!contenido) mostrarError('contenidoMensaje', 'El mensaje es obligatorio.');
+            else if (contenido.length < 5) mostrarError('contenidoMensaje', 'Debe tener al menos 5 caracteres.');
+            if (!valido) return;
+            mensajes.unshift({
+                id: mensajes.length ? Math.max(...mensajes.map(m=>m.id))+1 : 1,
+                cliente,
+                fecha: new Date().toISOString().slice(0,10),
+                contenido,
+                estado: 'pendiente'
+            });
+            cargarMensajes();
+            modal.style.display = 'none';
+        };
     }
 }); 
