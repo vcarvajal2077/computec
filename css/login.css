@@ -58,6 +58,7 @@ body {
     justify-content: center;
     padding: 2rem;
     position: relative;
+    width: 100%;
 }
 
 /* Fondo animado */
@@ -144,6 +145,7 @@ body {
     box-shadow: var(--shadow-xl);
     overflow: hidden;
     min-height: 600px;
+    margin: 0 auto;
 }
 
 /* Panel izquierdo - Información */
@@ -252,18 +254,25 @@ body {
     padding: 3rem 2rem;
     display: flex;
     align-items: center;
+    justify-content: center;
     background: var(--bg-primary);
+    width: 100%;
 }
 
 .form-wrapper {
     width: 100%;
     max-width: 400px;
-    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 }
 
 .form-header {
     text-align: center;
     margin-bottom: 2rem;
+    width: 100%;
+    max-width: 350px;
 }
 
 .form-header h2 {
@@ -283,6 +292,8 @@ body {
     display: flex;
     flex-direction: column;
     gap: 1.5rem;
+    width: 100%;
+    max-width: 350px;
 }
 
 .form-group {
@@ -467,6 +478,8 @@ body {
     margin-top: 2rem;
     padding-top: 1.5rem;
     border-top: 1px solid var(--border-light);
+    width: 100%;
+    max-width: 350px;
 }
 
 .form-footer p {
@@ -503,6 +516,41 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
+}
+
+/* Modal más ancho para el registro */
+.modal-content {
+    max-width: 500px;
+    width: 100%;
+}
+
+/* Si quieres que solo el registro sea más ancho y no otros modales, puedes usar una clase específica: */
+#registerModal .modal-content {
+    max-width: 800px;
+    width: 100%;
+    padding: 2.5rem 2.5rem 2rem 2.5rem;
+    box-sizing: border-box;
+}
+
+#registerModal .register-form .form-group {
+    margin-bottom: 1.5rem;
+}
+
+#registerModal .register-form input,
+#registerModal .register-form select {
+    padding: 0.75rem 1.25rem;
+    border-radius: 0.5rem;
+    font-size: 1rem;
+    border: 1px solid var(--border-color);
+    margin-top: 0.25rem;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+#registerModal .register-form label {
+    margin-bottom: 0.5rem;
+    display: block;
+    font-weight: 500;
 }
 
 .modal-content {

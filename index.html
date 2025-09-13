@@ -3,13 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Computec - Servicios Informáticos Profesionales</title>
-    <meta name="description" content="Computec - Reparación de computadoras, ensamblaje de equipos, soporte técnico y venta de productos informáticos. Servicio profesional y garantizado.">
-    <meta name="keywords" content="reparación computadoras, ensamblaje PC, soporte técnico, venta productos informáticos, servicio técnico">
+    <title>Computec - Soluciones Informáticas Profesionales</title>
+    <meta name="description" content="Computec: Reparación, ensamblaje, soporte técnico y venta de productos informáticos en Cúcuta. Servicios garantizados y precios competitivos.">
+    
+    <!-- CSS de la SPA Original -->
     <link rel="stylesheet" href="css/website-styles.css">
+    <link rel="stylesheet" href="css/header.css">
+    <link rel="stylesheet" href="css/slider.css">
+    <link rel="stylesheet" href="css/reseñas-carrusel.css">
+    <link rel="stylesheet" href="css/hero-servicios.css">
+    <link rel="stylesheet" href="css/productos-categorias.css">
+    <link rel="stylesheet" href="css/servicios-dinamicos.css">
+    <link rel="stylesheet" href="css/sections.css">
+    <link rel="stylesheet" href="css/ui-improvements.css">
+    <link rel="stylesheet" href="css/responsive-improvements.css">
+    
+    <!-- Fuentes y Iconos -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>💻</text></svg>">
 </head>
 <body>
     <!-- Header -->
@@ -20,20 +32,46 @@
                     <i class="fas fa-laptop-code"></i>
                     <span>Computec</span>
                 </div>
-                
-                <ul class="nav-menu">
-                    <li class="nav-item"><a href="index.html" class="nav-link">Inicio</a></li>
-                    <li class="nav-item"><a href="servicios.html" class="nav-link">Servicios</a></li>
-                    <li class="nav-item"><a href="productos.html" class="nav-link">Productos</a></li>
-                    <li class="nav-item"><a href="nosotros.html" class="nav-link">Nosotros</a></li>
-                    <li class="nav-item"><a href="contacto.html" class="nav-link">Contacto</a></li>
-                </ul>
-
-                <div class="header-session">
-                    <a href="#" class="btn-session">Iniciar sesión</a>
-                    <a href="#" class="btn-session secondary">Registrarse</a>
+                <div class="nav-actions">
+                    <a href="index.html" class="nav-link active">
+                        <i class="fas fa-home"></i>
+                        Inicio
+                    </a>
+                    <a href="servicios.html" class="nav-link">
+                        <i class="fas fa-tools"></i>
+                        Servicios
+                    </a>
+                    <a href="productos.html" class="nav-link">
+                        <i class="fas fa-box"></i>
+                        Productos
+                    </a>
+                    <a href="nosotros.html" class="nav-link">
+                        <i class="fas fa-users"></i>
+                        Nosotros
+                    </a>
+                    <a href="contacto.html" class="nav-link">
+                        <i class="fas fa-envelope"></i>
+                        Contacto
+                    </a>
+                    <a href="foro.html" class="nav-link">
+                        <i class="fas fa-comments"></i>
+                        Foro
+                    </a>
+                    <a href="noticias.html" class="nav-link">
+                        <i class="fas fa-newspaper"></i>
+                        Noticias
+                    </a>
                 </div>
-
+                <div class="header-session">
+                    <div class="account-dropdown" id="accountDropdown">
+                        <div class="account-icon" title="Mi cuenta" id="accountIcon">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <div class="dropdown-menu" id="dropdownMenu">
+                            <!-- Contenido dinámico se insertará aquí -->
+                        </div>
+                    </div>
+                </div>
                 <div class="hamburger">
                     <span class="bar"></span>
                     <span class="bar"></span>
@@ -43,444 +81,336 @@
         </nav>
     </header>
 
-    <!-- Slider principal -->
-    <section class="main-slider" style="background: linear-gradient(135deg, #2563eb 0%, #764ba2 100%); color: white; padding: 0;">
-        <div class="slider-container" style="max-width: 1200px; margin: 0 auto; position: relative; min-height: 420px; display: flex; align-items: center;">
-            <div class="slider-slide active" style="display: flex; align-items: center; justify-content: space-between; width: 100%; min-height: 420px;">
-                <div class="slider-content" style="max-width: 600px;">
-                    <h1 style="font-size: 2.5rem; font-weight: 800; margin-bottom: 1.2rem;">Soluciones Informáticas <span style='color: #f59e0b;'>Profesionales</span></h1>
-                    <p style="font-size: 1.1rem; margin-bottom: 2rem;">Reparación, mantenimiento y venta de equipos informáticos. Servicio técnico con garantía y atención personalizada.</p>
-                    <a href="servicios.html" class="btn btn-primary"><i class="fas fa-tools"></i> Ver Servicios</a>
-                </div>
-                <div class="slider-image" style="flex: 1; display: flex; justify-content: flex-end;">
-                    <img src="https://images.unsplash.com/photo-1518709268805-4e9042af2176?ixlib=rb-4.0.3&auto=format&fit=crop&w=700&q=80" alt="Servicios Computec" style="max-width: 440px; border-radius: 1.5rem; box-shadow: 0 8px 32px rgba(37,99,235,0.15);">
-                </div>
-            </div>
-            <div class="slider-slide" style="display: none; align-items: center; justify-content: space-between; width: 100%; min-height: 420px;">
-                <div class="slider-content" style="max-width: 600px;">
-                    <h1 style="font-size: 2.5rem; font-weight: 800; margin-bottom: 1.2rem;">Ensamblaje de <span style='color: #f59e0b;'>PCs a Medida</span></h1>
-                    <p style="font-size: 1.1rem; margin-bottom: 2rem;">Arma tu equipo ideal para gaming, oficina o diseño. Componentes de calidad y asesoría experta.</p>
-                    <a href="productos.html" class="btn btn-primary"><i class="fas fa-desktop"></i> Ver Productos</a>
-                </div>
-                <div class="slider-image" style="flex: 1; display: flex; justify-content: flex-end;">
-                    <img src="https://images.unsplash.com/photo-1593642632823-8f785ba67e45?ixlib=rb-4.0.3&auto=format&fit=crop&w=700&q=80" alt="PCs Computec" style="max-width: 440px; border-radius: 1.5rem; box-shadow: 0 8px 32px rgba(37,99,235,0.15);">
-                </div>
-            </div>
-            <div class="slider-slide" style="display: none; align-items: center; justify-content: space-between; width: 100%; min-height: 420px;">
-                <div class="slider-content" style="max-width: 600px;">
-                    <h1 style="font-size: 2.5rem; font-weight: 800; margin-bottom: 1.2rem;">Compra <span style='color: #f59e0b;'>Accesorios y Componentes</span></h1>
-                    <p style="font-size: 1.1rem; margin-bottom: 2rem;">Encuentra todo lo que necesitas para tu PC: monitores, teclados, mouse, memorias y más.</p>
-                    <a href="productos.html" class="btn btn-primary"><i class="fas fa-shopping-cart"></i> Ver Catálogo</a>
-                </div>
-                <div class="slider-image" style="flex: 1; display: flex; justify-content: flex-end;">
-                    <img src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?ixlib=rb-4.0.3&auto=format&fit=crop&w=700&q=80" alt="Accesorios Computec" style="max-width: 440px; border-radius: 1.5rem; box-shadow: 0 8px 32px rgba(37,99,235,0.15);">
-                </div>
-            </div>
-            <!-- Controles del slider -->
-            <button class="slider-prev" style="position: absolute; left: -3.5rem; top: 45%; transform: translateY(-50%); background: rgba(0,0,0,0.15); border: none; border-radius: 50%; width: 2.5rem; height: 2.5rem; color: white; font-size: 1.3rem; cursor: pointer;"><i class="fas fa-chevron-left"></i></button>
-            <button class="slider-next" style="position: absolute; right: -3.5rem; top: 45%; transform: translateY(-50%); background: rgba(0,0,0,0.15); border: none; border-radius: 50%; width: 2.5rem; height: 2.5rem; color: white; font-size: 1.3rem; cursor: pointer;"><i class="fas fa-chevron-right"></i></button>
-        </div>
-        <!-- Indicadores -->
-        <div class="slider-indicators" style="display: flex; justify-content: center; gap: 0.7rem; margin-top: -2.5rem; margin-bottom: 2.5rem; position: relative; z-index: 2;">
-            <span class="slider-dot active" style="width: 12px; height: 12px; border-radius: 50%; background: #fff; opacity: 0.7; cursor: pointer;"></span>
-            <span class="slider-dot" style="width: 12px; height: 12px; border-radius: 50%; background: #fff; opacity: 0.4; cursor: pointer;"></span>
-            <span class="slider-dot" style="width: 12px; height: 12px; border-radius: 50%; background: #fff; opacity: 0.4; cursor: pointer;"></span>
-        </div>
-    </section>
-
-    <!-- Nueva estructura base debajo del banner -->
-    <section class="features" style="background: #f8fafc; padding: 4rem 0;">
-        <div class="container" style="max-width: 1100px; margin: 0 auto; display: flex; flex-wrap: wrap; gap: 2.5rem; justify-content: center;">
-            <div class="feature-card" style="background: #fff; border-radius: 1.2rem; box-shadow: 0 2px 12px rgba(37,99,235,0.07); padding: 2rem 1.5rem; flex: 1 1 220px; min-width: 220px; max-width: 320px; text-align: center;">
-                <i class="fas fa-tools" style="font-size: 2rem; color: #2563eb; margin-bottom: 1rem;"></i>
-                <h3 style="font-size: 1.2rem; font-weight: 700; margin-bottom: 0.7rem;">Reparación y Soporte</h3>
-                <p style="color: #64748b; font-size: 1rem;">Soluciones rápidas y garantizadas para tus equipos informáticos.</p>
-            </div>
-            <div class="feature-card" style="background: #fff; border-radius: 1.2rem; box-shadow: 0 2px 12px rgba(37,99,235,0.07); padding: 2rem 1.5rem; flex: 1 1 220px; min-width: 220px; max-width: 320px; text-align: center;">
-                <i class="fas fa-desktop" style="font-size: 2rem; color: #2563eb; margin-bottom: 1rem;"></i>
-                <h3 style="font-size: 1.2rem; font-weight: 700; margin-bottom: 0.7rem;">Ensamblaje de PCs</h3>
-                <p style="color: #64748b; font-size: 1rem;">Equipos a la medida para gaming, oficina o diseño profesional.</p>
-            </div>
-            <div class="feature-card" style="background: #fff; border-radius: 1.2rem; box-shadow: 0 2px 12px rgba(37,99,235,0.07); padding: 2rem 1.5rem; flex: 1 1 220px; min-width: 220px; max-width: 320px; text-align: center;">
-                <i class="fas fa-shopping-cart" style="font-size: 2rem; color: #2563eb; margin-bottom: 1rem;"></i>
-                <h3 style="font-size: 1.2rem; font-weight: 700; margin-bottom: 0.7rem;">Venta de Productos</h3>
-                <p style="color: #64748b; font-size: 1rem;">Accesorios, componentes y equipos de las mejores marcas.</p>
+    <!-- Sección Inicio - Copia Exacta de la SPA -->
+    <section id="inicio" class="section active">
+        <!-- Hero Section con Slider Dinámico -->
+        <div class="hero-section">
+            <div class="container">
+                <div id="hero-slider"></div>
             </div>
         </div>
-    </section>
 
-    <!-- Slider de Servicios -->
-    <section class="main-slider" style="background: linear-gradient(135deg, #f8fafc 0%, #dbeafe 100%); color: #1e293b; padding: 0; margin-bottom: 4rem;">
-        <div class="slider-container" style="max-width: 1200px; margin: 0 auto; position: relative; min-height: 380px; display: flex; align-items: center;">
-            <div class="slider-slide active" style="display: flex; align-items: center; justify-content: space-between; width: 100%; min-height: 380px;">
-                <div class="slider-content" style="max-width: 600px;">
-                    <h2 style="font-size: 2rem; font-weight: 800; margin-bottom: 1.2rem;">Reparación de Computadoras</h2>
-                    <p style="font-size: 1.05rem; margin-bottom: 2rem;">Diagnóstico y reparación profesional de laptops y PCs. Servicio rápido y garantizado.</p>
-                    <a href="servicios.html" class="btn btn-primary"><i class="fas fa-tools"></i> Más info</a>
-                </div>
-                <div class="slider-image" style="flex: 1; display: flex; justify-content: flex-end;">
-                    <img src="https://images.unsplash.com/photo-1519389950473-47ba0277781c?ixlib=rb-4.0.3&auto=format&fit=crop&w=700&q=80" alt="Reparación" style="max-width: 340px; border-radius: 1.5rem; box-shadow: 0 8px 32px rgba(37,99,235,0.10);">
-                </div>
-            </div>
-            <div class="slider-slide" style="display: none; align-items: center; justify-content: space-between; width: 100%; min-height: 380px;">
-                <div class="slider-content" style="max-width: 600px;">
-                    <h2 style="font-size: 2rem; font-weight: 800; margin-bottom: 1.2rem;">Soporte Técnico 24/7</h2>
-                    <p style="font-size: 1.05rem; margin-bottom: 2rem;">Atención remota y presencial para empresas y hogares. Soluciones inmediatas.</p>
-                    <a href="servicios.html" class="btn btn-primary"><i class="fas fa-headset"></i> Más info</a>
-                </div>
-                <div class="slider-image" style="flex: 1; display: flex; justify-content: flex-end;">
-                    <img src="https://images.unsplash.com/photo-1581090700227-1c1b1b1b1b1b?ixlib=rb-4.0.3&auto=format&fit=crop&w=700&q=80" alt="Soporte Técnico" style="max-width: 340px; border-radius: 1.5rem; box-shadow: 0 8px 32px rgba(37,99,235,0.10);">
-                </div>
-            </div>
-            <div class="slider-slide" style="display: none; align-items: center; justify-content: space-between; width: 100%; min-height: 380px;">
-                <div class="slider-content" style="max-width: 600px;">
-                    <h2 style="font-size: 2rem; font-weight: 800; margin-bottom: 1.2rem;">Seguridad Informática</h2>
-                    <p style="font-size: 1.05rem; margin-bottom: 2rem;">Protege tus datos y equipos con antivirus, firewall y backup profesional.</p>
-                    <a href="servicios.html" class="btn btn-primary"><i class="fas fa-shield-alt"></i> Más info</a>
-                </div>
-                <div class="slider-image" style="flex: 1; display: flex; justify-content: flex-end;">
-                    <img src="https://images.unsplash.com/photo-1519125323398-675f0ddb6308?ixlib=rb-4.0.3&auto=format&fit=crop&w=700&q=80" alt="Seguridad" style="max-width: 340px; border-radius: 1.5rem; box-shadow: 0 8px 32px rgba(37,99,235,0.10);">
-                </div>
-            </div>
-            <button class="slider-prev" style="position: absolute; left: -3.5rem; top: 45%; transform: translateY(-50%); background: rgba(0,0,0,0.10); border: none; border-radius: 50%; width: 2.5rem; height: 2.5rem; color: #2563eb; font-size: 1.3rem; cursor: pointer;"><i class="fas fa-chevron-left"></i></button>
-            <button class="slider-next" style="position: absolute; right: -3.5rem; top: 45%; transform: translateY(-50%); background: rgba(0,0,0,0.10); border: none; border-radius: 50%; width: 2.5rem; height: 2.5rem; color: #2563eb; font-size: 1.3rem; cursor: pointer;"><i class="fas fa-chevron-right"></i></button>
-        </div>
-        <div class="slider-indicators" style="display: flex; justify-content: center; gap: 0.7rem; margin-top: -2.5rem; margin-bottom: 2.5rem; position: relative; z-index: 2;">
-            <span class="slider-dot active" style="width: 12px; height: 12px; border-radius: 50%; background: #2563eb; opacity: 0.7; cursor: pointer;"></span>
-            <span class="slider-dot" style="width: 12px; height: 12px; border-radius: 50%; background: #2563eb; opacity: 0.4; cursor: pointer;"></span>
-            <span class="slider-dot" style="width: 12px; height: 12px; border-radius: 50%; background: #2563eb; opacity: 0.4; cursor: pointer;"></span>
-        </div>
-    </section>
-
-    <!-- Slider de Productos -->
-    <section class="main-slider" style="background: linear-gradient(135deg, #fff 0%, #dbeafe 100%); color: #1e293b; padding: 0; margin-bottom: 4rem;">
-        <div class="slider-container" style="max-width: 1200px; margin: 0 auto; position: relative; min-height: 380px; display: flex; align-items: center;">
-            <div class="slider-slide active" style="display: flex; align-items: center; justify-content: space-between; width: 100%; min-height: 380px;">
-                <div class="slider-content" style="max-width: 600px;">
-                    <h2 style="font-size: 2rem; font-weight: 800; margin-bottom: 1.2rem;">Laptops y PCs</h2>
-                    <p style="font-size: 1.05rem; margin-bottom: 2rem;">Equipos de alto rendimiento para gaming, oficina y estudio. ¡Con garantía!</p>
-                    <a href="productos.html" class="btn btn-primary"><i class="fas fa-laptop"></i> Ver más</a>
-                </div>
-                <div class="slider-image" style="flex: 1; display: flex; justify-content: flex-end;">
-                    <img src="https://images.unsplash.com/photo-1541807084-5c52b6b3adef?ixlib=rb-4.0.3&auto=format&fit=crop&w=700&q=80" alt="Laptops" style="max-width: 340px; border-radius: 1.5rem; box-shadow: 0 8px 32px rgba(37,99,235,0.10);">
-                </div>
-            </div>
-            <div class="slider-slide" style="display: none; align-items: center; justify-content: space-between; width: 100%; min-height: 380px;">
-                <div class="slider-content" style="max-width: 600px;">
-                    <h2 style="font-size: 2rem; font-weight: 800; margin-bottom: 1.2rem;">Accesorios y Periféricos</h2>
-                    <p style="font-size: 1.05rem; margin-bottom: 2rem;">Teclados, mouse, monitores y más para potenciar tu experiencia digital.</p>
-                    <a href="productos.html" class="btn btn-primary"><i class="fas fa-keyboard"></i> Ver más</a>
-                </div>
-                <div class="slider-image" style="flex: 1; display: flex; justify-content: flex-end;">
-                    <img src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?ixlib=rb-4.0.3&auto=format&fit=crop&w=700&q=80" alt="Accesorios" style="max-width: 340px; border-radius: 1.5rem; box-shadow: 0 8px 32px rgba(37,99,235,0.10);">
-                </div>
-            </div>
-            <div class="slider-slide" style="display: none; align-items: center; justify-content: space-between; width: 100%; min-height: 380px;">
-                <div class="slider-content" style="max-width: 600px;">
-                    <h2 style="font-size: 2rem; font-weight: 800; margin-bottom: 1.2rem;">Componentes y Actualizaciones</h2>
-                    <p style="font-size: 1.05rem; margin-bottom: 2rem;">Mejora tu PC con memorias, discos SSD, tarjetas gráficas y más.</p>
-                    <a href="productos.html" class="btn btn-primary"><i class="fas fa-microchip"></i> Ver más</a>
-                </div>
-                <div class="slider-image" style="flex: 1; display: flex; justify-content: flex-end;">
-                    <img src="https://images.unsplash.com/photo-1593642632823-8f785ba67e45?ixlib=rb-4.0.3&auto=format&fit=crop&w=700&q=80" alt="Componentes" style="max-width: 340px; border-radius: 1.5rem; box-shadow: 0 8px 32px rgba(37,99,235,0.10);">
-                </div>
-            </div>
-            <button class="slider-prev" style="position: absolute; left: -3.5rem; top: 45%; transform: translateY(-50%); background: rgba(0,0,0,0.10); border: none; border-radius: 50%; width: 2.5rem; height: 2.5rem; color: #2563eb; font-size: 1.3rem; cursor: pointer;"><i class="fas fa-chevron-left"></i></button>
-            <button class="slider-next" style="position: absolute; right: -3.5rem; top: 45%; transform: translateY(-50%); background: rgba(0,0,0,0.10); border: none; border-radius: 50%; width: 2.5rem; height: 2.5rem; color: #2563eb; font-size: 1.3rem; cursor: pointer;"><i class="fas fa-chevron-right"></i></button>
-        </div>
-        <div class="slider-indicators" style="display: flex; justify-content: center; gap: 0.7rem; margin-top: -2.5rem; margin-bottom: 2.5rem; position: relative; z-index: 2;">
-            <span class="slider-dot active" style="width: 12px; height: 12px; border-radius: 50%; background: #2563eb; opacity: 0.7; cursor: pointer;"></span>
-            <span class="slider-dot" style="width: 12px; height: 12px; border-radius: 50%; background: #2563eb; opacity: 0.4; cursor: pointer;"></span>
-            <span class="slider-dot" style="width: 12px; height: 12px; border-radius: 50%; background: #2563eb; opacity: 0.4; cursor: pointer;"></span>
-        </div>
-    </section>
-
-    <!-- Servicios Section -->
-    <section class="services">
-        <div class="container">
-            <div class="section-header">
-                <h2 class="section-title">Nuestros Servicios</h2>
-                <p class="section-subtitle">Soluciones completas para todos tus problemas informáticos</p>
-            </div>
-
-            <div class="services-grid">
-                <div class="service-card">
-                    <div class="service-icon">
-                        <i class="fas fa-tools"></i>
-                    </div>
-                    <h3>Reparación de Computadoras</h3>
-                    <p>Diagnóstico y reparación profesional de laptops y computadoras de escritorio. Solucionamos problemas de hardware y software.</p>
-                    <ul class="service-features">
-                        <li><i class="fas fa-check"></i> Diagnóstico gratuito</li>
-                        <li><i class="fas fa-check"></i> Garantía de 3 meses</li>
-                        <li><i class="fas fa-check"></i> Repuestos originales</li>
-                        <li><i class="fas fa-check"></i> Servicio a domicilio</li>
-                    </ul>
-                    <div class="service-price">
-                        <span class="price">Desde $50.000</span>
-                        <span class="price-note">*Precio base</span>
-                    </div>
-                </div>
-
-                <div class="service-card featured">
-                    <div class="service-badge">Más Popular</div>
-                    <div class="service-icon">
-                        <i class="fas fa-desktop"></i>
-                    </div>
-                    <h3>Ensamblaje de PCs</h3>
-                    <p>Diseñamos y ensamblamos computadoras personalizadas según tus necesidades. Gaming, trabajo, diseño gráfico y más.</p>
-                    <ul class="service-features">
-                        <li><i class="fas fa-check"></i> Configuración personalizada</li>
-                        <li><i class="fas fa-check"></i> Componentes de calidad</li>
-                        <li><i class="fas fa-check"></i> Instalación de software</li>
-                        <li><i class="fas fa-check"></i> Garantía de 1 año</li>
-                    </ul>
-                    <div class="service-price">
-                        <span class="price">Desde $800.000</span>
-                        <span class="price-note">*Configuración básica</span>
-                    </div>
-                </div>
-
-                <div class="service-card">
-                    <div class="service-icon">
-                        <i class="fas fa-headset"></i>
-                    </div>
-                    <h3>Soporte Técnico</h3>
-                    <p>Soporte técnico remoto y presencial para empresas y hogares. Mantenimiento preventivo y soluciones rápidas.</p>
-                    <ul class="service-features">
-                        <li><i class="fas fa-check"></i> Soporte remoto 24/7</li>
-                        <li><i class="fas fa-check"></i> Mantenimiento preventivo</li>
-                        <li><i class="fas fa-check"></i> Instalación de programas</li>
-                        <li><i class="fas fa-check"></i> Recuperación de datos</li>
-                    </ul>
-                    <div class="service-price">
-                        <span class="price">Desde $30.000</span>
-                        <span class="price-note">*Por visita</span>
-                    </div>
-                </div>
-
-                <div class="service-card">
-                    <div class="service-icon">
-                        <i class="fas fa-shield-alt"></i>
-                    </div>
-                    <h3>Seguridad Informática</h3>
-                    <p>Protección completa de tus equipos con antivirus, firewall y backup automático. Mantén tus datos seguros.</p>
-                    <ul class="service-features">
-                        <li><i class="fas fa-check"></i> Instalación de antivirus</li>
-                        <li><i class="fas fa-check"></i> Configuración de firewall</li>
-                        <li><i class="fas fa-check"></i> Backup automático</li>
-                        <li><i class="fas fa-check"></i> Monitoreo de seguridad</li>
-                    </ul>
-                    <div class="service-price">
-                        <span class="price">Desde $80.000</span>
-                        <span class="price-note">*Anual</span>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="services-cta">
-                <a href="servicios.html" class="btn btn-primary">
-                    <i class="fas fa-arrow-right"></i>
-                    Ver Todos los Servicios
-                </a>
-            </div>
-        </div>
-    </section>
-
-    <!-- Productos Section -->
-    <div id="seccion-productos" style="display:none;">
-    <section class="products">
-        <div class="container">
-            <div class="section-header">
-                <h2 class="section-title">Productos Destacados</h2>
-                <p class="section-subtitle">Equipos y accesorios de las mejores marcas</p>
-            </div>
-
-            <div class="products-grid">
-                <div class="product-card">
-                    <div class="product-image">
-                        <img src="https://images.unsplash.com/photo-1541807084-5c52b6b3adef?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Laptop Gaming">
-                        <div class="product-badge">Nuevo</div>
-                    </div>
-                    <div class="product-info">
-                        <h3>Laptop Gaming ASUS ROG</h3>
-                        <p>Intel i7, 16GB RAM, GTX 1650, 512GB SSD</p>
-                        <div class="product-price">
-                            <span class="current-price">$2.500.000</span>
-                            <span class="original-price">$2.800.000</span>
-                        </div>
-                        <button class="btn btn-product">Ver Detalles</button>
-                    </div>
-                </div>
-
-                <div class="product-card">
-                    <div class="product-image">
-                        <img src="https://images.unsplash.com/photo-1593642632823-8f785ba67e45?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="PC Gaming">
-                        <div class="product-badge">Oferta</div>
-                    </div>
-                    <div class="product-info">
-                        <h3>PC Gaming Armada</h3>
-                        <p>Ryzen 5, 8GB RAM, GTX 1660, 1TB HDD</p>
-                        <div class="product-price">
-                            <span class="current-price">$1.800.000</span>
-                            <span class="original-price">$2.200.000</span>
-                        </div>
-                        <button class="btn btn-product">Ver Detalles</button>
-                    </div>
-                </div>
-
-                <div class="product-card">
-                    <div class="product-image">
-                        <img src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Auriculares">
-                    </div>
-                    <div class="product-info">
-                        <h3>Auriculares Gaming</h3>
-                        <p>Logitech G Pro X, 7.1 Surround, Micrófono</p>
-                        <div class="product-price">
-                            <span class="current-price">$350.000</span>
-                        </div>
-                        <button class="btn btn-product">Ver Detalles</button>
-                    </div>
-                </div>
-
-                <div class="product-card">
-                    <div class="product-image">
-                        <img src="https://images.unsplash.com/photo-1527864550417-7fd91fc51a46?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Monitor">
-                    </div>
-                    <div class="product-info">
-                        <h3>Monitor Gaming 24"</h3>
-                        <p>144Hz, 1ms, Full HD, FreeSync</p>
-                        <div class="product-price">
-                            <span class="current-price">$450.000</span>
-                        </div>
-                        <button class="btn btn-product">Ver Detalles</button>
-                    </div>
-                </div>
-            </div>
-
-            <div class="products-cta">
-                <a href="#" class="btn btn-primary">
-                    <i class="fas fa-shopping-cart"></i>
-                    Ver Catálogo Completo
-                </a>
-            </div>
-        </div>
-    </section>
-    </div>
-
-    <!-- Nosotros Section -->
-    <section class="about">
-        <div class="container">
-            <div class="about-content">
-                <div class="about-text">
-                    <h2>¿Por qué elegir Computec?</h2>
-                    <p>Con más de 5 años de experiencia en el sector informático, nos hemos convertido en la opción preferida de cientos de clientes satisfechos.</p>
-                    
-                    <div class="about-features">
-                        <div class="feature">
-                            <i class="fas fa-medal"></i>
-                            <div>
-                                <h3>Experiencia Garantizada</h3>
-                                <p>5+ años resolviendo problemas informáticos</p>
-                            </div>
-                        </div>
-                        <div class="feature">
-                            <i class="fas fa-clock"></i>
-                            <div>
-                                <h3>Servicio Rápido</h3>
-                                <p>Reparaciones en 24-48 horas</p>
-                            </div>
-                        </div>
-                        <div class="feature">
-                            <i class="fas fa-shield-alt"></i>
-                            <div>
-                                <h3>Garantía Total</h3>
-                                <p>Todos nuestros servicios incluyen garantía</p>
-                            </div>
-                        </div>
-                        <div class="feature">
-                            <i class="fas fa-dollar-sign"></i>
-                            <div>
-                                <h3>Precios Justos</h3>
-                                <p>Los mejores precios sin comprometer calidad</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+        <!-- Servicios Principales -->
+        <div class="servicios-principales-section">
+            <div class="container">
+                <h2 class="section-title">Nuestros Servicios Especializados</h2>
+                <p class="section-subtitle">Soluciones tecnológicas profesionales para tu hogar y empresa</p>
                 
-                <div class="about-stats">
-                    <div class="stat-item">
-                        <div class="stat-number">500+</div>
-                        <div class="stat-label">Clientes Satisfechos</div>
+                <!-- Grid de Servicios Original -->
+                <div class="hero-services-grid">
+                    <div class="hero-service-card" data-category="reparacion">
+                        <div class="hero-service-icon">
+                            <i class="fas fa-tools"></i>
+                        </div>
+                        <h3>Reparación</h3>
+                        <p>Reparación profesional de equipos y componentes con garantía y repuestos originales.</p>
+                        <button class="hero-service-btn" onclick="window.location.href='servicios.html'">
+                            Ver Servicios
+                            <i class="fas fa-arrow-right"></i>
+                        </button>
                     </div>
-                    <div class="stat-item">
-                        <div class="stat-number">1000+</div>
-                        <div class="stat-label">Equipos Reparados</div>
+                    
+                    <div class="hero-service-card" data-category="mantenimiento">
+                        <div class="hero-service-icon">
+                            <i class="fas fa-wrench"></i>
+                        </div>
+                        <h3>Mantenimiento</h3>
+                        <p>Servicios de mantenimiento preventivo y correctivo para mantener tu equipo funcionando al máximo rendimiento.</p>
+                        <button class="hero-service-btn" onclick="window.location.href='servicios.html'">
+                            Ver Servicios
+                            <i class="fas fa-arrow-right"></i>
+                        </button>
                     </div>
-                    <div class="stat-item">
-                        <div class="stat-number">50+</div>
-                        <div class="stat-label">PCs Ensambladas</div>
+                    
+                    <div class="hero-service-card" data-category="construccion">
+                        <div class="hero-service-icon">
+                            <i class="fas fa-desktop"></i>
+                        </div>
+                        <h3>Ensamblaje</h3>
+                        <p>Ensamblaje personalizado de computadoras y equipos según tus necesidades específicas.</p>
+                        <button class="hero-service-btn" onclick="window.location.href='servicios.html'">
+                            Ver Servicios
+                            <i class="fas fa-arrow-right"></i>
+                        </button>
                     </div>
-                    <div class="stat-item">
-                        <div class="stat-number">5</div>
-                        <div class="stat-label">Años de Experiencia</div>
+                    
+                    <div class="hero-service-card" data-category="soporte">
+                        <div class="hero-service-icon">
+                            <i class="fas fa-headset"></i>
+                        </div>
+                        <h3>Soporte Técnico</h3>
+                        <p>Soporte técnico especializado y consultoría para resolver cualquier problema tecnológico.</p>
+                        <button class="hero-service-btn" onclick="window.location.href='servicios.html'">
+                            Ver Servicios
+                            <i class="fas fa-arrow-right"></i>
+                        </button>
                     </div>
                 </div>
-            </div>
-            
-            <div class="about-cta">
-                <a href="nosotros.html" class="btn btn-primary">
-                    <i class="fas fa-info-circle"></i>
-                    Conoce Más Sobre Nosotros
-                </a>
             </div>
         </div>
-    </section>
 
-    <!-- Testimonios Section -->
-    <section class="testimonials">
-        <div class="container">
-            <div class="section-header">
-                <h2 class="section-title">Lo que dicen nuestros clientes</h2>
-                <p class="section-subtitle">Testimonios reales de clientes satisfechos</p>
+        <!-- Productos Principales -->
+        <div class="productos-principales-section">
+            <div class="container">
+                <h2 class="section-title">Nuestros Productos</h2>
+                <p class="section-subtitle">Equipos y componentes de alta calidad para todas tus necesidades tecnológicas</p>
+                
+                <div class="hero-productos-grid">
+                    <!-- Categoría Laptops -->
+                    <div class="hero-producto-card" data-category="laptops">
+                        <div class="hero-producto-icon">
+                            <i class="fas fa-laptop"></i>
+                        </div>
+                        <h3>Laptops y Portátiles</h3>
+                        <p>Equipos gaming, profesionales y estudiantiles con las mejores especificaciones del mercado.</p>
+                        <a href="productos.html" class="hero-producto-btn">
+                            <span>Ver Productos</span>
+                            <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </div>
+
+                    <!-- Categoría Componentes -->
+                    <div class="hero-producto-card" data-category="componentes">
+                        <div class="hero-producto-icon">
+                            <i class="fas fa-microchip"></i>
+                        </div>
+                        <h3>Componentes de PC</h3>
+                        <p>Procesadores, tarjetas gráficas, memoria RAM y componentes de última generación.</p>
+                        <a href="productos.html" class="hero-producto-btn">
+                            <span>Ver Productos</span>
+                            <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </div>
+                    
+                    <!-- Categoría Accesorios -->
+                    <div class="hero-producto-card" data-category="accesorios">
+                        <div class="hero-producto-icon">
+                            <i class="fas fa-gamepad"></i>
+                        </div>
+                        <h3>Accesorios Gaming</h3>
+                        <p>Teclados mecánicos, mouse gaming, auriculares y accesorios para gaming profesional.</p>
+                        <a href="productos.html" class="hero-producto-btn">
+                            <span>Ver Productos</span>
+                            <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </div>
+
+                    <!-- Categoría Periféricos -->
+                    <div class="hero-producto-card" data-category="perifericos">
+                        <div class="hero-producto-icon">
+                            <i class="fas fa-desktop"></i>
+                        </div>
+                        <h3>Periféricos y Monitores</h3>
+                        <p>Monitores gaming, profesionales, impresoras y periféricos de alta calidad.</p>
+                        <a href="productos.html" class="hero-producto-btn">
+                            <span>Ver Productos</span>
+                            <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </div>
+                    
+                    <!-- Categoría Almacenamiento -->
+                    <div class="hero-producto-card" data-category="almacenamiento">
+                        <div class="hero-producto-icon">
+                            <i class="fas fa-hdd"></i>
+                        </div>
+                        <h3>Almacenamiento</h3>
+                        <p>Discos duros SSD, HDD, memorias USB y tarjetas de almacenamiento de alta velocidad.</p>
+                        <a href="productos.html" class="hero-producto-btn">
+                            <span>Ver Productos</span>
+                            <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </div>
+
+                    <!-- Categoría Redes -->
+                    <div class="hero-producto-card" data-category="redes">
+                        <div class="hero-producto-icon">
+                            <i class="fas fa-wifi"></i>
+                        </div>
+                        <h3>Redes y Conectividad</h3>
+                        <p>Routers, switches, cables de red, adaptadores WiFi y equipos de conectividad.</p>
+                        <a href="productos.html" class="hero-producto-btn">
+                            <span>Ver Productos</span>
+                            <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </div>
+                </div>
             </div>
+        </div>
 
-            <div class="testimonials-grid">
-                <div class="testimonial-card">
-                    <div class="testimonial-content">
-                        <p>"Excelente servicio. Repararon mi laptop en menos de 24 horas y quedó como nueva. Muy recomendados."</p>
+        <!-- Sobre Nosotros -->
+        <div class="sobre-nosotros-hero-section">
+            <div class="container">
+                <div class="sobre-nosotros-content">
+                    <!-- Texto Principal -->
+                    <div class="sobre-nosotros-text">
+                        <h2 class="section-title">Sobre Nosotros</h2>
+                        <p class="section-subtitle">Tu socio tecnológico de confianza con años de experiencia</p>
+                        <p class="sobre-nosotros-description">
+                            En Computec, nos especializamos en brindar soluciones informáticas integrales 
+                            que impulsan el crecimiento de tu negocio. Con más de 5 años de experiencia 
+                            y más de 500 clientes satisfechos, nos comprometemos a ofrecerte la mejor 
+                            tecnología y el soporte más confiable del mercado.
+                        </p>
                     </div>
-                    <div class="testimonial-author">
-                        <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=100&q=80" alt="Carlos Rodríguez">
-                        <div>
-                            <h4>Carlos Rodríguez</h4>
-                            <span>Empresario</span>
+                    
+                    <!-- Estadísticas -->
+                    <div class="sobre-nosotros-stats">
+                        <div class="stat-item" data-category="experiencia">
+                            <div class="stat-number">5+</div>
+                            <div class="stat-label">Años de Experiencia</div>
+                        </div>
+                        <div class="stat-item" data-category="clientes">
+                            <div class="stat-number">500+</div>
+                            <div class="stat-label">Clientes Satisfechos</div>
+                        </div>
+                        <div class="stat-item" data-category="servicios">
+                            <div class="stat-number">50+</div>
+                            <div class="stat-label">Servicios Disponibles</div>
+                        </div>
+                        <div class="stat-item" data-category="soporte">
+                            <div class="stat-number">24/7</div>
+                            <div class="stat-label">Soporte Técnico</div>
+                        </div>
+                    </div>
+                    
+                    <!-- Valores -->
+                    <div class="sobre-nosotros-values">
+                        <div class="value-item" data-category="mision">
+                            <div class="value-icon">
+                                <i class="fas fa-bullseye"></i>
+                            </div>
+                            <h4>Misión</h4>
+                            <p>Soluciones innovadoras y confiables</p>
+                        </div>
+                        <div class="value-item" data-category="compromiso">
+                            <div class="value-icon">
+                                <i class="fas fa-handshake"></i>
+                            </div>
+                            <h4>Compromiso</h4>
+                            <p>Calidad garantizada y soporte especializado</p>
+                        </div>
+                        <div class="value-item" data-category="innovacion">
+                            <div class="value-icon">
+                                <i class="fas fa-lightbulb"></i>
+                            </div>
+                            <h4>Innovación</h4>
+                            <p>Tecnologías actualizadas del mercado</p>
                         </div>
                     </div>
                 </div>
+            </div>
+        </div>
 
-                <div class="testimonial-card">
-                    <div class="testimonial-content">
-                        <p>"Me ensamblaron una PC gaming increíble. El precio fue muy bueno y la calidad excelente. Volveré seguro."</p>
-                    </div>
-                    <div class="testimonial-author">
-                        <img src="https://images.unsplash.com/photo-1494790108755-2616b612b786?ixlib=rb-4.0.3&auto=format&fit=crop&w=100&q=80" alt="María González">
-                        <div>
-                            <h4>María González</h4>
-                            <span>Diseñadora Gráfica</span>
+        <!-- Carrusel de Reseñas de Clientes -->
+        <div class="reseñas-carrusel-section">
+            <div class="container">
+                <h2 class="section-title">Lo Que Dicen Nuestros Clientes</h2>
+                <div class="title-decoration"></div>
+                <div id="reseñas-carrusel"></div>
+            </div>
+        </div>
+        
+        <!-- Contáctanos -->
+        <div class="contactanos-hero-section">
+            <div class="container">
+                <div class="contactanos-content">
+                    <h2 class="section-title">Contáctanos</h2>
+                    <p class="section-subtitle">¿Listo para comenzar tu proyecto? Estamos aquí para ayudarte</p>
+                    
+                    <div class="contactanos-grid">
+                        <!-- Información de Contacto -->
+                        <div class="contact-info">
+                            <div class="contact-item" data-category="telefono">
+                                <div class="contact-icon">
+                                    <i class="fas fa-phone"></i>
+                                </div>
+                                <div class="contact-details">
+                                    <h4>Teléfono</h4>
+                                    <p>3203550004</p>
+                                </div>
+                            </div>
+                            
+                            <div class="contact-item" data-category="email">
+                                <div class="contact-icon">
+                                    <i class="fas fa-envelope"></i>
+                                </div>
+                                <div class="contact-details">
+                                    <h4>Email</h4>
+                                    <p>info@computec.com</p>
+                                </div>
+                            </div>
+                            
+                            <div class="contact-item" data-category="ubicacion">
+                                <div class="contact-icon">
+                                    <i class="fas fa-map-marker-alt"></i>
+                                </div>
+                                <div class="contact-details">
+                                    <h4>Ubicación</h4>
+                                    <p>Cúcuta, Norte de Santander</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Botones de Acción -->
+                        <div class="contact-actions">
+                            <a href="contacto.html" class="contact-btn primary">
+                                <i class="fas fa-comments"></i>
+                                <span>Chatear Ahora</span>
+                            </a>
+                            <a href="tel:3203550004" class="contact-btn secondary">
+                                <i class="fas fa-phone"></i>
+                                <span>Llamar Ahora</span>
+                            </a>
+                            <a href="mailto:info@computec.com" class="contact-btn tertiary">
+                                <i class="fas fa-envelope"></i>
+                                <span>Enviar Email</span>
+                            </a>
                         </div>
                     </div>
-                </div>
 
-                <div class="testimonial-card">
-                    <div class="testimonial-content">
-                        <p>"El soporte técnico es fantástico. Siempre están disponibles cuando los necesito. Muy profesionales."</p>
+                    <!-- Mapa de Ubicación -->
+                    <div class="contact-map">
+                        <iframe
+                            src="https://www.google.com/maps?q=C%C3%BAcuta%2C%20Norte%20de%20Santander%2C%20Colombia&output=embed"
+                            loading="lazy"
+                            referrerpolicy="no-referrer-when-downgrade"
+                            aria-label="Ubicación Computec en el mapa">
+                        </iframe>
                     </div>
-                    <div class="testimonial-author">
-                        <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-4.0.3&auto=format&fit=crop&w=100&q=80" alt="Juan Pérez">
-                        <div>
-                            <h4>Juan Pérez</h4>
-                            <span>Contador</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Placeholder - Foro y Noticias (Futuro) -->
+        <div class="future-sections-placeholder">
+            <div class="container">
+                <div class="placeholder-content">
+                    <h2 class="section-title">Próximamente</h2>
+                    <p class="section-subtitle">Nuevas funcionalidades en desarrollo</p>
+                    
+                    <div class="placeholder-grid">
+                        <!-- Placeholder Foro -->
+                        <div class="placeholder-card forum-card">
+                            <div class="placeholder-icon">
+                                <i class="fas fa-comments"></i>
+                            </div>
+                            <h3>Foro de la Comunidad</h3>
+                            <p>Próximamente podrás participar en nuestro foro, hacer preguntas, compartir experiencias y conectar con otros usuarios.</p>
+                            <div class="placeholder-status">
+                                <span class="status-badge coming-soon">En Desarrollo</span>
+                            </div>
+                        </div>
+
+                        <!-- Placeholder Noticias -->
+                        <div class="placeholder-card news-card">
+                            <div class="placeholder-icon">
+                                <i class="fas fa-newspaper"></i>
+                            </div>
+                            <h3>Centro de Noticias</h3>
+                            <p>Mantente informado con las últimas noticias tecnológicas, actualizaciones de productos y novedades de Computec.</p>
+                            <div class="placeholder-status">
+                                <span class="status-badge coming-soon">En Desarrollo</span>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -497,99 +427,62 @@
                         <i class="fas fa-laptop-code"></i>
                         <span>Computec</span>
                     </div>
-                    <p>Soluciones informáticas profesionales con la mejor calidad y garantía del mercado.</p>
+                    <p>Soluciones informáticas profesionales para tu hogar y empresa.</p>
                     <div class="social-links">
-                        <a href="#" class="social-link"><i class="fab fa-facebook"></i></a>
-                        <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
-                        <a href="#" class="social-link"><i class="fab fa-whatsapp"></i></a>
-                        <a href="#" class="social-link"><i class="fab fa-youtube"></i></a>
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-linkedin"></i></a>
                     </div>
                 </div>
-
+                
                 <div class="footer-section">
-                    <h3>Servicios</h3>
+                    <h4>Servicios</h4>
                     <ul>
-                        <li><a href="servicios.html">Reparación de computadoras</a></li>
-                        <li><a href="servicios.html">Ensamblaje de PCs</a></li>
-                        <li><a href="servicios.html">Soporte técnico</a></li>
-                        <li><a href="servicios.html">Seguridad informática</a></li>
+                        <li><a href="servicios.html">Reparación</a></li>
+                        <li><a href="servicios.html">Mantenimiento</a></li>
+                        <li><a href="servicios.html">Ensamblaje</a></li>
+                        <li><a href="servicios.html">Soporte Técnico</a></li>
                     </ul>
                 </div>
-
+                
                 <div class="footer-section">
-                    <h3>Productos</h3>
+                    <h4>Productos</h4>
                     <ul>
-                        <li><a href="productos.html">Laptops Gaming</a></li>
-                        <li><a href="productos.html">PCs Armadas</a></li>
-                        <li><a href="productos.html">Accesorios</a></li>
+                        <li><a href="productos.html">Laptops</a></li>
                         <li><a href="productos.html">Componentes</a></li>
+                        <li><a href="productos.html">Accesorios</a></li>
+                        <li><a href="productos.html">Periféricos</a></li>
                     </ul>
                 </div>
-
+                
                 <div class="footer-section">
-                    <h3>Contacto</h3>
-                    <ul>
-                        <li><i class="fas fa-phone"></i> +57 300 123 4567</li>
-                        <li><i class="fas fa-envelope"></i> info@computec.com</li>
-                        <li><i class="fas fa-map-marker-alt"></i> Bogotá, Colombia</li>
-                    </ul>
+                    <h4>Contacto</h4>
+                    <div class="contact-info">
+                        <p><i class="fas fa-phone"></i> 3203550004</p>
+                        <p><i class="fas fa-envelope"></i> info@computec.com</p>
+                        <p><i class="fas fa-map-marker-alt"></i> Cúcuta, N.S.</p>
+                    </div>
                 </div>
             </div>
-
+            
             <div class="footer-bottom">
-                <p>&copy; 2024 Computec. Todos los derechos reservados.</p>
-                <div class="footer-links">
-                    <a href="#">Política de privacidad</a>
-                    <a href="#">Términos y condiciones</a>
-                </div>
+                <p>&copy; 2025 Computec. Todos los derechos reservados.</p>
             </div>
         </div>
     </footer>
 
-    <!-- WhatsApp Button -->
-    <a href="https://wa.me/573001234567" class="whatsapp-button" target="_blank">
-        <i class="fab fa-whatsapp"></i>
-    </a>
+    <!-- Botón Volver Arriba -->
+    <button id="backToTop" class="back-to-top">
+        <i class="fas fa-chevron-up"></i>
+    </button>
 
-    <!-- Scripts -->
-    <script src="js/website-scripts.js"></script>
-    <script>
-    // Mostrar sección productos al hacer clic en el menú
-    const navLinks = document.querySelectorAll('.nav-link');
-    const seccionProductos = document.getElementById('seccion-productos');
-    const secciones = document.querySelectorAll('section, div[id^="seccion-"]');
-
-    navLinks.forEach(link => {
-        link.addEventListener('click', function(e) {
-            if (this.textContent.trim() === 'Productos') {
-                e.preventDefault();
-                secciones.forEach(sec => sec.style.display = 'none');
-                seccionProductos.style.display = 'block';
-            }
-        });
-    });
-    </script>
-    <script>
-    (function() {
-        const slides = document.querySelectorAll('.slider-slide');
-        const dots = document.querySelectorAll('.slider-dot');
-        const prev = document.querySelector('.slider-prev');
-        const next = document.querySelector('.slider-next');
-        let current = 0;
-        function showSlide(idx) {
-            slides.forEach((slide, i) => {
-                slide.style.display = i === idx ? 'flex' : 'none';
-                dots[i].classList.toggle('active', i === idx);
-                dots[i].style.opacity = i === idx ? '0.7' : '0.4';
-            });
-            current = idx;
-        }
-        prev.addEventListener('click', () => showSlide((current - 1 + slides.length) % slides.length));
-        next.addEventListener('click', () => showSlide((current + 1) % slides.length));
-        dots.forEach((dot, i) => dot.addEventListener('click', () => showSlide(i)));
-        // Autoplay opcional
-        setInterval(() => showSlide((current + 1) % slides.length), 7000);
-    })();
-    </script>
+    <!-- Scripts de la SPA Original -->
+    <script src="js/header.js"></script>
+    <script src="js/slider.js"></script>
+    <script src="js/reseñas-carrusel.js"></script>
+    <script src="js/servicios-dinamicos.js"></script>
+    <script src="js/notificaciones.js"></script>
+    <script src="js/mobile-menu.js"></script>
 </body>
-</html> 
+</html>

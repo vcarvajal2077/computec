@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout - Computec</title>
+    <link rel="stylesheet" href="css/website-styles.css">
+    <link rel="stylesheet" href="css/checkout.css">
+    <link rel="stylesheet" href="css/pagos.css">
+    <link rel="stylesheet" href="css/ui-improvements.css">
+    <link rel="stylesheet" href="css/responsive-improvements.css">
+    <link rel="stylesheet" href="css/checkout-responsive.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>💻</text></svg>">
+</head>
+<body>
+    <!-- Simple Header -->
+    <header class="header-simple">
+        <div class="container">
+            <a href="servicios.html" class="back-button">
+                <i class="fas fa-arrow-left"></i>
+                <span>Volver a Servicios</span>
+            </a>
+            <div class="simple-logo">
+                <i class="fas fa-laptop-code"></i>
+                <span>Computec</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="checkout-main">
+        <div class="container">
+            <!-- Breadcrumb -->
+            <nav class="breadcrumb">
+                <a href="index.html">Inicio</a>
+                <i class="fas fa-chevron-right"></i>
+                <a href="servicios.html">Servicios</a>
+                <i class="fas fa-chevron-right"></i>
+                <span>Checkout</span>
+            </nav>
+
+            <!-- Checkout Content -->
+            <div class="checkout-content">
+                <!-- Resumen del Servicio -->
+                <div class="checkout-summary">
+                    <h1>Finalizar Compra</h1>
+                    <div id="servicio-resumen" class="servicio-resumen">
+                        <!-- Se cargará dinámicamente -->
+                    </div>
+                </div>
+
+                <!-- Formulario de Checkout -->
+                <div class="checkout-form-container">
+                    <form id="checkout-form" class="checkout-form">
+                        <!-- Información del Cliente -->
+                        <div class="form-section">
+                            <h2>
+                                <i class="fas fa-user"></i>
+                                Información del Cliente
+                            </h2>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="cliente_nombre">Nombre *</label>
+                                    <input type="text" id="cliente_nombre" name="cliente_nombre" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="cliente_apellido">Apellido</label>
+                                    <input type="text" id="cliente_apellido" name="cliente_apellido">
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="cliente_email">Email *</label>
+                                    <input type="email" id="cliente_email" name="cliente_email" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="cliente_telefono">Teléfono *</label>
+                                    <input type="tel" id="cliente_telefono" name="cliente_telefono" required>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Información del Servicio -->
+                        <div class="form-section">
+                            <h2>
+                                <i class="fas fa-map-marker-alt"></i>
+                                Información del Servicio
+                            </h2>
+                            <div class="form-group">
+                                <label for="direccion_servicio">Dirección del Servicio *</label>
+                                <textarea id="direccion_servicio" name="direccion_servicio" rows="3" required 
+                                    placeholder="Ingresa la dirección completa donde se realizará el servicio"></textarea>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="fecha_agendada">Fecha Preferida</label>
+                                    <input type="date" id="fecha_agendada" name="fecha_agendada" min="">
+                                </div>
+                                <div class="form-group">
+                                    <label for="hora_agendada">Hora Preferida</label>
+                                    <select id="hora_agendada" name="hora_agendada">
+                                        <option value="">Seleccionar hora</option>
+                                        <option value="08:00">8:00 AM</option>
+                                        <option value="09:00">9:00 AM</option>
+                                        <option value="10:00">10:00 AM</option>
+                                        <option value="11:00">11:00 AM</option>
+                                        <option value="12:00">12:00 PM</option>
+                                        <option value="14:00">2:00 PM</option>
+                                        <option value="15:00">3:00 PM</option>
+                                        <option value="16:00">4:00 PM</option>
+                                        <option value="17:00">5:00 PM</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Método de Pago -->
+                        <div class="form-section">
+                            <h2>
+                                <i class="fas fa-credit-card"></i>
+                                Método de Pago
+                            </h2>
+                            <!-- Sistema de Pagos Avanzado -->
+                            <div class="payment-methods-container">
+                                <div class="payment-methods-header">
+                                    <h3>Selecciona tu método de pago preferido</h3>
+                                    <p>Procesamos pagos de forma segura con múltiples opciones</p>
+                                </div>
+                                
+                                <!-- Métodos disponibles (se cargan dinámicamente) -->
+                                <div id="payment-methods" class="payment-methods-grid">
+                                    <!-- Se llenará con JavaScript -->
+                                </div>
+                                
+                                <!-- Formularios de pago específicos -->
+                                <div id="formularios-pago">
+                                    <!-- Se generarán dinámicamente según el método seleccionado -->
+                                </div>
+                                
+                                <!-- Botón de procesar pago -->
+                                <div class="payment-actions">
+                                    <button type="button" id="btn-procesar-pago" class="btn-primary" style="display: none;">
+                                        <i class="fas fa-credit-card"></i>
+                                        Procesar Pago
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Notas Adicionales -->
+                        <div class="form-section">
+                            <h2>
+                                <i class="fas fa-sticky-note"></i>
+                                Notas Adicionales
+                            </h2>
+                            <div class="form-group">
+                                <label for="notas">Comentarios o Instrucciones Especiales</label>
+                                <textarea id="notas" name="notas" rows="4" 
+                                    placeholder="Describe cualquier detalle específico sobre el servicio, horarios especiales, o información adicional que consideres importante"></textarea>
+                            </div>
+                        </div>
+
+                        <!-- Términos y Condiciones -->
+                        <div class="form-section">
+                            <div class="terms-checkbox">
+                                <input type="checkbox" id="acepto_terminos" name="acepto_terminos" required>
+                                <label for="acepto_terminos">
+                                    Acepto los <a href="#" onclick="mostrarTerminos()">términos y condiciones</a> 
+                                    y la <a href="#" onclick="mostrarPolitica()">política de privacidad</a>
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- Botones de Acción -->
+                        <div class="form-actions">
+                            <button type="button" class="btn-secondary" onclick="volverServicios()">
+                                <i class="fas fa-arrow-left"></i>
+                                Volver a Servicios
+                            </button>
+                            <button type="submit" class="btn-primary" id="btn-confirmar">
+                                <i class="fas fa-check"></i>
+                                Confirmar Orden
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Modal de Confirmación -->
+    <div id="modal-confirmacion" class="modal-confirmacion">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>¡Orden Confirmada!</h2>
+                <button class="modal-close" onclick="cerrarModal()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="success-icon">
+                    <i class="fas fa-check-circle"></i>
+                </div>
+                <h3>Tu orden ha sido procesada exitosamente</h3>
+                <div id="orden-details" class="orden-details">
+                    <!-- Se llenará con los detalles de la orden -->
+                </div>
+                <p class="next-steps">
+                    Te contactaremos pronto para confirmar los detalles del servicio y coordinar la visita.
+                </p>
+            </div>
+            <div class="modal-footer">
+                <button class="btn-primary" onclick="irAInicio()">
+                    <i class="fas fa-home"></i>
+                    Ir al Inicio
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Loading Overlay -->
+    <div id="loading-overlay" class="loading-overlay">
+        <div class="loading-content">
+            <div class="loading-spinner"></div>
+            <p>Procesando orden...</p>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="js/notificaciones.js"></script>
+    <script src="js/pagos.js"></script>
+    <script src="js/checkout.js"></script>
+    <script src="js/ui-enhancements.js"></script>
+</body>
+</html>

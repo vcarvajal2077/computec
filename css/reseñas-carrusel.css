@@ -1,0 +1,275 @@
+/* Carrusel de Reseñas de Clientes */
+.reseñas-carrusel-section {
+    background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+    padding: 4rem 0;
+    position: relative;
+}
+
+.reseñas-carrusel-section .section-title {
+    text-align: center;
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #1e293b;
+    margin-bottom: 1rem;
+    position: relative;
+}
+
+.reseñas-carrusel-section .title-decoration {
+    width: 80px;
+    height: 4px;
+    background: linear-gradient(90deg, #3b82f6, #8b5cf6);
+    margin: 0 auto 3rem;
+    border-radius: 2px;
+}
+
+/* Contenedor del carrusel */
+.carrusel-container {
+    position: relative;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2rem;
+}
+
+.carrusel-wrapper {
+    display: flex;
+    gap: 2rem;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scroll-behavior: smooth;
+    padding-bottom: 1rem;
+    scrollbar-width: thin;
+    scrollbar-color: #3b82f6 #e2e8f0;
+}
+
+/* Tarjetas de reseñas */
+.reseña-card {
+    flex: 0 0 calc(33.333% - 1.33rem);
+    background: #ffffff;
+    border-radius: 16px;
+    padding: 2rem;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+    border: 1px solid #e2e8f0;
+    position: relative;
+}
+
+.reseña-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 16px 48px rgba(0, 0, 0, 0.15);
+}
+
+/* Header de la reseña */
+.reseña-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1.5rem;
+}
+
+.reseña-avatar {
+    width: 60px;
+    height: 60px;
+    background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 1rem;
+    color: white;
+    font-size: 1.5rem;
+}
+
+.reseña-info h4 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #1e293b;
+    margin: 0 0 0.25rem 0;
+}
+
+.reseña-empresa {
+    color: #64748b;
+    font-size: 0.9rem;
+    margin: 0 0 0.5rem 0;
+}
+
+/* Calificación con estrellas */
+.reseña-calificación {
+    display: flex;
+    gap: 0.25rem;
+}
+
+.reseña-calificación .fas.fa-star {
+    color: #fbbf24;
+    font-size: 1rem;
+}
+
+.reseña-calificación .fas.fa-star:not(.filled) {
+    color: #d1d5db;
+}
+
+/* Contenido de la reseña */
+.reseña-contenido {
+    margin-bottom: 1.5rem;
+}
+
+.reseña-comentario {
+    font-size: 1rem;
+    line-height: 1.6;
+    color: #374151;
+    font-style: italic;
+    margin: 0;
+}
+
+/* Footer de la reseña */
+.reseña-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 1rem;
+    border-top: 1px solid #e5e7eb;
+}
+
+.reseña-servicio {
+    background: #3b82f6;
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 500;
+}
+
+.reseña-fecha {
+    color: #6b7280;
+    font-size: 0.9rem;
+}
+
+/* Scrollbar personalizado para navegación */
+.carrusel-wrapper::-webkit-scrollbar {
+    height: 8px;
+}
+
+.carrusel-wrapper::-webkit-scrollbar-track {
+    background: #e2e8f0;
+    border-radius: 4px;
+}
+
+.carrusel-wrapper::-webkit-scrollbar-thumb {
+    background: #3b82f6;
+    border-radius: 4px;
+}
+
+.carrusel-wrapper::-webkit-scrollbar-thumb:hover {
+    background: #2563eb;
+}
+
+/* Indicadores */
+.carrusel-indicators {
+    display: flex;
+    justify-content: center;
+    gap: 0.5rem;
+    margin-top: 2rem;
+}
+
+.indicator {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    border: none;
+    background: #cbd5e1;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.indicator.active {
+    background: #3b82f6;
+    transform: scale(1.2);
+}
+
+.indicator:hover {
+    background: #64748b;
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+    .reseña-card {
+        flex: 0 0 calc(50% - 1rem);
+    }
+    
+}
+
+@media (max-width: 768px) {
+    .reseñas-carrusel-section {
+        padding: 3rem 0;
+    }
+    
+    .reseñas-carrusel-section .section-title {
+        font-size: 2rem;
+    }
+    
+    .reseña-card {
+        flex: 0 0 100%;
+    }
+    
+    .carrusel-container {
+        padding: 0 1rem;
+    }
+    
+}
+
+/* ========================================
+   MEJORAS RESPONSIVAS ADICIONALES
+   ======================================== */
+
+/* Móvil pequeño */
+@media (max-width: 360px) {
+    .reseñas-carrusel-section {
+        padding: 1.5rem 0;
+    }
+    
+    .reseñas-carrusel-section .section-title {
+        font-size: 1.5rem;
+    }
+    
+    .reseña-card {
+        min-width: 220px;
+        padding: 1rem;
+    }
+    
+    .reseña-name {
+        font-size: 0.9rem;
+    }
+    
+    .reseña-service {
+        font-size: 0.75rem;
+    }
+    
+    .reseña-text {
+        font-size: 0.85rem;
+    }
+    
+    .reseña-rating {
+        font-size: 0.8rem;
+    }
+    
+    .carrusel-container {
+        padding: 0 0.3rem;
+    }
+}
+
+/* Mejoras de accesibilidad para móvil */
+@media (max-width: 480px) {
+    .reseña-card {
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    }
+    
+    .reseña-card:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+    }
+}
+
+/* Optimización para pantallas de alta densidad */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+    .reseña-card {
+        border: 0.5px solid rgba(0, 0, 0, 0.1);
+    }
+}

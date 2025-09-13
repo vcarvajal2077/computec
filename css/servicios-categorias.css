@@ -1,0 +1,333 @@
+/* ===== SERVICIOS POR CATEGORÍAS ===== */
+
+.section-subtitle {
+    text-align: center;
+    color: #666;
+    font-size: 1.1rem;
+    margin-bottom: 3rem;
+    font-weight: 400;
+}
+
+.services-categories {
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+.service-category {
+    background: #fff;
+    border-radius: 15px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+    margin-bottom: 1.5rem;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    border: 1px solid #e8e8e8;
+}
+
+.service-category:hover {
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+    transform: translateY(-2px);
+}
+
+.category-header {
+    display: flex;
+    align-items: center;
+    padding: 1.5rem 2rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+    position: relative;
+}
+
+.category-header:hover {
+    background: linear-gradient(135deg, #e9ecef 0%, #dee2e6 100%);
+}
+
+.category-icon {
+    width: 60px;
+    height: 60px;
+    background: linear-gradient(135deg, #007bff, #0056b3);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 1.5rem;
+    transition: all 0.3s ease;
+}
+
+.category-icon i {
+    font-size: 1.5rem;
+    color: white;
+}
+
+.category-header h3 {
+    flex: 1;
+    font-size: 1.4rem;
+    font-weight: 600;
+    color: #333;
+    margin: 0;
+    transition: color 0.3s ease;
+}
+
+.category-toggle {
+    width: 40px;
+    height: 40px;
+    background: #007bff;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+}
+
+.category-toggle i {
+    color: white;
+    font-size: 1rem;
+    transition: transform 0.3s ease;
+}
+
+.service-category.active .category-toggle i {
+    transform: rotate(180deg);
+}
+
+.service-category.active .category-icon {
+    background: linear-gradient(135deg, #28a745, #1e7e34);
+}
+
+.service-category.active .category-header h3 {
+    color: #28a745;
+}
+
+.category-content {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s ease;
+}
+
+.service-category.active .category-content {
+    max-height: 1000px;
+}
+
+.services-list {
+    padding: 0 2rem 2rem;
+}
+
+.service-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding: 1.5rem 0;
+    border-bottom: 1px solid #f0f0f0;
+    transition: all 0.3s ease;
+}
+
+.service-item:last-child {
+    border-bottom: none;
+}
+
+.service-item:hover {
+    background: #f8f9fa;
+    margin: 0 -1rem;
+    padding: 1.5rem 1rem;
+    border-radius: 8px;
+}
+
+.service-details {
+    flex: 1;
+    margin-right: 1rem;
+}
+
+.service-details h4 {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #333;
+    margin: 0 0 0.5rem 0;
+}
+
+.service-details p {
+    color: #666;
+    margin: 0 0 1rem 0;
+    line-height: 1.5;
+}
+
+.service-meta {
+    display: flex;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+}
+
+.service-meta span {
+    display: flex;
+    align-items: center;
+    font-size: 0.9rem;
+    color: #666;
+    background: #f8f9fa;
+    padding: 0.3rem 0.8rem;
+    border-radius: 20px;
+    border: 1px solid #e9ecef;
+}
+
+.service-meta i {
+    margin-right: 0.4rem;
+    color: #007bff;
+}
+
+.service-price {
+    background: linear-gradient(135deg, #28a745, #20c997);
+    color: white;
+    padding: 0.8rem 1.2rem;
+    border-radius: 25px;
+    font-weight: 600;
+    font-size: 1.1rem;
+    text-align: center;
+    min-width: 140px;
+    box-shadow: 0 3px 10px rgba(40, 167, 69, 0.3);
+    transition: all 0.3s ease;
+}
+
+.service-price:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(40, 167, 69, 0.4);
+}
+
+/* ===== RESPONSIVE DESIGN ===== */
+
+@media (max-width: 768px) {
+    .category-header {
+        padding: 1rem 1.5rem;
+    }
+    
+    .category-icon {
+        width: 50px;
+        height: 50px;
+        margin-right: 1rem;
+    }
+    
+    .category-icon i {
+        font-size: 1.2rem;
+    }
+    
+    .category-header h3 {
+        font-size: 1.2rem;
+    }
+    
+    .category-toggle {
+        width: 35px;
+        height: 35px;
+    }
+    
+    .services-list {
+        padding: 0 1.5rem 1.5rem;
+    }
+    
+    .service-item {
+        flex-direction: column;
+        gap: 1rem;
+    }
+    
+    .service-details {
+        margin-right: 0;
+    }
+    
+    .service-price {
+        align-self: flex-start;
+        min-width: auto;
+        width: 100%;
+    }
+    
+    .service-meta {
+        gap: 1rem;
+    }
+    
+    .service-meta span {
+        font-size: 0.8rem;
+        padding: 0.25rem 0.6rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .category-header {
+        padding: 0.8rem 1rem;
+    }
+    
+    .category-icon {
+        width: 45px;
+        height: 45px;
+        margin-right: 0.8rem;
+    }
+    
+    .category-icon i {
+        font-size: 1rem;
+    }
+    
+    .category-header h3 {
+        font-size: 1.1rem;
+    }
+    
+    .services-list {
+        padding: 0 1rem 1rem;
+    }
+    
+    .service-item {
+        padding: 1rem 0;
+    }
+    
+    .service-details h4 {
+        font-size: 1.1rem;
+    }
+    
+    .service-price {
+        font-size: 1rem;
+        padding: 0.6rem 1rem;
+    }
+}
+
+/* ===== ANIMACIONES ===== */
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.service-category.active .category-content {
+    animation: slideDown 0.4s ease;
+}
+
+/* ===== ESTADOS ESPECIALES ===== */
+
+.service-category[data-category="reparacion"] .category-icon {
+    background: linear-gradient(135deg, #dc3545, #c82333);
+}
+
+.service-category[data-category="mantenimiento"] .category-icon {
+    background: linear-gradient(135deg, #ffc107, #e0a800);
+}
+
+.service-category[data-category="construccion"] .category-icon {
+    background: linear-gradient(135deg, #6f42c1, #5a32a3);
+}
+
+.service-category[data-category="soporte"] .category-icon {
+    background: linear-gradient(135deg, #17a2b8, #138496);
+}
+
+.service-category.active[data-category="reparacion"] .category-icon {
+    background: linear-gradient(135deg, #dc3545, #c82333);
+}
+
+.service-category.active[data-category="mantenimiento"] .category-icon {
+    background: linear-gradient(135deg, #ffc107, #e0a800);
+}
+
+.service-category.active[data-category="construccion"] .category-icon {
+    background: linear-gradient(135deg, #6f42c1, #5a32a3);
+}
+
+.service-category.active[data-category="soporte"] .category-icon {
+    background: linear-gradient(135deg, #17a2b8, #138496);
+}

@@ -9,132 +9,131 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
-    <div class="login-container">
-        <!-- Fondo animado -->
-        <div class="background-animation">
-            <div class="floating-shapes">
-                <div class="shape shape-1"></div>
-                <div class="shape shape-2"></div>
-                <div class="shape shape-3"></div>
-                <div class="shape shape-4"></div>
-                <div class="shape shape-5"></div>
-            </div>
+    <!-- Fondo animado -->
+    <div class="background-animation">
+        <div class="floating-shapes">
+            <div class="shape shape-1"></div>
+            <div class="shape shape-2"></div>
+            <div class="shape shape-3"></div>
+            <div class="shape shape-4"></div>
+            <div class="shape shape-5"></div>
         </div>
-
-        <!-- Contenedor principal -->
-        <div class="login-wrapper">
-            <!-- Panel izquierdo - Información -->
-            <div class="login-info">
-                <div class="info-content">
-                    <div class="logo-section">
-                        <div class="logo">
-                            <i class="fas fa-laptop-code"></i>
-                            <span>Computec</span>
-                        </div>
-                        <h1>Sistema de Gestión Integral</h1>
-                        <p>Gestiona reparaciones, ensamblajes y soporte técnico de manera eficiente</p>
+    </div>
+    
+    <!-- Contenedor principal -->
+    <div class="login-wrapper">
+        <!-- Panel izquierdo - Información -->
+        <div class="login-info">
+            <div class="info-content">
+                <div class="logo-section">
+                    <div class="logo">
+                        <i class="fas fa-laptop-code"></i>
+                        <span>Computec</span>
                     </div>
-                    
-                    <div class="features">
-                        <div class="feature-item">
-                            <i class="fas fa-tools"></i>
-                            <div>
-                                <h3>Reparaciones</h3>
-                                <p>Gestión completa de reparaciones de equipos</p>
-                            </div>
+                    <h1>Sistema de Gestión Integral</h1>
+                    <p>Gestiona reparaciones, ensamblajes y soporte técnico de manera eficiente</p>
+                </div>
+                
+                <div class="features">
+                    <div class="feature-item">
+                        <i class="fas fa-tools"></i>
+                        <div>
+                            <h3>Reparaciones</h3>
+                            <p>Gestión completa de reparaciones de equipos</p>
                         </div>
-                        <div class="feature-item">
-                            <i class="fas fa-desktop"></i>
-                            <div>
-                                <h3>Ensamblaje</h3>
-                                <p>Ensamblaje y configuración de equipos</p>
-                            </div>
+                    </div>
+                    <div class="feature-item">
+                        <i class="fas fa-desktop"></i>
+                        <div>
+                            <h3>Ensamblaje</h3>
+                            <p>Ensamblaje y configuración de equipos</p>
                         </div>
-                        <div class="feature-item">
-                            <i class="fas fa-headset"></i>
-                            <div>
-                                <h3>Soporte Técnico</h3>
-                                <p>Atención y soporte a clientes</p>
-                            </div>
+                    </div>
+                    <div class="feature-item">
+                        <i class="fas fa-headset"></i>
+                        <div>
+                            <h3>Soporte Técnico</h3>
+                            <p>Atención y soporte a clientes</p>
                         </div>
                     </div>
                 </div>
             </div>
-
-            <!-- Panel derecho - Formulario -->
-            <div class="login-form-container">
-                <div class="form-wrapper">
-                    <div class="form-header">
-                        <h2>Iniciar Sesión</h2>
-                        <p>Ingresa tus credenciales para acceder al sistema</p>
+        </div>
+        
+        <!-- Panel derecho - Formulario -->
+        <div class="login-form-container">
+            <div class="form-wrapper">
+                <div class="form-header">
+                    <h2>Iniciar Sesión</h2>
+                    <p>Ingresa tus credenciales para acceder al sistema</p>
+                </div>
+                
+                <form id="loginForm" class="login-form">
+                    <div class="form-group">
+                        <label for="username">
+                            <i class="fas fa-user"></i>
+                            Usuario
+                        </label>
+                        <input 
+                            type="text" 
+                            id="username" 
+                            name="username" 
+                            placeholder="Ingresa tu nombre de usuario"
+                            required
+                            autocomplete="username"
+                        >
+                        <div class="input-focus-border"></div>
                     </div>
-
-                    <form id="loginForm" class="login-form">
-                        <div class="form-group">
-                            <label for="username">
-                                <i class="fas fa-user"></i>
-                                Usuario
-                            </label>
+                    
+                    <div class="form-group">
+                        <label for="password">
+                            <i class="fas fa-lock"></i>
+                            Contraseña
+                        </label>
+                        <div class="password-input">
                             <input 
-                                type="text" 
-                                id="username" 
-                                name="username" 
-                                placeholder="Ingresa tu nombre de usuario"
+                                type="password" 
+                                id="password" 
+                                name="password" 
+                                placeholder="Ingresa tu contraseña"
                                 required
-                                autocomplete="username"
+                                autocomplete="current-password"
                             >
-                            <div class="input-focus-border"></div>
+                            <button type="button" class="password-toggle" id="passwordToggle">
+                                <i class="fas fa-eye"></i>
+                            </button>
                         </div>
-
-                        <div class="form-group">
-                            <label for="password">
-                                <i class="fas fa-lock"></i>
-                                Contraseña
-                            </label>
-                            <div class="password-input">
-                                <input 
-                                    type="password" 
-                                    id="password" 
-                                    name="password" 
-                                    placeholder="Ingresa tu contraseña"
-                                    required
-                                    autocomplete="current-password"
-                                >
-                                <button type="button" class="password-toggle" id="passwordToggle">
-                                    <i class="fas fa-eye"></i>
-                                </button>
-                            </div>
-                            <div class="input-focus-border"></div>
-                        </div>
-
-                        <div class="form-options">
-                            <label class="checkbox-container">
-                                <input type="checkbox" id="rememberMe" name="rememberMe">
-                                <span class="checkmark"></span>
-                                Recordarme
-                            </label>
-                            <a href="#" id="forgotPasswordLink" class="forgot-link">
-                                ¿Olvidaste tu contraseña?
-                            </a>
-                        </div>
-
-                        <button type="submit" class="login-btn" id="loginBtn">
-                            <span class="btn-text">Iniciar Sesión</span>
-                            <span class="btn-loading">
-                                <i class="fas fa-spinner fa-spin"></i>
-                                Iniciando...
-                            </span>
-                        </button>
-                    </form>
-
-                    <div class="form-footer">
-                        <p>¿Problemas para acceder? <a href="#" class="support-link">Contacta soporte</a></p>
+                        <div class="input-focus-border"></div>
                     </div>
+                    
+                    <div class="form-options">
+                        <label class="checkbox-container">
+                            <input type="checkbox" id="rememberMe" name="rememberMe">
+                            <span class="checkmark"></span>
+                            Recordarme
+                        </label>
+                        <a href="#" id="forgotPasswordLink" class="forgot-link">
+                            ¿Olvidaste tu contraseña?
+                        </a>
+                    </div>
+                    
+                    <button type="submit" class="login-btn" id="loginBtn">
+                        <span class="btn-text">Iniciar Sesión</span>
+                        <span class="btn-loading">
+                            <i class="fas fa-spinner fa-spin"></i>
+                            Iniciando...
+                        </span>
+                    </button>
+                </form>
+
+                <div class="form-footer">
+                    <p>¿No tienes cuenta? <a href="#" class="register-link">Regístrate</a></p>
+                    <p>¿Problemas para acceder? <a href="#" class="support-link">Contacta soporte</a></p>
                 </div>
             </div>
         </div>
     </div>
-
+    
     <!-- Modal de Recuperación de Contraseña -->
     <div id="recoveryModal" class="modal">
         <div class="modal-content">
@@ -160,7 +159,7 @@
                     >
                     <div class="input-focus-border"></div>
                 </div>
-
+                
                 <div class="form-group">
                     <label for="recoveryUsername">
                         <i class="fas fa-user"></i>
@@ -175,7 +174,7 @@
                     >
                     <div class="input-focus-border"></div>
                 </div>
-
+                
                 <div class="form-actions">
                     <button type="button" class="btn-secondary" id="cancelRecovery">
                         Cancelar
@@ -191,7 +190,73 @@
             </form>
         </div>
     </div>
-
+    
+    <!-- Formulario de Registro de Usuario -->
+    <div id="registerModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Registro de Usuario</h2>
+                <button class="modal-close" id="closeRegisterModal">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <form id="registerForm" class="register-form">
+                <div class="form-group">
+                    <label for="registerNombre"><i class="fas fa-user"></i> Nombre</label>
+                    <input type="text" id="registerNombre" name="nombre" placeholder="Ingresa tu nombre" required>
+                    <div class="input-focus-border"></div>
+                </div>
+                <div class="form-group">
+                    <label for="registerApellido"><i class="fas fa-user"></i> Apellido</label>
+                    <input type="text" id="registerApellido" name="apellido" placeholder="Ingresa tu apellido" required>
+                    <div class="input-focus-border"></div>
+                </div>
+                <div class="form-group">
+                    <label for="registerEmail"><i class="fas fa-envelope"></i> Email</label>
+                    <input type="email" id="registerEmail" name="email" placeholder="Ingresa tu correo electrónico" required>
+                    <div class="input-focus-border"></div>
+                </div>
+                <div class="form-group">
+                    <label for="registerPassword"><i class="fas fa-lock"></i> Contraseña</label>
+                    <input type="password" id="registerPassword" name="password" placeholder="Crea una contraseña" required>
+                    <div class="input-focus-border"></div>
+                </div>
+                <div class="form-group">
+                    <label for="registerConfirmPassword"><i class="fas fa-lock"></i> Confirmar Contraseña</label>
+                    <input type="password" id="registerConfirmPassword" name="confirmPassword" placeholder="Confirma tu contraseña" required>
+                    <div class="input-focus-border"></div>
+                </div>
+                <div class="form-group">
+                    <label for="registerTelefono"><i class="fas fa-phone"></i> Teléfono</label>
+                    <input type="text" id="registerTelefono" name="telefono" placeholder="Ingresa tu teléfono">
+                    <div class="input-focus-border"></div>
+                </div>
+                <div class="form-group">
+                    <label for="registerTipoUsuario"><i class="fas fa-users"></i> Tipo de usuario</label>
+                    <select id="registerTipoUsuario" name="id_tipo_usuario" required>
+                        <option value="1">Administrador</option>
+                        <option value="2">Vendedor</option>
+                        <option value="3">Técnico</option>
+                        <option value="4">Supervisor</option>
+                        <option value="5">Asistente Administrativo</option>
+                        <option value="6">Cliente</option>
+                    </select>
+                    <div class="input-focus-border"></div>
+                </div>
+                <div class="form-actions">
+                    <button type="button" class="btn-secondary" id="cancelRegister">Volver al Login</button>
+                    <button type="submit" class="btn-primary">
+                        <span class="btn-text">Registrarse</span>
+                        <span class="btn-loading">
+                            <i class="fas fa-spinner fa-spin"></i>
+                            Registrando...
+                        </span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+    
     <!-- Notificaciones -->
     <div id="notificationContainer" class="notification-container"></div>
 

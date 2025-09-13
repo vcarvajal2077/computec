@@ -4,6 +4,78 @@ let isProcessing = false;
 // Inicialización cuando el DOM esté listo
 document.addEventListener('DOMContentLoaded', function() {
     initializeLogin();
+
+    // Mostrar modal de registro
+    document.querySelectorAll('.register-link').forEach(link => {
+        link.addEventListener('click', function(e) {
+            e.preventDefault();
+            openModal('registerModal');
+        });
+    });
+
+    // Cerrar modal de registro
+    const closeRegisterModal = document.getElementById('closeRegisterModal');
+    if (closeRegisterModal) {
+        closeRegisterModal.addEventListener('click', function() {
+            closeModal('registerModal');
+        });
+    }
+    const cancelRegister = document.getElementById('cancelRegister');
+    if (cancelRegister) {
+        cancelRegister.addEventListener('click', function() {
+            closeModal('registerModal');
+        });
+    }
+    const registerModal = document.getElementById('registerModal');
+    if (registerModal) {
+        registerModal.addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeModal('registerModal');
+            }
+        });
+    }
+
+    // Enviar formulario de registro
+    const registerForm = document.getElementById('registerForm');
+    if (registerForm) {
+        registerForm.addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            // Validar que las contraseñas coincidan
+            const password = this.querySelector('[name="password"]').value;
+            const confirmPassword = this.querySelector('[name="confirmPassword"]').value;
+            
+            if (password !== confirmPassword) {
+                showNotification('Las contraseñas no coinciden', 'error');
+                return;
+            }
+            
+            const formData = new FormData(this);
+            const data = {};
+            formData.forEach((value, key) => { data[key] = value; });
+            
+            // Remover confirmPassword del objeto data
+            delete data.confirmPassword;
+            
+            try {
+                const response = await fetch('api/register.php?v=' + Date.now(), {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(data)
+                });
+                if (response.ok) {
+                    showNotification('Usuario registrado exitosamente.', 'success');
+                    closeModal('registerModal');
+                    this.reset();
+                } else {
+                    const res = await response.json();
+                    showNotification(res.message || 'Error al registrar usuario.', 'error');
+                }
+            } catch (error) {
+                showNotification('Error de conexión con la API.', 'error');
+            }
+        });
+    }
 });
 
 // Función principal de inicialización
@@ -14,6 +86,8 @@ function initializeLogin() {
     setupFormSubmission();
     setupAnimations();
     setupKeyboardShortcuts();
+    
+
 }
 
 // Configurar validación del formulario
@@ -228,6 +302,15 @@ function setupFormSubmission() {
 }
 
 // Enviar formulario
+enumUserRedirect = {
+    'Administrador': 'index.html',
+    'Asistente Administrativo': 'index.html',
+    'Técnico': 'index.html',
+    'Vendedor': 'index.html',
+    'Cliente': 'index.html',
+    'Supervisor': 'index.html',
+};
+
 function submitForm() {
     if (isProcessing) return;
 
@@ -251,11 +334,61 @@ function submitForm() {
         return;
     }
 
-    // Mostrar estado de carga
     setLoadingState(true);
 
-    // Simular envío de datos (aquí iría la lógica real)
-    simulateLogin(username, password, rememberMe);
+    // Enviar datos a la API real
+    fetch('api/login.php?v=' + Date.now(), {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+            email: username,
+            password: password
+        })
+    })
+    .then(async response => {
+        const res = await response.json();
+        if (response.ok) {
+            showNotification('Inicio de sesión exitoso', 'success');
+            rememberUser(username);
+            
+            // Mapear y guardar datos de sesión para compatibilidad con checkout
+            const nameParts = res.userData.name.split(' ');
+            const nombre = nameParts.shift() || '';
+            const apellido = nameParts.join(' ') || '';
+
+            const userData = {
+                id_usuario: res.userData.id,
+                id_cliente: res.userData.id_cliente,
+                nombre: nombre,
+                apellido: apellido,
+                email: res.userData.email,
+                rol: res.userData.rol,
+                telefono: res.userData.telefono || '',
+                loggedIn: true
+            };
+            localStorage.setItem('usuario_logueado', JSON.stringify(userData));
+            
+            setTimeout(() => {
+                const urlParams = new URLSearchParams(window.location.search);
+                const returnUrl = urlParams.get('return');
+
+                if (returnUrl) {
+                    // Si hay una URL de retorno, redirigir a ella
+                    window.location.href = decodeURIComponent(returnUrl);
+                } else {
+                    // Redirección por defecto si no hay URL de retorno
+                    window.location.href = 'index.html';
+                }
+            }, 1000);
+        } else {
+            showNotification(res.message || 'Usuario o contraseña incorrectos', 'error');
+            setLoadingState(false);
+        }
+    })
+    .catch(error => {
+        showNotification('Error de conexión con la API.', 'error');
+        setLoadingState(false);
+    });
 }
 
 // Simular proceso de login
@@ -586,9 +719,52 @@ dynamicStyles.textContent = `
         transform: none;
         box-shadow: none;
     }
+    
+    .register-info {
+        background: linear-gradient(135deg, #e3f2fd, #f3e5f5);
+        border: 1px solid #bbdefb;
+        border-radius: 10px;
+        padding: 15px;
+        margin: 20px 0;
+        text-align: center;
+    }
+    
+    .register-info h4 {
+        color: #1976d2;
+        margin: 0 0 10px 0;
+        font-size: 1.1rem;
+    }
+    
+    .register-info p {
+        color: #424242;
+        margin: 0;
+        font-size: 0.9rem;
+        line-height: 1.4;
+    }
+    
+    .back-to-login {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        color: #6c757d;
+        text-decoration: none;
+        font-size: 0.9rem;
+        padding: 8px 16px;
+        border: 1px solid #dee2e6;
+        border-radius: 20px;
+        transition: all 0.3s ease;
+    }
+    
+    .back-to-login:hover {
+        color: #007bff;
+        border-color: #007bff;
+        background: rgba(0, 123, 255, 0.05);
+    }
 `;
 
 document.head.appendChild(dynamicStyles);
+
+
 
 // Inicializar usuario recordado al cargar la página
 checkRememberedUser();

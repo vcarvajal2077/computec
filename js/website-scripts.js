@@ -21,7 +21,6 @@ document.addEventListener('DOMContentLoaded', function() {
 function initializeWebsite() {
     setupScrollEffects();
     setupMobileMenu();
-    setupSmoothScrolling();
     setupContactForm();
     setupProductModals();
     setupProductFilters();
@@ -90,38 +89,7 @@ function setupMobileMenu() {
 }
 
 // Scroll suave
-function setupSmoothScrolling() {
-    // Scroll indicator
-    if (scrollIndicator) {
-        scrollIndicator.addEventListener('click', function() {
-            const serviciosSection = document.querySelector('#servicios');
-            const headerHeight = document.querySelector('.header').offsetHeight;
-            const targetPosition = serviciosSection.offsetTop - headerHeight - 10; // 10px extra de margen visual
-            window.scrollTo({
-                top: targetPosition,
-                behavior: 'smooth'
-            });
-        });
-    }
-    
-    // Enlaces internos de la página
-    const internalLinks = document.querySelectorAll('a[href^="#"]');
-    internalLinks.forEach(link => {
-        link.addEventListener('click', function(e) {
-            const targetId = this.getAttribute('href').substring(1);
-            const targetSection = document.getElementById(targetId);
-            if (targetSection) {
-                e.preventDefault();
-                const headerHeight = document.querySelector('.header').offsetHeight;
-                const targetPosition = targetSection.offsetTop - headerHeight - 10;
-                window.scrollTo({
-                    top: targetPosition,
-                    behavior: 'smooth'
-                });
-            }
-        });
-    });
-}
+
 
 // Filtros de productos
 function setupProductFilters() {
@@ -650,44 +618,11 @@ document.addEventListener('DOMContentLoaded', function() {
     navLinks.forEach(link => {
         link.addEventListener('click', function(e) {
             const href = this.getAttribute('href');
-            if (href.startsWith('#')) {
-                e.preventDefault();
-                const targetSection = document.querySelector(href);
-                if (targetSection) {
-                    const headerHeight = document.querySelector('.header').offsetHeight;
-                    const targetPosition = targetSection.offsetTop - headerHeight;
-                    window.scrollTo({
-                        top: targetPosition,
-                        behavior: 'smooth'
-                    });
-                }
-            }
             // Si es un enlace a otra página, no se previene el comportamiento por defecto
         });
     });
     
-    // Resaltar menú activo según la sección visible
-    function highlightActiveMenu() {
-        const scrollPosition = window.scrollY + 100;
-        
-        sections.forEach(section => {
-            const sectionTop = section.offsetTop;
-            const sectionHeight = section.offsetHeight;
-            const sectionId = section.getAttribute('id');
-            
-            if (scrollPosition >= sectionTop && scrollPosition < sectionTop + sectionHeight) {
-                navLinks.forEach(link => {
-                    link.classList.remove('active');
-                    if (link.getAttribute('href') === '#' + sectionId) {
-                        link.classList.add('active');
-                    }
-                });
-            }
-        });
-    }
     
-    // Escuchar scroll para resaltar menú
-    window.addEventListener('scroll', highlightActiveMenu);
     
     // Formulario de contacto
     const contactForm = document.getElementById('contactForm');

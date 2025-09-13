@@ -1,0 +1,947 @@
+/* =====================================================
+   CHECKOUT - ESTILOS MEJORADOS
+   ===================================================== */
+
+.checkout-main {
+    padding: 40px 0 80px;
+    background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+    min-height: calc(100vh - 80px);
+    position: relative;
+    overflow: hidden;
+}
+
+.checkout-main::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="25" cy="25" r="1" fill="%23e2e8f0" opacity="0.1"/><circle cx="75" cy="75" r="1" fill="%23cbd5e1" opacity="0.1"/><circle cx="50" cy="10" r="0.5" fill="%23f1f5f9" opacity="0.2"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
+    pointer-events: none;
+    z-index: 0;
+}
+
+/* Breadcrumb */
+.breadcrumb {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 32px;
+    font-size: 14px;
+    color: #64748b;
+}
+
+.breadcrumb a {
+    color: #3b82f6;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.breadcrumb a:hover {
+    color: #1d4ed8;
+}
+
+.breadcrumb i {
+    font-size: 12px;
+}
+
+.breadcrumb span {
+    color: #1e293b;
+    font-weight: 500;
+}
+
+/* Checkout Content */
+.checkout-content {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 40px;
+    max-width: 1200px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 1;
+}
+
+/* Animación de entrada */
+.checkout-content {
+    animation: slideInUp 0.6s ease-out;
+}
+
+@keyframes slideInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Resumen del Servicio */
+.checkout-summary {
+    background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+    border-radius: 20px;
+    padding: 32px;
+    box-shadow: 
+        0 20px 40px rgba(0, 0, 0, 0.1),
+        0 0 0 1px rgba(255, 255, 255, 0.8);
+    height: fit-content;
+    position: sticky;
+    top: 100px;
+    border: 1px solid rgba(59, 130, 246, 0.1);
+    backdrop-filter: blur(10px);
+    transition: all 0.3s ease;
+}
+
+.checkout-summary:hover {
+    transform: translateY(-2px);
+    box-shadow: 
+        0 25px 50px rgba(0, 0, 0, 0.15),
+        0 0 0 1px rgba(59, 130, 246, 0.2);
+}
+
+.checkout-summary h1 {
+    font-size: 28px;
+    font-weight: 700;
+    color: #1e293b;
+    margin-bottom: 24px;
+}
+
+.servicio-resumen {
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    padding: 24px;
+    background: #f8fafc;
+}
+
+.servicio-info {
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+    margin-bottom: 20px;
+}
+
+.servicio-icon {
+    width: 60px;
+    height: 60px;
+    background: var(--servicio-color, #3b82f6);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.servicio-icon i {
+    font-size: 24px;
+    color: white;
+}
+
+.servicio-details h3 {
+    font-size: 18px;
+    font-weight: 600;
+    color: #1e293b;
+    margin-bottom: 8px;
+}
+
+.servicio-details p {
+    color: #64748b;
+    font-size: 14px;
+    line-height: 1.5;
+    margin-bottom: 12px;
+}
+
+.servicio-precio {
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--servicio-color, #3b82f6);
+    margin-bottom: 16px;
+}
+
+.servicio-caracteristicas {
+    margin-bottom: 20px;
+}
+
+.servicio-caracteristicas h4 {
+    font-size: 14px;
+    font-weight: 600;
+    color: #374151;
+    margin-bottom: 8px;
+}
+
+.caracteristicas-lista {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+}
+
+.caracteristica-tag {
+    background: #e0f2fe;
+    color: #0369a1;
+    padding: 4px 10px;
+    border-radius: 12px;
+    font-size: 12px;
+    font-weight: 500;
+}
+
+.resumen-total {
+    border-top: 1px solid #e2e8f0;
+    padding-top: 20px;
+}
+
+.total-item {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 8px;
+    font-size: 14px;
+}
+
+.total-item.final {
+    font-size: 18px;
+    font-weight: 700;
+    color: #1e293b;
+    border-top: 1px solid #e2e8f0;
+    padding-top: 12px;
+    margin-top: 12px;
+}
+
+/* Formulario de Checkout */
+.checkout-form-container {
+    background: white;
+    border-radius: 16px;
+    padding: 32px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.checkout-form {
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+}
+
+.form-section {
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    padding: 24px;
+    background: #fafbfc;
+}
+
+.form-section h2 {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 20px;
+    font-weight: 600;
+    color: #1e293b;
+    margin-bottom: 24px;
+}
+
+.form-section h2 i {
+    color: #3b82f6;
+    font-size: 18px;
+}
+
+.form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.form-group label {
+    font-size: 14px;
+    font-weight: 600;
+    color: #374151;
+}
+
+.form-group input,
+.form-group textarea,
+.form-group select {
+    padding: 12px 16px;
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+    font-size: 14px;
+    transition: all 0.3s ease;
+    background: white;
+}
+
+.form-group input:focus,
+.form-group textarea:focus,
+.form-group select:focus {
+    outline: none;
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+.form-group textarea {
+    resize: vertical;
+    min-height: 80px;
+}
+
+/* Métodos de Pago */
+.payment-methods {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 16px;
+}
+
+.payment-option {
+    position: relative;
+}
+
+.payment-option input[type="radio"] {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.payment-option label {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px 16px;
+    border: 2px solid #e2e8f0;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    background: white;
+    text-align: center;
+}
+
+.payment-option label:hover {
+    border-color: #3b82f6;
+    background: #f8fafc;
+}
+
+.payment-option input[type="radio"]:checked + label {
+    border-color: #3b82f6;
+    background: #eff6ff;
+}
+
+.payment-option label i {
+    font-size: 24px;
+    color: #64748b;
+    margin-bottom: 8px;
+    transition: color 0.3s ease;
+}
+
+.payment-option input[type="radio"]:checked + label i {
+    color: #3b82f6;
+}
+
+.payment-option label span {
+    font-size: 16px;
+    font-weight: 600;
+    color: #1e293b;
+    margin-bottom: 4px;
+}
+
+.payment-option label small {
+    font-size: 12px;
+    color: #64748b;
+}
+
+/* Términos y Condiciones */
+.terms-checkbox {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+}
+
+.terms-checkbox input[type="checkbox"] {
+    margin-top: 4px;
+    width: 18px;
+    height: 18px;
+    accent-color: #3b82f6;
+}
+
+.terms-checkbox label {
+    font-size: 14px;
+    color: #64748b;
+    line-height: 1.5;
+}
+
+.terms-checkbox a {
+    color: #3b82f6;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.terms-checkbox a:hover {
+    text-decoration: underline;
+}
+
+/* Botones de Acción */
+.form-actions {
+    display: flex;
+    gap: 16px;
+    justify-content: flex-end;
+    padding-top: 24px;
+    border-top: 1px solid #e2e8f0;
+}
+
+.btn-secondary,
+.btn-primary {
+    padding: 14px 28px;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    border: none;
+}
+
+.btn-secondary {
+    background: #f1f5f9;
+    color: #475569;
+    border: 1px solid #cbd5e1;
+}
+
+.btn-secondary:hover {
+    background: #e2e8f0;
+    transform: translateY(-2px);
+}
+
+.btn-primary {
+    background: #3b82f6;
+    color: white;
+}
+
+.btn-primary:hover {
+    background: #2563eb;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(59, 130, 246, 0.3);
+}
+
+.btn-primary:disabled {
+    background: #94a3b8;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+}
+
+/* Modal de Confirmación */
+.modal-confirmacion {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+}
+
+.modal-confirmacion .modal-content {
+    background: white;
+    border-radius: 16px;
+    max-width: 500px;
+    width: 90%;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+    animation: modalSlideIn 0.3s ease;
+}
+
+@keyframes modalSlideIn {
+    from {
+        opacity: 0;
+        transform: translateY(-30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 24px;
+    border-bottom: 1px solid #e2e8f0;
+}
+
+.modal-header h2 {
+    margin: 0;
+    color: #1e293b;
+    font-size: 24px;
+}
+
+.modal-close {
+    background: none;
+    border: none;
+    font-size: 24px;
+    color: #64748b;
+    cursor: pointer;
+    padding: 8px;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+}
+
+.modal-close:hover {
+    background: #f1f5f9;
+    color: #1e293b;
+}
+
+.modal-body {
+    padding: 24px;
+    text-align: center;
+}
+
+.success-icon {
+    margin-bottom: 20px;
+}
+
+.success-icon i {
+    font-size: 64px;
+    color: #10b981;
+}
+
+.modal-body h3 {
+    font-size: 20px;
+    font-weight: 600;
+    color: #1e293b;
+    margin-bottom: 20px;
+}
+
+.orden-details {
+    background: #f8fafc;
+    border-radius: 8px;
+    padding: 16px;
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+.orden-details h4 {
+    font-size: 16px;
+    font-weight: 600;
+    color: #1e293b;
+    margin-bottom: 8px;
+}
+
+.orden-details p {
+    font-size: 14px;
+    color: #64748b;
+    margin-bottom: 4px;
+}
+
+.next-steps {
+    font-size: 14px;
+    color: #64748b;
+    line-height: 1.5;
+}
+
+.modal-footer {
+    padding: 24px;
+    border-top: 1px solid #e2e8f0;
+    text-align: center;
+}
+
+/* Loading Overlay */
+.loading-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 1001;
+}
+
+.loading-content {
+    background: white;
+    border-radius: 12px;
+    padding: 40px;
+    text-align: center;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+}
+
+.loading-spinner {
+    width: 50px;
+    height: 50px;
+    border: 4px solid #f3f3f3;
+    border-top: 4px solid #3b82f6;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin: 0 auto 20px;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.loading-content p {
+    color: #64748b;
+    font-size: 16px;
+    margin: 0;
+}
+
+/* Mensaje de Bienvenida */
+.bienvenida-usuario {
+    background: linear-gradient(135deg, #dbeafe 0%, #bfdbfe 100%);
+    border: 1px solid #3b82f6;
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 24px;
+    animation: slideInDown 0.5s ease;
+}
+
+.bienvenida-content {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.bienvenida-content i {
+    font-size: 24px;
+    color: #3b82f6;
+}
+
+.bienvenida-content h3 {
+    margin: 0 0 4px 0;
+    color: #1e40af;
+    font-size: 18px;
+}
+
+.bienvenida-content p {
+    margin: 0;
+    color: #1e40af;
+    font-size: 14px;
+}
+
+.btn-cerrar-bienvenida {
+    background: none;
+    border: none;
+    color: #64748b;
+    cursor: pointer;
+    padding: 8px;
+    border-radius: 6px;
+    transition: all 0.3s ease;
+    margin-left: auto;
+}
+
+.btn-cerrar-bienvenida:hover {
+    background: #f1f5f9;
+    color: #1e293b;
+}
+
+/* Opción de Login */
+.opcion-login {
+    background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+    border: 1px solid #f59e0b;
+    border-radius: 12px;
+    padding: 24px;
+    margin-bottom: 24px;
+    animation: slideInDown 0.5s ease;
+}
+
+.opcion-login-content {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.opcion-login-content i {
+    font-size: 32px;
+    color: #f59e0b;
+}
+
+.opcion-login-content h3 {
+    margin: 0 0 8px 0;
+    color: #92400e;
+    font-size: 20px;
+}
+
+.opcion-login-content p {
+    margin: 0;
+    color: #92400e;
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+.opcion-login-actions {
+    display: flex;
+    gap: 12px;
+    margin-left: auto;
+    flex-shrink: 0;
+}
+
+.btn-login-checkout,
+.btn-continuar-sin-login {
+    padding: 12px 20px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: none;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.btn-login-checkout {
+    background: #3b82f6;
+    color: white;
+}
+
+.btn-login-checkout:hover {
+    background: #2563eb;
+    transform: translateY(-2px);
+}
+
+.btn-continuar-sin-login {
+    background: #f1f5f9;
+    color: #475569;
+    border: 1px solid #cbd5e1;
+}
+
+.btn-continuar-sin-login:hover {
+    background: #e2e8f0;
+    transform: translateY(-2px);
+}
+
+/* Loading Spinner Mejorado */
+.loading-spinner {
+    display: none;
+    justify-content: center;
+    align-items: center;
+    padding: 40px;
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 16px;
+    backdrop-filter: blur(10px);
+    margin: 20px 0;
+}
+
+.spinner {
+    width: 50px;
+    height: 50px;
+    border: 4px solid rgba(59, 130, 246, 0.1);
+    border-top: 4px solid #3b82f6;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    position: relative;
+}
+
+.spinner::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 20px;
+    height: 20px;
+    border: 2px solid rgba(59, 130, 246, 0.3);
+    border-top: 2px solid #3b82f6;
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    animation: spin 0.5s linear infinite reverse;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Loading Text */
+.loading-text {
+    margin-top: 16px;
+    color: #64748b;
+    font-size: 14px;
+    font-weight: 500;
+    animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+    0%, 100% { opacity: 0.6; }
+    50% { opacity: 1; }
+}
+
+/* Animaciones */
+@keyframes slideInDown {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Success Animation */
+@keyframes successBounce {
+    0% { transform: scale(0.3); }
+    50% { transform: scale(1.05); }
+    70% { transform: scale(0.9); }
+    100% { transform: scale(1); }
+}
+
+.success-animation {
+    animation: successBounce 0.6s ease-out;
+}
+
+/* Error Animation */
+@keyframes errorShake {
+    0%, 100% { transform: translateX(0); }
+    10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+    20%, 40%, 60%, 80% { transform: translateX(5px); }
+}
+
+.error-animation {
+    animation: errorShake 0.5s ease-in-out;
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+    .checkout-content {
+        grid-template-columns: 1fr;
+        gap: 32px;
+    }
+    
+    .checkout-summary {
+        position: static;
+    }
+}
+
+@media (max-width: 768px) {
+    .checkout-main {
+        padding: 20px 0 60px;
+    }
+    
+    .checkout-summary,
+    .checkout-form-container {
+        padding: 24px;
+    }
+    
+    .form-row {
+        grid-template-columns: 1fr;
+        gap: 16px;
+    }
+    
+    .payment-methods {
+        grid-template-columns: 1fr;
+    }
+    
+    .form-actions {
+        flex-direction: column;
+    }
+    
+    .btn-secondary,
+    .btn-primary {
+        width: 100%;
+        justify-content: center;
+    }
+    
+    .opcion-login-content {
+        flex-direction: column;
+        text-align: center;
+        gap: 16px;
+    }
+    
+    .opcion-login-actions {
+        margin-left: 0;
+        justify-content: center;
+        flex-direction: column;
+        width: 100%;
+    }
+    
+    .btn-login-checkout,
+    .btn-continuar-sin-login {
+        width: 100%;
+        justify-content: center;
+    }
+    
+    .bienvenida-content {
+        flex-direction: column;
+        text-align: center;
+        gap: 12px;
+    }
+    
+    .btn-cerrar-bienvenida {
+        margin-left: 0;
+        align-self: center;
+    }
+}
+
+@media (max-width: 480px) {
+    .checkout-summary h1 {
+        font-size: 24px;
+    }
+    
+    .form-section h2 {
+        font-size: 18px;
+    }
+    
+    .modal-confirmacion .modal-content {
+        width: 95%;
+        margin: 20px;
+    }
+}
+
+
+/* Simple Header for Checkout/Login Pages */
+.header-simple {
+    background: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid #e2e8f0;
+    padding: 0.75rem 0;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    position: sticky;
+    top: 0;
+    z-index: 999;
+}
+
+.header-simple .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1rem;
+}
+
+.header-simple .back-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: #475569;
+    text-decoration: none;
+    font-weight: 600;
+    transition: color 0.3s ease;
+    font-size: 1rem;
+}
+
+.header-simple .back-button:hover {
+    color: #1e293b;
+}
+
+.header-simple .back-button i {
+    font-size: 1rem;
+}
+
+.header-simple .simple-logo {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #1e293b;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.header-simple .simple-logo i {
+    color: #3b82f6;
+}
