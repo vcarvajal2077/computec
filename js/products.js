@@ -1,329 +1,182 @@
-/* ===== COMPUTEC PLATFORM - PRODUCTOS ===== */
+document.addEventListener('DOMContentLoaded', () => {
+    // Elementos del DOM
+    const searchBar = document.getElementById('search-bar');
+    const categoryFilters = document.getElementById('category-filters');
+    const productGrid = document.getElementById('product-grid');
+    const loadingIndicator = document.getElementById('products-loading');
+    const errorIndicator = document.getElementById('products-error');
+    const noResultsIndicator = document.getElementById('no-results');
 
-class ProductsPage {
-    constructor() {
-        this.products = [];
-        this.currentFilter = 'all';
-        this.cart = [];
-        this.init();
-    }
+    // Estado de la aplicación
+    let allProducts = [];
+    let allCategories = [];
+    let currentCategory = 'all';
+    let searchTerm = '';
 
-    init() {
-        this.bindElements();
-        this.bindEvents();
-        this.loadProducts();
-        this.loadCart();
-    }
-
-    bindElements() {
-        this.productsGrid = document.getElementById('products-grid');
-        this.filterButtons = document.querySelectorAll('.filter-btn');
-        this.cartCount = document.getElementById('cart-count');
-    }
-
-    bindEvents() {
-        this.filterButtons.forEach(button => {
-            button.addEventListener('click', (e) => this.handleFilter(e));
-        });
-    }
-
-    async loadProducts() {
+    /**
+     * Inicializa la página: obtiene datos y configura eventos
+     */
+    async function init() {
+        showLoading();
         try {
-            this.showLoading();
-            
-            // Simular carga de productos (en producción vendría de una API)
-            const mockProducts = [
-                {
-                    id: 1,
-                    name: 'Laptop Gaming Pro',
-                    price: 2500000,
-                    category: 'laptops',
-                    image: 'https://via.placeholder.com/300x200/2563eb/ffffff?text=Laptop+Gaming',
-                    description: 'Laptop gaming de alta gama con tarjeta gráfica dedicada',
-                    features: ['Intel i7', '16GB RAM', 'GTX 1660', 'SSD 512GB'],
-                    stock: 5
-                },
-                {
-                    id: 2,
-                    name: 'Mouse Gaming RGB',
-                    price: 150000,
-                    category: 'accesorios',
-                    image: 'https://via.placeholder.com/300x200/10b981/ffffff?text=Mouse+Gaming',
-                    description: 'Mouse gaming con iluminación RGB y sensor óptico avanzado',
-                    features: ['RGB', 'DPI Ajustable', 'Ergonómico', 'Cable Braided'],
-                    stock: 10
-                },
-                {
-                    id: 3,
-                    name: 'Teclado Mecánico',
-                    price: 200000,
-                    category: 'accesorios',
-                    image: 'https://via.placeholder.com/300x200/f59e0b/ffffff?text=Teclado+Mecánico',
-                    description: 'Teclado mecánico con switches Cherry MX y retroiluminación',
-                    features: ['Cherry MX', 'Retroiluminación', 'Anti-ghosting', 'USB-C'],
-                    stock: 8
-                },
-                {
-                    id: 4,
-                    name: 'Monitor 24" 4K',
-                    price: 800000,
-                    category: 'perifericos',
-                    image: 'https://via.placeholder.com/300x200/8b5cf6/ffffff?text=Monitor+4K',
-                    description: 'Monitor 4K de 24 pulgadas con tecnología IPS',
-                    features: ['4K UHD', 'IPS Panel', 'HDR10', 'USB-C'],
-                    stock: 3
-                },
-                {
-                    id: 5,
-                    name: 'Procesador Intel i5',
-                    price: 600000,
-                    category: 'componentes',
-                    image: 'https://via.placeholder.com/300x200/ef4444/ffffff?text=Intel+i5',
-                    description: 'Procesador Intel Core i5 de 10ma generación',
-                    features: ['6 Cores', '12 Threads', '4.3GHz', 'LGA 1200'],
-                    stock: 12
-                },
-                {
-                    id: 6,
-                    name: 'Memoria RAM 16GB',
-                    price: 300000,
-                    category: 'componentes',
-                    image: 'https://via.placeholder.com/300x200/06b6d4/ffffff?text=RAM+16GB',
-                    description: 'Memoria RAM DDR4 de 16GB a 3200MHz',
-                    features: ['DDR4', '3200MHz', 'CL16', 'Dual Channel'],
-                    stock: 20
-                }
-            ];
+            // Obtener productos y categorías en paralelo
+            const [productsResponse, categoriesResponse] = await Promise.all([
+                fetch('api/productos.php?action=getProductos'),
+                fetch('api/productos.php?action=getCategorias')
+            ]);
 
-            this.products = mockProducts;
-            this.renderProducts();
+            const productsResult = await productsResponse.json();
+            const categoriesResult = await categoriesResponse.json();
+
+            if (productsResult.success) {
+                allProducts = productsResult.data;
+            } else {
+                throw new Error(productsResult.error || 'Error al cargar productos');
+            }
+
+            if (categoriesResult.success) {
+                allCategories = categoriesResult.data;
+            } else {
+                throw new Error(categoriesResult.error || 'Error al cargar categorías');
+            }
+
+            renderCategories();
+            filterAndRender();
+            setupEventListeners();
+
         } catch (error) {
-            console.error('Error loading products:', error);
-            this.showError('Error al cargar productos');
+            console.error('Error en la inicialización:', error);
+            showError();
         } finally {
-            this.hideLoading();
+            hideLoading();
         }
     }
 
-    renderProducts() {
-        if (!this.productsGrid) return;
+    /**
+     * Configura los event listeners para búsqueda y filtros
+     */
+    function setupEventListeners() {
+        // Listener para la barra de búsqueda (con debounce)
+        let searchTimeout;
+        searchBar.addEventListener('input', (e) => {
+            clearTimeout(searchTimeout);
+            searchTimeout = setTimeout(() => {
+                searchTerm = e.target.value.toLowerCase();
+                filterAndRender();
+            }, 300); // Espera 300ms después de que el usuario deja de escribir
+        });
 
-        const filteredProducts = this.currentFilter === 'all' 
-            ? this.products 
-            : this.products.filter(product => product.category === this.currentFilter);
+        // Listener para los botones de categoría (usando delegación de eventos)
+        categoryFilters.addEventListener('click', (e) => {
+            if (e.target.matches('.filter-btn')) {
+                currentCategory = e.target.dataset.category;
+                // Actualizar clase activa
+                categoryFilters.querySelector('.active').classList.remove('active');
+                e.target.classList.add('active');
+                filterAndRender();
+            }
+        });
+    }
 
-        this.productsGrid.innerHTML = filteredProducts.map(product => `
-            <div class="product-card" data-category="${product.category}">
-                <div class="product-image">
-                    <img src="${product.image}" alt="${product.name}" loading="lazy">
-                    <div class="product-overlay">
-                        <button class="btn btn-primary" onclick="productsPage.viewProduct(${product.id})">
-                            <i class="fas fa-eye"></i>
-                            <span>Ver Detalles</span>
-                        </button>
-                    </div>
+    /**
+     * Filtra los productos según el término de búsqueda y la categoría actual, y los renderiza
+     */
+    function filterAndRender() {
+        let filteredProducts = allProducts;
+
+        // 1. Filtrar por categoría
+        if (currentCategory !== 'all') {
+            filteredProducts = filteredProducts.filter(product => product.categoria === currentCategory);
+        }
+
+        // 2. Filtrar por término de búsqueda
+        if (searchTerm) {
+            filteredProducts = filteredProducts.filter(product => 
+                product.nombre.toLowerCase().includes(searchTerm) ||
+                (product.descripcion && product.descripcion.toLowerCase().includes(searchTerm))
+            );
+        }
+
+        renderProducts(filteredProducts);
+    }
+
+    /**
+     * Renderiza las tarjetas de producto en el grid
+     * @param {Array} products - La lista de productos a renderizar
+     */
+    function renderProducts(products) {
+        productGrid.innerHTML = ''; // Limpiar el grid
+
+        if (products.length === 0) {
+            showNoResults();
+            return;
+        }
+
+        hideNoResults();
+        const productCards = products.map(product => `
+            <div class="product-card">
+                <div class="product-image-container">
+                    <img src="${product.imagen || 'https://via.placeholder.com/300'}" alt="${product.nombre}">
                 </div>
-                <div class="product-content">
-                    <h3>${product.name}</h3>
-                    <p class="product-description">${product.description}</p>
-                    <div class="product-features">
-                        ${product.features.map(feature => `<span class="feature-tag">${feature}</span>`).join('')}
-                    </div>
-                    <div class="product-price">
-                        <span class="price">$${product.price.toLocaleString()}</span>
-                        <span class="stock">Stock: ${product.stock}</span>
-                    </div>
-                    <div class="product-actions">
-                        <button class="btn btn-primary" onclick="productsPage.addToCart(${product.id})" ${product.stock === 0 ? 'disabled' : ''}>
-                            <i class="fas fa-shopping-cart"></i>
-                            <span>${product.stock === 0 ? 'Agotado' : 'Agregar al Carrito'}</span>
-                        </button>
-                        <button class="btn btn-outline" onclick="productsPage.addToWishlist(${product.id})">
-                            <i class="fas fa-heart"></i>
-                        </button>
+                <div class="product-info">
+                    <span class="product-category">${product.categoria}</span>
+                    <h4 class="product-name">${product.nombre}</h4>
+                    <p class="product-price">$${formatPrice(product.precio_venta)}</p>
+                    <div class="product-action">
+                        <button class="btn" data-product-id="${product.id_producto}">Ver Detalles</button>
                     </div>
                 </div>
             </div>
         `).join('');
+
+        productGrid.innerHTML = productCards;
     }
 
-    handleFilter(e) {
-        const button = e.currentTarget;
-        const category = button.getAttribute('data-category');
-
-        // Update active button
-        this.filterButtons.forEach(btn => btn.classList.remove('active'));
-        button.classList.add('active');
-
-        // Update current filter
-        this.currentFilter = category;
-
-        // Re-render products
-        this.renderProducts();
-    }
-
-    addToCart(productId) {
-        const product = this.products.find(p => p.id === productId);
-        if (!product || product.stock === 0) return;
-
-        const existingItem = this.cart.find(item => item.id === productId);
+    /**
+     * Renderiza los botones de filtro de categoría
+     */
+    function renderCategories() {
+        let categoryButtons = '<button class="filter-btn active" data-category="all">Todas</button>';
         
-        if (existingItem) {
-            existingItem.quantity += 1;
-        } else {
-            this.cart.push({
-                id: product.id,
-                name: product.name,
-                price: product.price,
-                image: product.image,
-                quantity: 1
-            });
-        }
+        allCategories.forEach(category => {
+            categoryButtons += `<button class="filter-btn" data-category="${category}">${category}</button>`;
+        });
 
-        this.updateCartUI();
-        this.showNotification(`${product.name} agregado al carrito`, 'success');
-        this.saveCart();
+        categoryFilters.innerHTML = categoryButtons;
     }
 
-    addToWishlist(productId) {
-        const product = this.products.find(p => p.id === productId);
-        if (product) {
-            this.showNotification(`${product.name} agregado a favoritos`, 'info');
-        }
+    // --- Funciones de utilidad ---
+
+    function showLoading() {
+        loadingIndicator.style.display = 'flex';
+        productGrid.style.display = 'none';
+        errorIndicator.style.display = 'none';
+        noResultsIndicator.style.display = 'none';
     }
 
-    viewProduct(productId) {
-        const product = this.products.find(p => p.id === productId);
-        if (product) {
-            this.showProductModal(product);
-        }
+    function hideLoading() {
+        loadingIndicator.style.display = 'none';
+        productGrid.style.display = 'grid';
     }
 
-    showProductModal(product) {
-        const modal = document.createElement('div');
-        modal.className = 'product-modal';
-        modal.innerHTML = `
-            <div class="modal-overlay" onclick="this.parentElement.remove()"></div>
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h3>${product.name}</h3>
-                    <button class="modal-close" onclick="this.closest('.product-modal').remove()">
-                        <i class="fas fa-times"></i>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <div class="product-details">
-                        <div class="product-image-large">
-                            <img src="${product.image}" alt="${product.name}">
-                        </div>
-                        <div class="product-info">
-                            <p class="product-description">${product.description}</p>
-                            <div class="product-features">
-                                <h4>Características:</h4>
-                                <ul>
-                                    ${product.features.map(feature => `<li><i class="fas fa-check"></i> ${feature}</li>`).join('')}
-                                </ul>
-                            </div>
-                            <div class="product-price-large">
-                                <span class="price">$${product.price.toLocaleString()}</span>
-                                <span class="stock">Stock disponible: ${product.stock}</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button class="btn btn-primary" onclick="productsPage.addToCart(${product.id})" ${product.stock === 0 ? 'disabled' : ''}>
-                        <i class="fas fa-shopping-cart"></i>
-                        <span>${product.stock === 0 ? 'Agotado' : 'Agregar al Carrito'}</span>
-                    </button>
-                    <button class="btn btn-secondary" onclick="this.closest('.product-modal').remove()">
-                        <i class="fas fa-times"></i>
-                        <span>Cerrar</span>
-                    </button>
-                </div>
-            </div>
-        `;
-        document.body.appendChild(modal);
+    function showError() {
+        loadingIndicator.style.display = 'none';
+        productGrid.style.display = 'none';
+        errorIndicator.style.display = 'flex';
     }
 
-    updateCartUI() {
-        const totalItems = this.cart.reduce((sum, item) => sum + item.quantity, 0);
-        if (this.cartCount) {
-            this.cartCount.textContent = totalItems;
-        }
+    function showNoResults() {
+        noResultsIndicator.style.display = 'flex';
     }
 
-    loadCart() {
-        const savedCart = localStorage.getItem('computec_cart');
-        if (savedCart) {
-            this.cart = JSON.parse(savedCart);
-            this.updateCartUI();
-        }
+    function hideNoResults() {
+        noResultsIndicator.style.display = 'none';
     }
 
-    saveCart() {
-        localStorage.setItem('computec_cart', JSON.stringify(this.cart));
+    function formatPrice(price) {
+        return new Intl.NumberFormat('es-CO', { style: 'currency', currency: 'COP', minimumFractionDigits: 0 }).format(price);
     }
 
-    showLoading() {
-        if (this.productsGrid) {
-            this.productsGrid.innerHTML = `
-                <div class="loading-container">
-                    <div class="loading-spinner"></div>
-                    <p>Cargando productos...</p>
-                </div>
-            `;
-        }
-    }
-
-    hideLoading() {
-        // Loading will be replaced by renderProducts
-    }
-
-    showError(message) {
-        if (this.productsGrid) {
-            this.productsGrid.innerHTML = `
-                <div class="error-container">
-                    <i class="fas fa-exclamation-triangle"></i>
-                    <h3>Error al cargar productos</h3>
-                    <p>${message}</p>
-                    <button class="btn btn-primary" onclick="productsPage.loadProducts()">
-                        <i class="fas fa-refresh"></i>
-                        <span>Reintentar</span>
-                    </button>
-                </div>
-            `;
-        }
-    }
-
-    showNotification(message, type = 'info') {
-        const notification = document.createElement('div');
-        notification.className = `notification notification-${type}`;
-        notification.innerHTML = `
-            <div class="notification-content">
-                <i class="fas fa-${type === 'success' ? 'check' : type === 'error' ? 'times' : 'info'}"></i>
-                <span>${message}</span>
-            </div>
-        `;
-        
-        document.body.appendChild(notification);
-        
-        setTimeout(() => {
-            notification.classList.add('show');
-        }, 100);
-        
-        setTimeout(() => {
-            notification.classList.remove('show');
-            setTimeout(() => {
-                document.body.removeChild(notification);
-            }, 300);
-        }, 3000);
-    }
-}
-
-// Initialize products page when DOM is ready
-document.addEventListener('DOMContentLoaded', () => {
-    if (document.getElementById('products-grid')) {
-        window.productsPage = new ProductsPage();
-    }
+    // Iniciar la aplicación
+    init();
 });

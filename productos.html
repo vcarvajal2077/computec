@@ -4,18 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Productos - Computec</title>
-    <meta name="description" content="Productos informáticos de alta calidad: laptops, componentes, accesorios y periféricos.">
+    <meta name="description" content="Explora nuestro catálogo de productos informáticos de alta calidad: laptops, componentes, accesorios y periféricos.">
     
-    <!-- CSS de la SPA Original -->
+    <!-- CSS -->
     <link rel="stylesheet" href="css/website-styles.css">
     <link rel="stylesheet" href="css/header.css">
-    <link rel="stylesheet" href="css/slider.css">
-    <link rel="stylesheet" href="css/reseñas-carrusel.css">
-    <link rel="stylesheet" href="css/hero-servicios.css">
-    <link rel="stylesheet" href="css/productos-categorias.css">
-    <link rel="stylesheet" href="css/servicios-dinamicos.css">
     <link rel="stylesheet" href="css/sections.css">
-    <link rel="stylesheet" href="css/ui-improvements.css">
+    <link rel="stylesheet" href="css/productos.css"> <!-- Nueva hoja de estilos -->
     <link rel="stylesheet" href="css/responsive-improvements.css">
     
     <!-- Fuentes y Iconos -->
@@ -25,7 +20,7 @@
 </head>
 <body>
     <!-- Header -->
-    <header class="header">
+    <header class="header full-width-header">
         <nav class="navbar">
             <div class="nav-container">
                 <div class="nav-logo">
@@ -63,29 +58,66 @@
                     </a>
                 </div>
                 <div class="header-session">
+                    <a href="cart.html" class="cart-icon-link" title="Carrito de Compras">
+                        <i class="fas fa-shopping-cart"></i>
+                        <span id="cart-item-count" class="cart-item-count">0</span>
+                    </a>
                     <div class="account-dropdown" id="accountDropdown">
-                        <div class="account-icon" title="Mi cuenta" id="accountIcon">
-                            <i class="fas fa-user"></i>
-                        </div>
-                        <div class="dropdown-menu" id="dropdownMenu">
-                            <!-- Contenido dinámico se insertará aquí -->
-                        </div>
+                        <div class="account-icon" title="Mi cuenta" id="accountIcon"><i class="fas fa-user"></i></div>
+                        <div class="dropdown-menu" id="dropdownMenu"></div>
                     </div>
                 </div>
-                <div class="hamburger">
-                    <span class="bar"></span>
-                    <span class="bar"></span>
-                    <span class="bar"></span>
-                </div>
+                <div class="hamburger"><span class="bar"></span><span class="bar"></span><span class="bar"></span></div>
             </div>
         </nav>
     </header>
 
-    <!-- Contenido Principal -->
+    <!-- Contenido Principal de Productos -->
     <main class="main-content">
         <div class="container">
-            <h1>Productos</h1>
-            <p>Contenido de productos en desarrollo...</p>
+            <!-- Barra de herramientas: Búsqueda y filtros -->
+            <div class="product-toolbar">
+                <div class="search-container">
+                    <i class="fas fa-search search-icon"></i>
+                    <input type="text" id="search-bar" placeholder="Buscar en Computec...">
+                </div>
+            </div>
+
+            <!-- Vista principal de productos -->
+            <div class="product-view">
+                <!-- Barra lateral de filtros -->
+                <aside class="filters-sidebar">
+                    <h3>Categorías</h3>
+                    <div id="category-filters" class="category-filters">
+                        <!-- Las categorías se cargarán aquí dinámicamente -->
+                    </div>
+                </aside>
+
+                <!-- Grid de productos -->
+                <section class="product-grid-container">
+                    <div id="product-grid" class="product-grid">
+                        <!-- Los productos se cargarán aquí dinámicamente -->
+                    </div>
+
+                    <!-- Estado de Carga -->
+                    <div id="products-loading" class="loading-state">
+                        <div class="loading-spinner"></div>
+                        <p>Cargando productos...</p>
+                    </div>
+
+                    <!-- Estado de Error -->
+                    <div id="products-error" class="error-state" style="display: none;">
+                        <i class="fas fa-exclamation-triangle"></i>
+                        <p>Error al cargar los productos. Por favor, intenta de nuevo más tarde.</p>
+                    </div>
+
+                    <!-- Sin Resultados -->
+                    <div id="no-results" class="no-results-state" style="display: none;">
+                        <i class="fas fa-box-open"></i>
+                        <p>No se encontraron productos que coincidan con tu búsqueda.</p>
+                    </div>
+                </section>
+            </div>
         </div>
     </main>
 
@@ -99,58 +131,30 @@
                         <span>Computec</span>
                     </div>
                     <p>Soluciones informáticas profesionales para tu hogar y empresa.</p>
-                    <div class="social-links">
-                        <a href="#"><i class="fab fa-facebook"></i></a>
-                        <a href="#"><i class="fab fa-twitter"></i></a>
-                        <a href="#"><i class="fab fa-instagram"></i></a>
-                        <a href="#"><i class="fab fa-linkedin"></i></a>
-                    </div>
                 </div>
-                
                 <div class="footer-section">
-                    <h4>Servicios</h4>
+                    <h4>Navegación</h4>
                     <ul>
-                        <li><a href="servicios.html">Reparación</a></li>
-                        <li><a href="servicios.html">Mantenimiento</a></li>
-                        <li><a href="servicios.html">Ensamblaje</a></li>
-                        <li><a href="servicios.html">Soporte Técnico</a></li>
+                        <li><a href="servicios.html">Servicios</a></li>
+                        <li><a href="productos.html">Productos</a></li>
+                        <li><a href="nosotros.html">Nosotros</a></li>
                     </ul>
                 </div>
-                
-                <div class="footer-section">
-                    <h4>Productos</h4>
-                    <ul>
-                        <li><a href="productos.html">Laptops</a></li>
-                        <li><a href="productos.html">Componentes</a></li>
-                        <li><a href="productos.html">Accesorios</a></li>
-                        <li><a href="productos.html">Periféricos</a></li>
-                    </ul>
-                </div>
-                
                 <div class="footer-section">
                     <h4>Contacto</h4>
-                    <div class="contact-info">
-                        <p><i class="fas fa-phone"></i> 3203550004</p>
-                        <p><i class="fas fa-envelope"></i> info@computec.com</p>
-                        <p><i class="fas fa-map-marker-alt"></i> Cúcuta, N.S.</p>
-                    </div>
+                    <p><i class="fas fa-phone"></i> 3203550004</p>
+                    <p><i class="fas fa-envelope"></i> info@computec.com</p>
                 </div>
             </div>
-            
             <div class="footer-bottom">
                 <p>&copy; 2025 Computec. Todos los derechos reservados.</p>
             </div>
         </div>
     </footer>
 
-    <!-- Botón Volver Arriba -->
-    <button id="backToTop" class="back-to-top">
-        <i class="fas fa-chevron-up"></i>
-    </button>
-
     <!-- Scripts -->
     <script src="js/header.js"></script>
     <script src="js/mobile-menu.js"></script>
-    <script src="js/products.js"></script>
+    <script src="js/products.js"></script> <!-- Script para la lógica de productos -->
 </body>
 </html>

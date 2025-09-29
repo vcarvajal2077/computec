@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carrito de Compras - Computec</title>
+    <link rel="stylesheet" href="css/website-styles.css">
+    <link rel="stylesheet" href="css/header.css">
+    <link rel="stylesheet" href="css/cart.css">
+    <link rel="stylesheet" href="css/checkout.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Simple Header -->
+    <header class="header-simple">
+        <div class="container">
+            <a href="javascript:history.back()" class="back-button">
+                <i class="fas fa-arrow-left"></i>
+                <span>Volver</span>
+            </a>
+            <div class="simple-logo">
+                <i class="fas fa-laptop-code"></i>
+                <span>Computec</span>
+            </div>
+        </div>
+    </header>
+
+    <main class="main-content">
+        <div class="container">
+            <h1><i class="fas fa-shopping-cart"></i> Tu Carrito de Compras</h1>
+            <div id="cart-container" class="cart-container">
+                <!-- Los items del carrito se cargarán aquí -->
+            </div>
+            <div id="cart-summary" class="cart-summary">
+                <!-- El resumen del carrito se cargará aquí -->
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <!-- El footer se cargará dinámicamente -->
+    </footer>
+
+    <script src="js/header.js"></script>
+    <script src="js/cart.js"></script>
+</body>
+</html>

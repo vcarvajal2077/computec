@@ -5,11 +5,7 @@
 
 document.addEventListener('DOMContentLoaded', () => {
     // Verificar que el script de servicios dinámicos esté cargado
-    if (typeof ServiciosDinamicos !== 'undefined') {
-        // Inicializar servicios dinámicos
-        window.serviciosDinamicos = new ServiciosDinamicos();
-        console.log('Servicios dinámicos inicializados correctamente');
-    } else {
+    if (typeof ServiciosDinamicos === 'undefined') {
         console.error('Error: ServiciosDinamicos no está disponible');
     }
     

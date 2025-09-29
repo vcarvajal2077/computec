@@ -24,66 +24,7 @@
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>💻</text></svg>">
 </head>
 <body>
-    <!-- Header -->
-    <header class="header full-width-header">
-        <nav class="navbar">
-            <div class="nav-container">
-                <div class="nav-logo">
-                    <i class="fas fa-laptop-code"></i>
-                    <span>Computec</span>
-                </div>
-                <div class="nav-actions">
-                    <a href="index.html" class="nav-link active">
-                        <i class="fas fa-home"></i>
-                        Inicio
-                    </a>
-                    <a href="servicios.html" class="nav-link">
-                        <i class="fas fa-tools"></i>
-                        Servicios
-                    </a>
-                    <a href="productos.html" class="nav-link">
-                        <i class="fas fa-box"></i>
-                        Productos
-                    </a>
-                    <a href="nosotros.html" class="nav-link">
-                        <i class="fas fa-users"></i>
-                        Nosotros
-                    </a>
-                    <a href="contacto.html" class="nav-link">
-                        <i class="fas fa-envelope"></i>
-                        Contacto
-                    </a>
-                    <a href="foro.html" class="nav-link">
-                        <i class="fas fa-comments"></i>
-                        Foro
-                    </a>
-                    <a href="noticias.html" class="nav-link">
-                        <i class="fas fa-newspaper"></i>
-                        Noticias
-                    </a>
-                </div>
-                <div class="header-session">
-                    <a href="cart.html" class="cart-icon-link" title="Carrito de Compras">
-                        <i class="fas fa-shopping-cart"></i>
-                        <span id="cart-item-count" class="cart-item-count">0</span>
-                    </a>
-                    <div class="account-dropdown" id="accountDropdown">
-                        <div class="account-icon" title="Mi cuenta" id="accountIcon">
-                            <i class="fas fa-user"></i>
-                        </div>
-                        <div class="dropdown-menu" id="dropdownMenu">
-                            <!-- Contenido dinámico se insertará aquí -->
-                        </div>
-                    </div>
-                </div>
-                <div class="hamburger">
-                    <span class="bar"></span>
-                    <span class="bar"></span>
-                    <span class="bar"></span>
-                </div>
-            </div>
-        </nav>
-    </header>
+    <?php include 'header.php'; ?>
 
     <!-- Sección Inicio - Copia Exacta de la SPA -->
     <section id="inicio" class="section active">
@@ -108,7 +49,7 @@
                         </div>
                         <h3>Reparación</h3>
                         <p>Reparación profesional de equipos y componentes con garantía y repuestos originales.</p>
-                        <button class="hero-service-btn" onclick="window.location.href='servicios.html'">
+                        <button class="hero-service-btn" onclick="window.location.href='servicios.php'">
                             Ver Servicios
                             <i class="fas fa-arrow-right"></i>
                         </button>
@@ -120,7 +61,7 @@
                         </div>
                         <h3>Mantenimiento</h3>
                         <p>Servicios de mantenimiento preventivo y correctivo para mantener tu equipo funcionando al máximo rendimiento.</p>
-                        <button class="hero-service-btn" onclick="window.location.href='servicios.html'">
+                        <button class="hero-service-btn" onclick="window.location.href='servicios.php'">
                             Ver Servicios
                             <i class="fas fa-arrow-right"></i>
                         </button>
@@ -132,7 +73,7 @@
                         </div>
                         <h3>Ensamblaje</h3>
                         <p>Ensamblaje personalizado de computadoras y equipos según tus necesidades específicas.</p>
-                        <button class="hero-service-btn" onclick="window.location.href='servicios.html'">
+                        <button class="hero-service-btn" onclick="window.location.href='servicios.php'">
                             Ver Servicios
                             <i class="fas fa-arrow-right"></i>
                         </button>
@@ -144,7 +85,7 @@
                         </div>
                         <h3>Soporte Técnico</h3>
                         <p>Soporte técnico especializado y consultoría para resolver cualquier problema tecnológico.</p>
-                        <button class="hero-service-btn" onclick="window.location.href='servicios.html'">
+                        <button class="hero-service-btn" onclick="window.location.href='servicios.php'">
                             Ver Servicios
                             <i class="fas fa-arrow-right"></i>
                         </button>
@@ -167,7 +108,7 @@
                         </div>
                         <h3>Laptops y Portátiles</h3>
                         <p>Equipos gaming, profesionales y estudiantiles con las mejores especificaciones del mercado.</p>
-                        <a href="productos.html" class="hero-producto-btn">
+                        <a href="productos.php" class="hero-producto-btn">
                             <span>Ver Productos</span>
                             <i class="fas fa-arrow-right"></i>
                         </a>
@@ -180,7 +121,7 @@
                         </div>
                         <h3>Componentes de PC</h3>
                         <p>Procesadores, tarjetas gráficas, memoria RAM y componentes de última generación.</p>
-                        <a href="productos.html" class="hero-producto-btn">
+                        <a href="productos.php" class="hero-producto-btn">
                             <span>Ver Productos</span>
                             <i class="fas fa-arrow-right"></i>
                         </a>
@@ -193,7 +134,7 @@
                         </div>
                         <h3>Accesorios Gaming</h3>
                         <p>Teclados mecánicos, mouse gaming, auriculares y accesorios para gaming profesional.</p>
-                        <a href="productos.html" class="hero-producto-btn">
+                        <a href="productos.php" class="hero-producto-btn">
                             <span>Ver Productos</span>
                             <i class="fas fa-arrow-right"></i>
                         </a>
@@ -206,7 +147,7 @@
                         </div>
                         <h3>Periféricos y Monitores</h3>
                         <p>Monitores gaming, profesionales, impresoras y periféricos de alta calidad.</p>
-                        <a href="productos.html" class="hero-producto-btn">
+                        <a href="productos.php" class="hero-producto-btn">
                             <span>Ver Productos</span>
                             <i class="fas fa-arrow-right"></i>
                         </a>
@@ -219,7 +160,7 @@
                         </div>
                         <h3>Almacenamiento</h3>
                         <p>Discos duros SSD, HDD, memorias USB y tarjetas de almacenamiento de alta velocidad.</p>
-                        <a href="productos.html" class="hero-producto-btn">
+                        <a href="productos.php" class="hero-producto-btn">
                             <span>Ver Productos</span>
                             <i class="fas fa-arrow-right"></i>
                         </a>
@@ -232,7 +173,7 @@
                         </div>
                         <h3>Redes y Conectividad</h3>
                         <p>Routers, switches, cables de red, adaptadores WiFi y equipos de conectividad.</p>
-                        <a href="productos.html" class="hero-producto-btn">
+                        <a href="productos.php" class="hero-producto-btn">
                             <span>Ver Productos</span>
                             <i class="fas fa-arrow-right"></i>
                         </a>
@@ -357,7 +298,7 @@
 
                         <!-- Botones de Acción -->
                         <div class="contact-actions">
-                            <a href="contacto.html" class="contact-btn primary">
+                            <a href="contacto.php" class="contact-btn primary">
                                 <i class="fas fa-comments"></i>
                                 <span>Chatear Ahora</span>
                             </a>
@@ -443,20 +384,20 @@
                 <div class="footer-section">
                     <h4>Servicios</h4>
                     <ul>
-                        <li><a href="servicios.html">Reparación</a></li>
-                        <li><a href="servicios.html">Mantenimiento</a></li>
-                        <li><a href="servicios.html">Ensamblaje</a></li>
-                        <li><a href="servicios.html">Soporte Técnico</a></li>
+                        <li><a href="servicios.php">Reparación</a></li>
+                        <li><a href="servicios.php">Mantenimiento</a></li>
+                        <li><a href="servicios.php">Ensamblaje</a></li>
+                        <li><a href="servicios.php">Soporte Técnico</a></li>
                     </ul>
                 </div>
                 
                 <div class="footer-section">
                     <h4>Productos</h4>
                     <ul>
-                        <li><a href="productos.html">Laptops</a></li>
-                        <li><a href="productos.html">Componentes</a></li>
-                        <li><a href="productos.html">Accesorios</a></li>
-                        <li><a href="productos.html">Periféricos</a></li>
+                        <li><a href="productos.php">Laptops</a></li>
+                        <li><a href="productos.php">Componentes</a></li>
+                        <li><a href="productos.php">Accesorios</a></li>
+                        <li><a href="productos.php">Periféricos</a></li>
                     </ul>
                 </div>
                 
@@ -485,6 +426,7 @@
     <script src="js/header.js"></script>
     <script src="js/slider.js"></script>
     <script src="js/reseñas-carrusel.js"></script>
+    <script src="js/servicios-dinamicos.js"></script>
     <script src="js/notificaciones.js"></script>
     <script src="js/mobile-menu.js"></script>
 </body>

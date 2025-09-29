@@ -24,66 +24,7 @@
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>💻</text></svg>">
 </head>
 <body>
-    <!-- Header -->
-    <header class="header full-width-header">
-        <nav class="navbar">
-            <div class="nav-container">
-                <div class="nav-logo">
-                    <i class="fas fa-laptop-code"></i>
-                    <span>Computec</span>
-                </div>
-                <div class="nav-actions">
-                    <a href="index.html" class="nav-link">
-                        <i class="fas fa-home"></i>
-                        Inicio
-                    </a>
-                    <a href="servicios.html" class="nav-link">
-                        <i class="fas fa-tools"></i>
-                        Servicios
-                    </a>
-                    <a href="productos.html" class="nav-link">
-                        <i class="fas fa-box"></i>
-                        Productos
-                    </a>
-                    <a href="nosotros.html" class="nav-link active">
-                        <i class="fas fa-users"></i>
-                        Nosotros
-                    </a>
-                    <a href="contacto.html" class="nav-link">
-                        <i class="fas fa-envelope"></i>
-                        Contacto
-                    </a>
-                    <a href="foro.html" class="nav-link">
-                        <i class="fas fa-comments"></i>
-                        Foro
-                    </a>
-                    <a href="noticias.html" class="nav-link">
-                        <i class="fas fa-newspaper"></i>
-                        Noticias
-                    </a>
-                </div>
-                <div class="header-session">
-                    <a href="cart.html" class="cart-icon-link" title="Carrito de Compras">
-                        <i class="fas fa-shopping-cart"></i>
-                        <span id="cart-item-count" class="cart-item-count">0</span>
-                    </a>
-                    <div class="account-dropdown" id="accountDropdown">
-                        <div class="account-icon" title="Mi cuenta" id="accountIcon">
-                            <i class="fas fa-user"></i>
-                        </div>
-                        <div class="dropdown-menu" id="dropdownMenu">
-                            <!-- Contenido dinámico se insertará aquí -->
-                        </div>
-                    </div>
-                </div>
-                <div class="hamburger">
-                    <span class="bar"></span>
-                    <span class="bar"></span>
-                    <span class="bar"></span>
-                </div>
-            </div>
-        </nav>
-    </header>
+    <?php include 'header.php'; ?>
 
     <!-- Contenido Principal -->
     <main class="main-content">
@@ -114,20 +55,20 @@
                 <div class="footer-section">
                     <h4>Servicios</h4>
                     <ul>
-                        <li><a href="servicios.html">Reparación</a></li>
-                        <li><a href="servicios.html">Mantenimiento</a></li>
-                        <li><a href="servicios.html">Ensamblaje</a></li>
-                        <li><a href="servicios.html">Soporte Técnico</a></li>
+                        <li><a href="servicios.php">Reparación</a></li>
+                        <li><a href="servicios.php">Mantenimiento</a></li>
+                        <li><a href="servicios.php">Ensamblaje</a></li>
+                        <li><a href="servicios.php">Soporte Técnico</a></li>
                     </ul>
                 </div>
                 
                 <div class="footer-section">
                     <h4>Productos</h4>
                     <ul>
-                        <li><a href="productos.html">Laptops</a></li>
-                        <li><a href="productos.html">Componentes</a></li>
-                        <li><a href="productos.html">Accesorios</a></li>
-                        <li><a href="productos.html">Periféricos</a></li>
+                        <li><a href="productos.php">Laptops</a></li>
+                        <li><a href="productos.php">Componentes</a></li>
+                        <li><a href="productos.php">Accesorios</a></li>
+                        <li><a href="productos.php">Periféricos</a></li>
                     </ul>
                 </div>
                 

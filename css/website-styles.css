@@ -97,7 +97,6 @@ body {
     font-size: 2rem;
     font-weight: 800;
     color: var(--primary-color);
-    margin-left: -100px !important;
     padding-left: 0 !important;
     justify-content: flex-start;
     letter-spacing: -1px;

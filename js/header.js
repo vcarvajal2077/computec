@@ -5,6 +5,7 @@ class HeaderManager {
         this.header = null;
         this.accountDropdown = null;
         this.dropdownMenu = null;
+        this.cartItemCount = null;
         this.userData = null;
         this.init();
     }
@@ -14,12 +15,14 @@ class HeaderManager {
         this.bindEvents();
         this.loadUserData();
         this.renderDropdown();
+        this.updateCartCount();
     }
 
     bindElements() {
         this.header = document.querySelector('.header');
         this.accountDropdown = document.getElementById('accountDropdown');
         this.dropdownMenu = document.getElementById('dropdownMenu');
+        this.cartItemCount = document.getElementById('cart-item-count');
     }
 
     bindEvents() {
@@ -33,6 +36,45 @@ class HeaderManager {
         this.userData = userDataString ? JSON.parse(userDataString) : { loggedIn: false, name: null };
     }
 
+    async updateCartCount() {
+        if (!this.isAuthenticated() || !this.cartItemCount) return;
+
+        try {
+            const response = await fetch('api/cart.php');
+            if (response.ok) {
+                const items = await response.json();
+                this.cartItemCount.textContent = items.length;
+            } else {
+                this.cartItemCount.textContent = '0';
+            }
+        } catch (error) {
+            console.error('Error fetching cart count:', error);
+            this.cartItemCount.textContent = '0';
+        }
+    }
+
+    loadUserData() {
+        const userDataString = localStorage.getItem('usuario_logueado');
+        this.userData = userDataString ? JSON.parse(userDataString) : { loggedIn: false, name: null };
+    }
+
+    async updateCartCount() {
+        if (!this.isAuthenticated() || !this.cartItemCount) return;
+
+        try {
+            const response = await fetch('api/cart.php');
+            if (response.ok) {
+                const items = await response.json();
+                this.cartItemCount.textContent = items.length;
+            } else {
+                this.cartItemCount.textContent = '0';
+            }
+        } catch (error) {
+            console.error('Error fetching cart count:', error);
+            this.cartItemCount.textContent = '0';
+        }
+    }
+
     renderDropdown() {
         if (!this.dropdownMenu) return;
 
@@ -41,7 +83,7 @@ class HeaderManager {
             this.dropdownMenu.innerHTML = `
                 <div class="dropdown-content">
                     <div class="user-info">
-                        <div class="user-name">${this.userData.name || 'Usuario'}</div>
+                        <div class="user-name">${this.userData.nombre || 'Usuario'}</div>
                         <div class="user-email">${this.userData.email || 'usuario@computec.com'}</div>
                     </div>
                     <div class="dropdown-actions">
@@ -70,7 +112,7 @@ class HeaderManager {
                             <i class="fas fa-sign-in-alt"></i>
                             Iniciar Sesión
                         </a>
-                        <a href="login.html" class="dropdown-item">
+                        <a href="#" class="dropdown-item register-link">
                             <i class="fas fa-user-plus"></i>
                             Registrarse
                         </a>
@@ -84,11 +126,33 @@ class HeaderManager {
         return this.userData;
     }
 
-    logout() {
-        localStorage.removeItem('userData');
-        this.userData = { loggedIn: false, name: null };
-        this.renderDropdown();
-        window.location.href = 'index.html';
+    async logout() {
+        if (confirm('¿Estás seguro de que quieres cerrar la sesión?')) {
+            try {
+                // Llamada a la API para destruir la sesión en el servidor
+                const response = await fetch('api/logout.php');
+                if (!response.ok) {
+                    console.error('Error al cerrar la sesión en el servidor.');
+                }
+            } catch (error) {
+                console.error('Error de red al intentar cerrar la sesión:', error);
+            }
+
+            // Limpiar datos de sesión del lado del cliente
+            localStorage.removeItem('usuario_logueado');
+            localStorage.removeItem('userData');
+
+            this.userData = { loggedIn: false, name: null };
+
+            // Actualizar la interfaz
+            this.renderDropdown();
+            if (this.cartItemCount) {
+                this.cartItemCount.textContent = '0';
+            }
+
+            // Redirigir y recargar la página para un estado limpio
+            window.location.reload();
+        }
     }
 
     handleScroll() {
@@ -112,6 +176,7 @@ class HeaderManager {
         this.userData = { ...userData, loggedIn: true };
         localStorage.setItem('userData', JSON.stringify(this.userData));
         this.renderDropdown();
+        this.updateCartCount();
     }
 }
 
