@@ -72,6 +72,14 @@ try {
     // Actualizar último acceso
     $updateStmt = $pdo->prepare("UPDATE usuarios SET ultimo_acceso = NOW() WHERE id_usuario = ?");
     $updateStmt->execute([$user['id_usuario']]);
+
+    // Iniciar sesión y guardar datos del usuario
+    if (session_status() === PHP_SESSION_NONE) {
+        session_start();
+    }
+    $_SESSION['user_id'] = $user['id_usuario'];
+    $_SESSION['user_name'] = $user['nombre'] . ' ' . $user['apellido'];
+    $_SESSION['user_rol'] = $user['rol'];
     
     // Preparar respuesta
     $response = [

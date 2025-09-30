@@ -1,0 +1,19 @@
+-- Mantenimiento (categoria_id = 9)
+INSERT INTO `servicios_catalogo` (`categoria_id`, `nombre`, `descripcion`, `descripcion_detallada`, `precio_base`, `tiempo_estimado`, `garantia`, `estado`, `imagen`, `caracteristicas`) VALUES
+(9, 'Mantenimiento Básico de PC', 'Limpieza interna y externa, y optimización de software.', 'Incluye limpieza de componentes, cambio de pasta térmica, optimización del sistema operativo y eliminación de malware.', 150000.00, '1-2 horas', '30 días', 'disponible', 'img/mantenimiento_basico.jpg', '{"componentes": ["CPU", "GPU", "RAM"], "software": ["Antivirus", "Optimizador"]}'),
+(9, 'Mantenimiento Avanzado de Servidores', 'Revisión completa de hardware y software para servidores.', 'Incluye diagnóstico de hardware, actualización de firmware, configuración de RAID y monitoreo de rendimiento.', 800000.00, '4-6 horas', '90 días', 'disponible', 'img/mantenimiento_servidores.jpg', '{"componentes": ["RAID", "Fuente de poder redundante"], "software": ["Windows Server", "Linux"]}');
+
+-- Reparación (categoria_id = 10)
+INSERT INTO `servicios_catalogo` (`categoria_id`, `nombre`, `descripcion`, `descripcion_detallada`, `precio_base`, `tiempo_estimado`, `garantia`, `estado`, `imagen`, `caracteristicas`) VALUES
+(10, 'Reparación de Placa Base', 'Diagnóstico y reparación de fallas en la placa base.', 'Incluye reemplazo de capacitores, reparación de pistas y soldadura de componentes.', 400000.00, '3-5 días', '60 días', 'disponible', 'img/reparacion_placa.jpg', '{"componentes": ["Capacitores", "Circuitos integrados"], "marcas": ["ASUS", "Gigabyte", "MSI"]}'),
+(10, 'Recuperación de Datos', 'Recuperación de datos de discos duros dañados.', 'Utilizamos software y hardware especializado para recuperar información de discos duros mecánicos y SSD.', 600000.00, '2-7 días', 'N/A', 'disponible', 'img/recuperacion_datos.jpg', '{"dispositivos": ["HDD", "SSD", "USB"], "sistemas_archivos": ["NTFS", "FAT32", "ext4"]}');
+
+-- Instalación (categoria_id = 11)
+INSERT INTO `servicios_catalogo` (`categoria_id`, `nombre`, `descripcion`, `descripcion_detallada`, `precio_base`, `tiempo_estimado`, `garantia`, `estado`, `imagen`, `caracteristicas`) VALUES
+(11, 'Instalación de Redes Domésticas', 'Diseño e instalación de redes Wi-Fi y cableadas para el hogar.', 'Incluye configuración de router, puntos de acceso y seguridad de red.', 250000.00, '2-3 horas', '30 días', 'disponible', 'img/instalacion_red_hogar.jpg', '{"equipos": ["Router", "Switch", "Access Point"], "tecnologias": ["Wi-Fi 6", "Ethernet"]}'),
+(11, 'Instalación de Software a Medida', 'Instalación y configuración de software empresarial.', 'Nos adaptamos a las necesidades de tu negocio para instalar y configurar el software que necesitas.', 500000.00, '4-8 horas', '60 días', 'disponible', 'img/instalacion_software_medida.jpg', '{"software": ["CRM", "ERP", "Software contable"], "plataformas": ["Windows", "Linux", "macOS"]}');
+
+-- Consultoría (categoria_id = 12)
+INSERT INTO `servicios_catalogo` (`categoria_id`, `nombre`, `descripcion`, `descripcion_detallada`, `precio_base`, `tiempo_estimado`, `garantia`, `estado`, `imagen`, `caracteristicas`) VALUES
+(12, 'Consultoría en Seguridad Informática', 'Análisis de vulnerabilidades y recomendaciones de seguridad.', 'Realizamos un análisis exhaustivo de tu infraestructura para identificar y mitigar riesgos de seguridad.', 1000000.00, '1-2 semanas', 'N/A', 'disponible', 'img/consultoria_seguridad.jpg', '{"areas": ["Pentesting", "Análisis de malware", "Políticas de seguridad"], "normativas": ["ISO 27001", "GDPR"]}'),
+(12, 'Consultoría para Migración a la Nube', 'Asesoramiento para migrar tu infraestructura a la nube.', 'Te ayudamos a elegir la plataforma cloud adecuada y a planificar la migración de tus servicios y datos.', 1500000.00, '2-4 semanas', 'N/A', 'disponible', 'img/consultoria_nube.jpg', '{"plataformas": ["AWS", "Azure", "Google Cloud"], "servicios": ["IaaS", "PaaS", "SaaS"]}');

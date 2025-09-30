@@ -96,19 +96,12 @@ class ServiciosDinamicos {
             }
         }
         
-        // Logs de debug comentados
-        // console.log('Categorías únicas:', categoriasUnicas);
-        // console.log('Servicios cargados:', this.servicios);
-        
         container.innerHTML = categoriasUnicas.map(categoria => {
             // Contar servicios por categoría - convertir a string para comparación
             const serviciosEnCategoria = this.servicios.filter(servicio => 
                 String(servicio.categoria_id) === String(categoria.id)
             );
             const cantidadServicios = serviciosEnCategoria.length;
-            
-            // Log para debug (comentado en producción)
-            // console.log(`Categoría ${categoria.nombre} (ID: ${categoria.id}): ${cantidadServicios} servicios`);
             
             return `
                 <div class="categoria-card" 
@@ -185,7 +178,7 @@ class ServiciosDinamicos {
                     </button>
                     <button class="btn-servicio btn-contratar" onclick="serviciosDinamicos.contratarServicio(${servicio.id})">
                         <i class="fas fa-shopping-cart"></i>
-                        Contratar
+                        Agregar al Carrito
                     </button>
                 </div>
             </div>
@@ -333,12 +326,37 @@ class ServiciosDinamicos {
     }
     
     contratarServicio(servicioId) {
-        // Buscar el servicio en los servicios filtrados
-        const servicio = this.serviciosFiltrados.find(s => s.id == servicioId);
-        if (!servicio) return;
-        
-        // Redirigir al checkout con el servicio seleccionado
-        window.location.href = `checkout.html?servicio_id=${servicioId}`;
+        this.addToCart(servicioId, 'service');
+    }
+
+    async addToCart(itemId, itemType) {
+        try {
+            const response = await fetch('api/cart.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    item_id: itemId,
+                    item_type: itemType,
+                    quantity: 1
+                }),
+            });
+
+            const result = await response.json();
+
+            if (response.ok) {
+                this.showNotification('Servicio agregado al carrito', 'success');
+                if (window.headerManager) {
+                    window.headerManager.updateCartCount();
+                }
+            } else {
+                throw new Error(result.error || 'Error al agregar el servicio');
+            }
+        } catch (error) {
+            console.error('Error en addToCart:', error);
+            this.showNotification(error.message, 'error');
+        }
     }
     
     verificarUsuarioLogueado() {
@@ -421,25 +439,23 @@ class ServiciosDinamicos {
         }
     }
     
-    mostrarNotificacion(mensaje, tipo = 'info') {
+    showNotification(message, type = 'info') {
         // Crear notificación
         const notificacion = document.createElement('div');
-        notificacion.className = `notificacion notificacion-${tipo}`;
-        notificacion.innerHTML = `
-            <i class="fas fa-${tipo === 'success' ? 'check-circle' : 'info-circle'}"></i>
-            <span>${mensaje}</span>
-        `;
+        notificacion.className = `notificacion notificacion-${type}`;
+        notificacion.innerHTML = `<i class="fas fa-info-circle"></i> ${message}`;
         
-        // Agregar al DOM
         document.body.appendChild(notificacion);
         
-        // Mostrar con animación
-        setTimeout(() => notificacion.classList.add('mostrar'), 100);
-        
-        // Remover después de 3 segundos
         setTimeout(() => {
-            notificacion.classList.remove('mostrar');
-            setTimeout(() => notificacion.remove(), 300);
+            notificacion.classList.add('show');
+        }, 10);
+        
+        setTimeout(() => {
+            notificacion.classList.remove('show');
+            setTimeout(() => {
+                notificacion.remove();
+            }, 500);
         }, 3000);
     }
 }
@@ -615,8 +631,9 @@ const modalStyles = `
 
 .notificacion {
     position: fixed;
-    top: 20px;
-    right: 20px;
+    top: 90px; /* Ajustado para estar debajo del header */
+    left: 50%;
+    transform: translate(-50%, -20px);
     background: white;
     border: 1px solid #e2e8f0;
     border-radius: 8px;
@@ -625,13 +642,17 @@ const modalStyles = `
     display: flex;
     align-items: center;
     gap: 12px;
-    transform: translateX(400px);
-    transition: transform 0.3s ease;
     z-index: 1001;
+    opacity: 0;
+    transition: transform 0.3s ease-out, opacity 0.3s ease-out;
+    max-width: 400px; /* Ancho máximo para la notificación */
+    width: 90%; /* Ancho adaptable */
+    justify-content: center; /* Centrar contenido */
 }
 
-.notificacion.mostrar {
-    transform: translateX(0);
+.notificacion.show {
+    opacity: 1;
+    transform: translate(-50%, 0);
 }
 
 .notificacion-success {
@@ -662,4 +683,3 @@ const modalStyles = `
 
 // Agregar estilos al head
 document.head.insertAdjacentHTML('beforeend', modalStyles);
-

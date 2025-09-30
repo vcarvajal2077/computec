@@ -1,0 +1,17 @@
+INSERT INTO `proveedores` (`id_proveedor`, `nombre_empresa`, `contacto`, `telefono`, `email`, `direccion`, `categoria`, `activo`) VALUES
+(1, 'PC Gamers S.A.S.', 'Juan Pérez', '3101234567', 'ventas@pcgamers.com', 'Calle Falsa 123, Bogotá', 'Laptops', 1),
+(2, 'Tech Accesorios Ltda.', 'Maria Rodriguez', '3112345678', 'contacto@techaccesorios.com', 'Carrera 7 # 8-90, Medellín', 'Accesorios', 1),
+(3, 'Vision Global Tech', 'Carlos López', '3123456789', 'info@visionglobal.tech', 'Avenida Siempre Viva 45, Cali', 'Monitores', 1),
+(4, 'Componentes de Alta Velocidad', 'Ana Martínez', '3134567890', 'soporte@componentesav.com', 'Diagonal 23 # 45-67, Barranquilla', 'Componentes', 1),
+(5, 'Mobiliario Gamer Pro', 'Pedro Gómez', '3145678901', 'ventas@mobiliariogamer.pro', 'Calle 100 # 20-30, Bogotá', 'Mobiliario', 1),
+(6, 'Impresiones Modernas', 'Laura Sánchez', '3156789012', 'contacto@impresionesmodernas.com', 'Avenida El Dorado # 68-70, Bogotá', 'Impresoras', 1),
+(7, 'Conectividad Total', 'Andrés Jiménez', '3167890123', 'info@conectividadtotal.net', 'Carrera 15 # 85-20, Bogotá', 'Redes', 1),
+(8, 'Diseño Digital Creativo', 'Sofia Castro', '3178901234', 'ventas@disenodigital.co', 'Calle 80 # 10-15, Medellín', 'Accesorios', 1),
+(9, 'Proyecta Ideas', 'Jorge Ramirez', '3189012345', 'soporte@proyectaideas.com', 'Avenida 6N # 25-30, Cali', 'Proyectores', 1),
+(10, 'Sonido Envolvente Pro', 'Lucia Torres', '3190123456', 'info@sonidoenvolvente.pro', 'Carrera 43 # 70-80, Barranquilla', 'Audio', 1),
+(11, 'Tecnología Vestible Futura', 'David Garcia', '3201234567', 'ventas@tecnologiavestible.com', 'Calle 93 # 15-20, Bogotá', 'Wearables', 1),
+(12, 'Energía Portátil Global', 'Carolina Hernandez', '3212345678', 'contacto@energiaportatil.com', 'Avenida de las Américas # 50-60, Bogotá', 'Accesorios', 1),
+(13, 'Protectores de Tecnología', 'Daniel Rojas', '3223456789', 'info@protectoresdetecnologia.com', 'Calle 72 # 7-80, Bogotá', 'Accesorios', 1),
+(14, 'Audio Profesional de Estudio', 'Gabriela Vargas', '3234567890', 'soporte@audioprofesional.co', 'Carrera 13 # 35-40, Bogotá', 'Audio', 1),
+(15, 'Soluciones de Refrigeración', 'Mateo Diaz', '3001234567', 'ventas@solucionesrefrigeracion.com', 'Calle 26 # 18-25, Bogotá', 'Accesorios', 1),
+(16, 'Limpieza Electrónica Pura', 'Valentina Morales', '3012345678', 'contacto@limpiezapure.com', 'Carrera 9 # 110-120, Bogotá', 'Accesorios', 1);
