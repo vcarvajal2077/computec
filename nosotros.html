@@ -87,9 +87,138 @@
 
     <!-- Contenido Principal -->
     <main class="main-content">
+        <!-- Hero de Nosotros -->
+        <section class="hero-servicios" style="background-image: url('https://images.unsplash.com/photo-1498050108023-c5249f4df085?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1172&q=80');">
+            <div class="hero-overlay" style="background-color: rgba(0, 0, 0, 0.7);"></div>
+            <div class="hero-content-centered" style="text-align: center; color: white; text-shadow: 0 2px 8px rgba(0, 0, 0, 0.7);">
+                <h1 class="hero-title-h1" style="font-size: 3.5rem; font-weight: 800; margin-bottom: 1rem;">Somos Computec</h1>
+                <p class="hero-subtitle-p" style="font-size: 1.5rem; max-width: 700px; margin: 0 auto 2rem;">Apasionados por la tecnología y comprometidos con tu éxito. Descubre la historia y el equipo que hacen de tus metas tecnológicas una realidad.</p>
+                <a href="#history-section" class="btn btn-primary">Nuestra Historia</a>
+            </div>
+        </section>
+
         <div class="container">
-            <h1>Nosotros</h1>
-            <p>Contenido sobre nosotros en desarrollo...</p>
+            <!-- Sección: Nuestra Esencia -->
+            <section id="about-us-section" class="about-us-section" style="padding: 6rem 0; background-color: var(--bg-secondary);">
+                <div class="container">
+                    <div class="section-header">
+                        <h2 class="section-title">Nuestra Esencia</h2>
+                        <p class="section-subtitle">Más que una empresa, somos un equipo apasionado por la innovación y el servicio.</p>
+                    </div>
+                    <div class="about-content" style="display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center;">
+                        <div class="about-text">
+                            <h3 style="font-size: 1.75rem; font-weight: 700; margin-bottom: 1.5rem; color: var(--primary-color);">Tecnología con propósito</h3>
+                            <p style="font-size: 1.1rem; line-height: 1.7; margin-bottom: 2rem;">En Computec, creemos que la tecnología debe ser accesible, eficiente y amigable. Desde nuestros inicios, nos hemos dedicado a ofrecer soluciones informáticas que no solo resuelven problemas, sino que también potencian el crecimiento de nuestros clientes.</p>
+                            <div class="about-features">
+                                <div class="feature">
+                                    <i class="fas fa-bullseye" style="color: var(--accent-color);"></i>
+                                    <div>
+                                        <h4>Misión</h4>
+                                        <p>Proveer soluciones tecnológicas integrales y personalizadas, garantizando la satisfacción y el éxito de nuestros clientes a través de un servicio experto y confiable.</p>
+                                    </div>
+                                </div>
+                                <div class="feature">
+                                    <i class="fas fa-eye" style="color: var(--accent-color);"></i>
+                                    <div>
+                                        <h4>Visión</h4>
+                                        <p>Ser la empresa líder en servicios y productos informáticos en la región, reconocida por nuestra innovación, calidad humana y contribución al desarrollo tecnológico.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="about-image" style="text-align: center;">
+                            <img src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80" alt="Nuestro equipo trabajando" style="width: 100%; border-radius: var(--radius-xl); box-shadow: var(--shadow-lg);">
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Sección: Nuestra Historia -->
+            <section class="history-section">
+                <div class="section-header">
+                    <h2 class="section-title">Nuestra Trayectoria</h2>
+                    <p class="section-subtitle">Un viaje de crecimiento y adaptación constante.</p>
+                </div>
+                <div class="process-steps">
+                    <div class="process-step">
+                        <div class="step-number">1</div>
+                        <div class="step-content">
+                            <h3>2015: El Comienzo</h3>
+                            <p>Computec nace como un pequeño taller de reparación, con el sueño de llevar soporte técnico de calidad a nuestra comunidad local.</p>
+                        </div>
+                    </div>
+                    <div class="process-step">
+                        <div class="step-number">2</div>
+                        <div class="step-content">
+                            <h3>2018: Expansión</h3>
+                            <p>Ampliamos nuestros servicios para incluir ensamblaje de PCs a medida y venta de componentes, convirtiéndonos en un referente para entusiastas.</p>
+                        </div>
+                    </div>
+                    <div class="process-step">
+                        <div class="step-number">3</div>
+                        <div class="step-content">
+                            <h3>2022: Soluciones para Empresas</h3>
+                            <p>Lanzamos nuestra división de servicios para empresas, ofreciendo mantenimiento, soporte y consultoría tecnológica a pymes.</p>
+                        </div>
+                    </div>
+                    <div class="process-step">
+                        <div class="step-number">4</div>
+                        <div class="step-content">
+                            <h3>2025: Transformación Digital</h3>
+                            <p>Inauguramos nuestra plataforma online, llevando nuestros productos y servicios a todo el país y consolidando nuestra presencia digital.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Sección: Nuestro Equipo -->
+            <section class="team-section">
+                <div class="section-header">
+                    <h2 class="section-title">Nuestro Equipo</h2>
+                    <p class="section-subtitle">Los expertos que hacen posible la magia tecnológica.</p>
+                </div>
+                <div class="team-grid">
+                    <div class="team-member">
+                        <div class="member-photo">
+                            <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80" alt="Miembro del equipo 1">
+                        </div>
+                        <div class="member-info">
+                            <h3>Carlos Rodríguez</h3>
+                            <span class="member-role">CEO y Fundador</span>
+                            <p>Visionario y líder, con más de 15 años de experiencia en el sector tecnológico.</p>
+                        </div>
+                    </div>
+                    <div class="team-member">
+                        <div class="member-photo">
+                            <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=688&q=80" alt="Miembro del equipo 2">
+                        </div>
+                        <div class="member-info">
+                            <h3>Ana Gómez</h3>
+                            <span class="member-role">Directora de Operaciones</span>
+                            <p>La mente organizadora que asegura que cada proyecto se ejecute con precisión y eficiencia.</p>
+                        </div>
+                    </div>
+                    <div class="team-member">
+                        <div class="member-photo">
+                            <img src="https://images.unsplash.com/photo-1556157382-97eda2d62296?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80" alt="Miembro del equipo 3">
+                        </div>
+                        <div class="member-info">
+                            <h3>Javier Torres</h3>
+                            <span class="member-role">Técnico Principal</span>
+                            <p>Nuestro gurú del hardware, capaz de resolver cualquier problema técnico.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Sección CTA -->
+            <section class="cta-section">
+                <div class="cta-content">
+                    <h2>¿Listo para tu próximo proyecto tecnológico?</h2>
+                    <p>Nuestro equipo está preparado para ayudarte. Contáctanos y descubre cómo podemos potenciar tus ideas.</p>
+                    <a href="contacto.html" class="btn btn-primary">Habla con nosotros</a>
+                </div>
+            </section>
         </div>
     </main>
 

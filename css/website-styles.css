@@ -1210,7 +1210,7 @@ section, .about, .products, .services, .testimonials, .contact {
     background: var(--bg-primary);
     border-radius: var(--radius-lg);
     box-shadow: var(--shadow-md);
-    overflow: hidden;
+    /* overflow: hidden; */
 }
 
 .faq-question {
@@ -1237,20 +1237,26 @@ section, .about, .products, .services, .testimonials, .contact {
     transition: var(--transition);
 }
 
+/* This rule was based on a JS .active class, which is not used by the native <details> element */
+/*
 .faq-item.active .faq-question i {
     transform: rotate(180deg);
 }
+*/
 
 .faq-answer {
     padding: 0 1.5rem 1.5rem;
     color: var(--text-secondary);
     line-height: 1.6;
-    display: none;
+    /* display: none; is now handled by the <details> element automatically */
 }
 
+/* This rule is not needed as the native <details> element handles showing/hiding */
+/*
 .faq-item.active .faq-answer {
     display: block;
 }
+*/
 
 /* CTA Sections */
 .cta-content {

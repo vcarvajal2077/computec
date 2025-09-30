@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 11-09-2025 a las 01:33:30
+-- Tiempo de generación: 30-09-2025 a las 19:45:48
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -172,6 +172,21 @@ INSERT INTO `asignacion_modulo` (`id_asignacion`, `id_usuario`, `id_modulo`, `fe
 -- --------------------------------------------------------
 
 --
+-- Estructura de tabla para la tabla `cart_items`
+--
+
+CREATE TABLE `cart_items` (
+  `id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `item_id` int(11) NOT NULL,
+  `item_type` enum('product','service') NOT NULL,
+  `quantity` int(11) NOT NULL DEFAULT 1,
+  `added_at` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Estructura de tabla para la tabla `categorias_servicios`
 --
 
@@ -273,6 +288,21 @@ INSERT INTO `configuracion_pagos` (`id`, `pasarela`, `configuracion`, `habilitad
 (2, 'paypal', '{\"client_id\": \"paypal_client_id\", \"client_secret\": \"paypal_client_secret\", \"sandbox\": true}', 1, '2025-09-09 20:33:32'),
 (3, 'nequi', '{\"api_key\": \"nequi_api_key\", \"merchant_id\": \"nequi_merchant\", \"sandbox\": true}', 1, '2025-09-09 20:33:32'),
 (4, 'daviplata', '{\"api_key\": \"daviplata_api_key\", \"merchant_id\": \"daviplata_merchant\", \"sandbox\": true}', 1, '2025-09-09 20:33:32');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `contacto`
+--
+
+CREATE TABLE `contacto` (
+  `id` int(11) NOT NULL,
+  `nombre` varchar(100) NOT NULL,
+  `email` varchar(150) NOT NULL,
+  `asunto` varchar(200) NOT NULL,
+  `mensaje` text NOT NULL,
+  `fecha_envio` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -462,6 +492,13 @@ CREATE TABLE `inventario` (
   `movimiento` varchar(100) DEFAULT NULL,
   `fecha_creacion` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Volcado de datos para la tabla `inventario`
+--
+
+INSERT INTO `inventario` (`id_inventario`, `id_producto`, `stock_actual`, `stock_disponible`, `stock_reservado`, `ubicacion`, `fecha_actualizacion`, `movimiento`, `fecha_creacion`) VALUES
+(1, 31, 13, 10, 10, 'su madre', '2025-09-30 15:01:06', 'de arriba a abajo', '2025-09-30 14:38:10');
 
 -- --------------------------------------------------------
 
@@ -658,7 +695,27 @@ CREATE TABLE `productos` (
 
 INSERT INTO `productos` (`id_producto`, `nombre`, `descripcion`, `categoria`, `precio_compra`, `precio_venta`, `stock_minimo`, `fecha_ingreso`, `id_proveedor`, `activo`, `codigo_barras`, `imagen`, `fecha_creacion`, `fecha_actualizacion`) VALUES
 (2, 'Laptop Gaming Pro', 'Laptop de alto rendimiento para gaming', 'Laptops', 1500000.00, 2000000.00, 5, '2025-08-21 20:57:34', NULL, 1, NULL, NULL, '2025-08-21 20:57:34', '2025-08-21 20:57:34'),
-(3, 'Mouse Gaming RGB', 'Mouse gaming con iluminación RGB', 'Accesorios', 50000.00, 80000.00, 10, '2025-08-21 20:57:34', NULL, 1, NULL, NULL, '2025-08-21 20:57:34', '2025-08-21 20:57:34');
+(3, 'Mouse Gaming RGB', 'Mouse gaming con iluminación RGB', 'Accesorios', 50000.00, 80000.00, 10, '2025-08-21 20:57:34', NULL, 1, NULL, NULL, '2025-08-21 20:57:34', '2025-08-21 20:57:34'),
+(24, 'Laptop Gamer Pro X', 'Laptop de alta gama para gaming con tarjeta gráfica RTX 4080', 'Laptops', 5500000.00, 7500000.00, 5, '2025-09-30 13:50:33', 1, 1, '7890123456789', 'https://via.placeholder.com/300x300.png?text=Laptop+Gamer', '2025-09-30 13:50:33', '2025-09-30 13:50:33'),
+(25, 'Mouse Inalámbrico Ergonómico', 'Mouse ergonómico para largas horas de trabajo y juego', 'Accesorios', 80000.00, 150000.00, 10, '2025-09-30 13:50:33', 2, 1, '7890123456790', 'https://via.placeholder.com/300x300.png?text=Mouse', '2025-09-30 13:50:33', '2025-09-30 13:50:33'),
+(26, 'Teclado Mecánico RGB', 'Teclado mecánico con retroiluminación RGB personalizable', 'Accesorios', 250000.00, 450000.00, 8, '2025-09-30 13:50:33', 2, 1, '7890123456791', 'https://via.placeholder.com/300x300.png?text=Teclado', '2025-09-30 13:50:33', '2025-09-30 13:50:33'),
+(27, 'Monitor Curvo 27\"', 'Monitor curvo de 27 pulgadas para una experiencia inmersiva', 'Monitores', 900000.00, 1500000.00, 6, '2025-09-30 13:50:33', 3, 1, '7890123456792', 'https://via.placeholder.com/300x300.png?text=Monitor', '2025-09-30 13:50:33', '2025-09-30 13:50:33'),
+(28, 'Disco Duro SSD 1TB', 'Disco de estado sólido de 1TB para un rendimiento ultrarrápido', 'Componentes', 300000.00, 500000.00, 12, '2025-09-30 13:50:33', 4, 1, '7890123456793', 'https://via.placeholder.com/300x300.png?text=SSD', '2025-09-30 13:50:33', '2025-09-30 13:50:33'),
+(29, 'Memoria RAM 16GB DDR5', 'Módulo de memoria RAM de 16GB DDR5 para máxima velocidad', 'Componentes', 400000.00, 650000.00, 15, '2025-09-30 13:50:33', 4, 1, '7890123456794', 'https://via.placeholder.com/300x300.png?text=RAM', '2025-09-30 13:50:33', '2025-09-30 13:50:33'),
+(30, 'Silla Gamer Ergonómica', 'Silla ergonómica diseñada para largas sesiones de juego', 'Mobiliario', 800000.00, 1200000.00, 4, '2025-09-30 13:50:33', 5, 1, '7890123456795', 'https://via.placeholder.com/300x300.png?text=Silla+Gamer', '2025-09-30 13:50:33', '2025-09-30 13:50:33'),
+(31, 'Auriculares con Micrófono', 'Auriculares con cancelación de ruido y micrófono integrado', 'Accesorios', 150000.00, 250000.00, 9, '2025-09-30 13:50:33', 2, 1, '7890123456796', 'https://via.placeholder.com/300x300.png?text=Auriculares', '2025-09-30 13:50:33', '2025-09-30 13:50:33'),
+(32, 'Webcam Full HD 1080p', 'Cámara web con resolución Full HD para streaming y videoconferencias', 'Accesorios', 200000.00, 350000.00, 7, '2025-09-30 13:50:33', 3, 1, '7890123456797', 'https://via.placeholder.com/300x300.png?text=Webcam', '2025-09-30 13:50:33', '2025-09-30 13:50:33'),
+(33, 'Impresora Multifuncional', 'Impresora, escáner y copiadora en un solo dispositivo', 'Impresoras', 400000.00, 600000.00, 5, '2025-09-30 13:50:33', 6, 1, '7890123456798', 'https://via.placeholder.com/300x300.png?text=Impresora', '2025-09-30 13:50:33', '2025-09-30 13:50:33'),
+(34, 'Router Wi-Fi 6', 'Router de última generación para una conexión a internet más rápida y estable', 'Redes', 350000.00, 550000.00, 8, '2025-09-30 13:50:33', 7, 1, '7890123456799', 'https://via.placeholder.com/300x300.png?text=Router', '2025-09-30 13:50:33', '2025-09-30 13:50:33'),
+(35, 'Tableta Gráfica', 'Tableta para diseño gráfico y dibujo digital', 'Accesorios', 600000.00, 900000.00, 4, '2025-09-30 13:50:33', 8, 1, '7890123456800', 'https://via.placeholder.com/300x300.png?text=Tableta+Grafica', '2025-09-30 13:50:33', '2025-09-30 13:50:33'),
+(36, 'Proyector Portátil', 'Proyector compacto para presentaciones y entretenimiento', 'Proyectores', 700000.00, 1100000.00, 3, '2025-09-30 13:50:33', 9, 1, '7890123456801', 'https://via.placeholder.com/300x300.png?text=Proyector', '2025-09-30 13:50:33', '2025-09-30 13:50:33'),
+(37, 'Sistema de Sonido 5.1', 'Sistema de altavoces envolvente para una experiencia de cine en casa', 'Audio', 900000.00, 1400000.00, 3, '2025-09-30 13:50:33', 10, 1, '7890123456802', 'https://via.placeholder.com/300x300.png?text=Sistema+de+Sonido', '2025-09-30 13:50:33', '2025-09-30 13:50:33'),
+(38, 'Smartwatch Deportivo', 'Reloj inteligente con funciones de seguimiento de actividad física', 'Wearables', 500000.00, 800000.00, 6, '2025-09-30 13:50:33', 11, 1, '7890123456803', 'https://via.placeholder.com/300x300.png?text=Smartwatch', '2025-09-30 13:50:33', '2025-09-30 13:50:33'),
+(39, 'Power Bank 20000mAh', 'Batería externa de alta capacidad para cargar tus dispositivos', 'Accesorios', 120000.00, 200000.00, 10, '2025-09-30 13:50:33', 12, 1, '7890123456804', 'https://via.placeholder.com/300x300.png?text=Power+Bank', '2025-09-30 13:50:33', '2025-09-30 13:50:33'),
+(40, 'Funda para Laptop 15\"', 'Funda acolchada para proteger tu laptop de golpes y arañazos', 'Accesorios', 50000.00, 90000.00, 15, '2025-09-30 13:50:33', 13, 1, '7890123456805', 'https://via.placeholder.com/300x300.png?text=Funda', '2025-09-30 13:50:33', '2025-09-30 13:50:33'),
+(41, 'Micrófono de Condensador', 'Micrófono de estudio para grabación de voz y música', 'Audio', 300000.00, 500000.00, 5, '2025-09-30 13:50:33', 14, 1, '7890123456806', 'https://via.placeholder.com/300x300.png?text=Microfono', '2025-09-30 13:50:33', '2025-09-30 13:50:33'),
+(42, 'Base Refrigerante para Laptop', 'Base con ventiladores para mantener tu laptop a una temperatura óptima', 'Accesorios', 90000.00, 160000.00, 8, '2025-09-30 13:50:33', 15, 1, '7890123456807', 'https://via.placeholder.com/300x300.png?text=Base+Refrigerante', '2025-09-30 13:50:33', '2025-09-30 13:50:33'),
+(43, 'Kit de Limpieza para Pantallas', 'Solución y paño de microfibra para limpiar pantallas sin dejar marcas', 'Accesorios', 30000.00, 60000.00, 20, '2025-09-30 13:50:33', 16, 1, '7890123456808', 'https://via.placeholder.com/300x300.png?text=Kit+Limpieza', '2025-09-30 13:50:33', '2025-09-30 13:50:33');
 
 -- --------------------------------------------------------
 
@@ -679,6 +736,28 @@ CREATE TABLE `proveedores` (
   `fecha_creacion` timestamp NOT NULL DEFAULT current_timestamp(),
   `fecha_actualizacion` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Volcado de datos para la tabla `proveedores`
+--
+
+INSERT INTO `proveedores` (`id_proveedor`, `nombre_empresa`, `contacto`, `telefono`, `email`, `direccion`, `categoria`, `fecha_registro`, `activo`, `fecha_creacion`, `fecha_actualizacion`) VALUES
+(1, 'PC Gamers S.A.S.', 'Juan Pérez', '3101234567', 'ventas@pcgamers.com', 'Calle Falsa 123, Bogotá', 'Laptops', '2025-09-30 13:50:30', 1, '2025-09-30 13:50:30', '2025-09-30 13:50:30'),
+(2, 'Tech Accesorios Ltda.', 'Maria Rodriguez', '3112345678', 'contacto@techaccesorios.com', 'Carrera 7 # 8-90, Medellín', 'Accesorios', '2025-09-30 13:50:30', 1, '2025-09-30 13:50:30', '2025-09-30 13:50:30'),
+(3, 'Vision Global Tech', 'Carlos López', '3123456789', 'info@visionglobal.tech', 'Avenida Siempre Viva 45, Cali', 'Monitores', '2025-09-30 13:50:30', 1, '2025-09-30 13:50:30', '2025-09-30 13:50:30'),
+(4, 'Componentes de Alta Velocidad', 'Ana Martínez', '3134567890', 'soporte@componentesav.com', 'Diagonal 23 # 45-67, Barranquilla', 'Componentes', '2025-09-30 13:50:30', 1, '2025-09-30 13:50:30', '2025-09-30 13:50:30'),
+(5, 'Mobiliario Gamer Pro', 'Pedro Gómez', '3145678901', 'ventas@mobiliariogamer.pro', 'Calle 100 # 20-30, Bogotá', 'Mobiliario', '2025-09-30 13:50:30', 1, '2025-09-30 13:50:30', '2025-09-30 13:50:30'),
+(6, 'Impresiones Modernas', 'Laura Sánchez', '3156789012', 'contacto@impresionesmodernas.com', 'Avenida El Dorado # 68-70, Bogotá', 'Impresoras', '2025-09-30 13:50:30', 1, '2025-09-30 13:50:30', '2025-09-30 13:50:30'),
+(7, 'Conectividad Total', 'Andrés Jiménez', '3167890123', 'info@conectividadtotal.net', 'Carrera 15 # 85-20, Bogotá', 'Redes', '2025-09-30 13:50:30', 1, '2025-09-30 13:50:30', '2025-09-30 13:50:30'),
+(8, 'Diseño Digital Creativo', 'Sofia Castro', '3178901234', 'ventas@disenodigital.co', 'Calle 80 # 10-15, Medellín', 'Accesorios', '2025-09-30 13:50:30', 1, '2025-09-30 13:50:30', '2025-09-30 13:50:30'),
+(9, 'Proyecta Ideas', 'Jorge Ramirez', '3189012345', 'soporte@proyectaideas.com', 'Avenida 6N # 25-30, Cali', 'Proyectores', '2025-09-30 13:50:30', 1, '2025-09-30 13:50:30', '2025-09-30 13:50:30'),
+(10, 'Sonido Envolvente Pro', 'Lucia Torres', '3190123456', 'info@sonidoenvolvente.pro', 'Carrera 43 # 70-80, Barranquilla', 'Audio', '2025-09-30 13:50:30', 1, '2025-09-30 13:50:30', '2025-09-30 13:50:30'),
+(11, 'Tecnología Vestible Futura', 'David Garcia', '3201234567', 'ventas@tecnologiavestible.com', 'Calle 93 # 15-20, Bogotá', 'Wearables', '2025-09-30 13:50:30', 1, '2025-09-30 13:50:30', '2025-09-30 13:50:30'),
+(12, 'Energía Portátil Global', 'Carolina Hernandez', '3212345678', 'contacto@energiaportatil.com', 'Avenida de las Américas # 50-60, Bogotá', 'Accesorios', '2025-09-30 13:50:30', 1, '2025-09-30 13:50:30', '2025-09-30 13:50:30'),
+(13, 'Protectores de Tecnología', 'Daniel Rojas', '3223456789', 'info@protectoresdetecnologia.com', 'Calle 72 # 7-80, Bogotá', 'Accesorios', '2025-09-30 13:50:30', 1, '2025-09-30 13:50:30', '2025-09-30 13:50:30'),
+(14, 'Audio Profesional de Estudio', 'Gabriela Vargas', '3234567890', 'soporte@audioprofesional.co', 'Carrera 13 # 35-40, Bogotá', 'Audio', '2025-09-30 13:50:30', 1, '2025-09-30 13:50:30', '2025-09-30 13:50:30'),
+(15, 'Soluciones de Refrigeración', 'Mateo Diaz', '3001234567', 'ventas@solucionesrefrigeracion.com', 'Calle 26 # 18-25, Bogotá', 'Accesorios', '2025-09-30 13:50:30', 1, '2025-09-30 13:50:30', '2025-09-30 13:50:30'),
+(16, 'Limpieza Electrónica Pura', 'Valentina Morales', '3012345678', 'contacto@limpiezapure.com', 'Carrera 9 # 110-120, Bogotá', 'Accesorios', '2025-09-30 13:50:30', 1, '2025-09-30 13:50:30', '2025-09-30 13:50:30');
 
 -- --------------------------------------------------------
 
@@ -827,6 +906,20 @@ CREATE TABLE `servicios_catalogo` (
   `fecha_actualizacion` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Volcado de datos para la tabla `servicios_catalogo`
+--
+
+INSERT INTO `servicios_catalogo` (`id`, `categoria_id`, `nombre`, `descripcion`, `descripcion_detallada`, `precio_base`, `tiempo_estimado`, `garantia`, `estado`, `imagen`, `caracteristicas`, `fecha_creacion`, `fecha_actualizacion`) VALUES
+(94, 9, 'Mantenimiento Básico de PC', 'Limpieza interna y externa, y optimización de software.', 'Incluye limpieza de componentes, cambio de pasta térmica, optimización del sistema operativo y eliminación de malware.', 150000.00, '1-2 horas', '30 días', 'disponible', 'img/mantenimiento_basico.jpg', '{\"componentes\": [\"CPU\", \"GPU\", \"RAM\"], \"software\": [\"Antivirus\", \"Optimizador\"]}', '2025-09-30 13:52:55', '2025-09-30 13:52:55'),
+(95, 9, 'Mantenimiento Avanzado de Servidores', 'Revisión completa de hardware y software para servidores.', 'Incluye diagnóstico de hardware, actualización de firmware, configuración de RAID y monitoreo de rendimiento.', 800000.00, '4-6 horas', '90 días', 'disponible', 'img/mantenimiento_servidores.jpg', '{\"componentes\": [\"RAID\", \"Fuente de poder redundante\"], \"software\": [\"Windows Server\", \"Linux\"]}', '2025-09-30 13:52:55', '2025-09-30 13:52:55'),
+(96, 10, 'Reparación de Placa Base', 'Diagnóstico y reparación de fallas en la placa base.', 'Incluye reemplazo de capacitores, reparación de pistas y soldadura de componentes.', 400000.00, '3-5 días', '60 días', 'disponible', 'img/reparacion_placa.jpg', '{\"componentes\": [\"Capacitores\", \"Circuitos integrados\"], \"marcas\": [\"ASUS\", \"Gigabyte\", \"MSI\"]}', '2025-09-30 13:52:55', '2025-09-30 13:52:55'),
+(97, 10, 'Recuperación de Datos', 'Recuperación de datos de discos duros dañados.', 'Utilizamos software y hardware especializado para recuperar información de discos duros mecánicos y SSD.', 600000.00, '2-7 días', 'N/A', 'disponible', 'img/recuperacion_datos.jpg', '{\"dispositivos\": [\"HDD\", \"SSD\", \"USB\"], \"sistemas_archivos\": [\"NTFS\", \"FAT32\", \"ext4\"]}', '2025-09-30 13:52:55', '2025-09-30 13:52:55'),
+(98, 11, 'Instalación de Redes Domésticas', 'Diseño e instalación de redes Wi-Fi y cableadas para el hogar.', 'Incluye configuración de router, puntos de acceso y seguridad de red.', 250000.00, '2-3 horas', '30 días', 'disponible', 'img/instalacion_red_hogar.jpg', '{\"equipos\": [\"Router\", \"Switch\", \"Access Point\"], \"tecnologias\": [\"Wi-Fi 6\", \"Ethernet\"]}', '2025-09-30 13:52:55', '2025-09-30 13:52:55'),
+(99, 11, 'Instalación de Software a Medida', 'Instalación y configuración de software empresarial.', 'Nos adaptamos a las necesidades de tu negocio para instalar y configurar el software que necesitas.', 500000.00, '4-8 horas', '60 días', 'disponible', 'img/instalacion_software_medida.jpg', '{\"software\": [\"CRM\", \"ERP\", \"Software contable\"], \"plataformas\": [\"Windows\", \"Linux\", \"macOS\"]}', '2025-09-30 13:52:55', '2025-09-30 13:52:55'),
+(100, 12, 'Consultoría en Seguridad Informática', 'Análisis de vulnerabilidades y recomendaciones de seguridad.', 'Realizamos un análisis exhaustivo de tu infraestructura para identificar y mitigar riesgos de seguridad.', 1000000.00, '1-2 semanas', 'N/A', 'disponible', 'img/consultoria_seguridad.jpg', '{\"areas\": [\"Pentesting\", \"Análisis de malware\", \"Políticas de seguridad\"], \"normativas\": [\"ISO 27001\", \"GDPR\"]}', '2025-09-30 13:52:55', '2025-09-30 13:52:55'),
+(101, 12, 'Consultoría para Migración a la Nube', 'Asesoramiento para migrar tu infraestructura a la nube.', 'Te ayudamos a elegir la plataforma cloud adecuada y a planificar la migración de tus servicios y datos.', 1500000.00, '2-4 semanas', 'N/A', 'disponible', 'img/consultoria_nube.jpg', '{\"plataformas\": [\"AWS\", \"Azure\", \"Google Cloud\"], \"servicios\": [\"IaaS\", \"PaaS\", \"SaaS\"]}', '2025-09-30 13:52:55', '2025-09-30 13:52:55');
+
 -- --------------------------------------------------------
 
 --
@@ -941,14 +1034,14 @@ CREATE TABLE `usuarios` (
 --
 
 INSERT INTO `usuarios` (`id_usuario`, `nombre`, `apellido`, `email`, `password`, `telefono`, `fecha_registro`, `activo`, `id_tipo_usuario`, `ultimo_acceso`, `intentos_fallidos`, `fecha_creacion`, `fecha_actualizacion`) VALUES
-(10, 'Heiner Camilo', 'Moreno Beltran', 'auxiliar@gmail.com', '$2y$10$8LZ2d6e4lDMoULlUlyRNJevyZqjLw.zCNKLNhkNKu2zjZObHnSuyG', NULL, '2025-07-21 17:34:56', 1, 5, '2025-09-09 21:24:39', 0, '2025-07-21 17:34:56', '2025-09-09 21:24:39'),
-(12, 'Maria', 'Rojas', 'admin@gmail.com', '$2y$10$ZNPCrcGamecOF0ipIyVyd.cvbDLcmTk0Uc/HSMgViiXo1StcDZnFq', NULL, '2025-08-12 19:48:49', 1, 1, '2025-09-10 22:26:18', 0, '2025-08-12 19:48:49', '2025-09-10 22:26:18'),
+(10, 'Heiner Camilo', 'Moreno Beltran', 'auxiliar@gmail.com', '$2y$10$8LZ2d6e4lDMoULlUlyRNJevyZqjLw.zCNKLNhkNKu2zjZObHnSuyG', NULL, '2025-07-21 17:34:56', 1, 5, '2025-09-30 13:59:21', 0, '2025-07-21 17:34:56', '2025-09-30 13:59:21'),
+(12, 'Maria', 'Rojas', 'admin@gmail.com', '$2y$10$ZNPCrcGamecOF0ipIyVyd.cvbDLcmTk0Uc/HSMgViiXo1StcDZnFq', NULL, '2025-08-12 19:48:49', 1, 1, '2025-09-30 14:10:13', 0, '2025-08-12 19:48:49', '2025-09-30 14:10:13'),
 (13, 'Gersson ', 'Rubio', 'cliente@gmail.com', '$2y$10$qktmquGRurCw09/jBNhffuw9b3uoWKtZSC5rxa3fbr.uiBvUMHzQK', NULL, '2025-08-14 20:06:20', 1, 6, '2025-09-01 19:47:39', 0, '2025-08-14 20:06:20', '2025-09-01 19:47:39'),
 (14, 'Juan ', 'Prieto', 'vendedor@gmail.com', '$2y$10$ckSFDfgOjuRmW0zewtcJi.hJSL7xXi1fc8kVv4BLKymkBNxnEBHMa', NULL, '2025-08-14 20:39:55', 1, 2, '2025-08-26 19:32:04', 0, '2025-08-14 20:39:55', '2025-08-26 19:32:04'),
 (15, 'Victor Josep', 'Carvajal Valencia', 'tecnico@gmail.com', '$2y$10$4aOm3m4GZGH1vtxuEtgxW.ADJTiVXRSK4Lbbkx71TTQ/tCOK2Pz3u', NULL, '2025-08-14 20:41:20', 1, 3, NULL, 0, '2025-08-14 20:41:20', '2025-08-14 20:41:20'),
 (16, 'Salome', 'Farfan', 'supervisor@gmail.com', '$2y$10$PJUUB9GmT0i2tCKKu5RxoO03Nwk70/rFiQuwkFrwtugt8/CL/lnZO', NULL, '2025-08-14 20:42:02', 1, 4, '2025-08-21 19:50:04', 0, '2025-08-14 20:42:02', '2025-08-21 19:50:04'),
 (17, 'Test', 'Usuario', 'test@test.com', '$2y$10$rKuLJ4yxApYSjWZsuA7mG.5L.ptiybO2232HidyueLLxcfSc1akkS', NULL, '2025-08-20 20:27:46', 1, 6, NULL, 0, '2025-08-20 20:27:46', '2025-08-20 20:27:46'),
-(18, 'Carlos', 'Ardila', 'carlitos@gmail.com', '$2y$10$eHD1IVLht/VJ1//FBs0WregEuwoKXMQvx2.m.6C/gfIT3g0QBuvcC', '32324234234', '2025-08-28 03:40:38', 1, 6, '2025-09-01 20:06:10', 0, '2025-08-27 20:40:38', '2025-09-01 20:06:10'),
+(18, 'Carlos', 'Ardila', 'carlitos@gmail.com', '$2y$10$eHD1IVLht/VJ1//FBs0WregEuwoKXMQvx2.m.6C/gfIT3g0QBuvcC', '32324234234', '2025-08-28 03:40:38', 1, 6, '2025-09-30 15:22:24', 0, '2025-08-27 20:40:38', '2025-09-30 15:22:24'),
 (19, 'Carlos', 'Ardila', 'ardilita@gmail.com', '$2y$10$88Ylu0rcz01XlOfBavtjcuhaRElQ5l0Zf./8Fm6b8I8PkFeV3ZVjG', '3203550004', '2025-08-28 03:42:17', 1, 6, '2025-09-10 22:25:56', 0, '2025-08-27 20:42:17', '2025-09-10 22:25:56'),
 (20, 'etgsgfsd', 'gfsfgsdf', 'sfdgsd@gmail.com', '$2y$10$L0GQxGikMcCh.YLenYcI9edw5JZq4nfxT8pRFA/ue4bEB/4xzXHBe', '3203550004', '2025-09-02 02:48:27', 1, 6, NULL, 0, '2025-09-01 19:48:27', '2025-09-01 19:48:27'),
 (21, 'fdcasdfasdf', 'adsfasdfasdf', 'hola@gmail.com', '$2y$10$gi1Ab39Myo5Rdu.9swmXQ.te5CAnJlDS5aniPR7eKhm9Aoz0S.hHy', '320355004', '2025-09-02 03:00:54', 1, 5, NULL, 0, '2025-09-01 20:00:54', '2025-09-01 20:00:54'),
@@ -1345,6 +1438,13 @@ ALTER TABLE `asignacion_modulo`
   ADD KEY `idx_modulo` (`id_modulo`);
 
 --
+-- Indices de la tabla `cart_items`
+--
+ALTER TABLE `cart_items`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `user_id` (`user_id`);
+
+--
 -- Indices de la tabla `categorias_servicios`
 --
 ALTER TABLE `categorias_servicios`
@@ -1378,6 +1478,12 @@ ALTER TABLE `clientes`
 ALTER TABLE `configuracion_pagos`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `unique_pasarela` (`pasarela`);
+
+--
+-- Indices de la tabla `contacto`
+--
+ALTER TABLE `contacto`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indices de la tabla `detalle_venta`
@@ -1639,6 +1745,12 @@ ALTER TABLE `asignacion_modulo`
   MODIFY `id_asignacion` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=60;
 
 --
+-- AUTO_INCREMENT de la tabla `cart_items`
+--
+ALTER TABLE `cart_items`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+
+--
 -- AUTO_INCREMENT de la tabla `categorias_servicios`
 --
 ALTER TABLE `categorias_servicios`
@@ -1661,6 +1773,12 @@ ALTER TABLE `clientes`
 --
 ALTER TABLE `configuracion_pagos`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- AUTO_INCREMENT de la tabla `contacto`
+--
+ALTER TABLE `contacto`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `detalle_venta`
@@ -1696,7 +1814,7 @@ ALTER TABLE `garantias`
 -- AUTO_INCREMENT de la tabla `inventario`
 --
 ALTER TABLE `inventario`
-  MODIFY `id_inventario` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_inventario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT de la tabla `modulos`
@@ -1738,13 +1856,13 @@ ALTER TABLE `pagos`
 -- AUTO_INCREMENT de la tabla `productos`
 --
 ALTER TABLE `productos`
-  MODIFY `id_producto` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id_producto` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=44;
 
 --
 -- AUTO_INCREMENT de la tabla `proveedores`
 --
 ALTER TABLE `proveedores`
-  MODIFY `id_proveedor` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_proveedor` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT de la tabla `reembolsos`
@@ -1774,7 +1892,7 @@ ALTER TABLE `servicios`
 -- AUTO_INCREMENT de la tabla `servicios_catalogo`
 --
 ALTER TABLE `servicios_catalogo`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=94;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=102;
 
 --
 -- AUTO_INCREMENT de la tabla `tecnicos`
@@ -1829,6 +1947,12 @@ ALTER TABLE `asignaciones_tecnicos`
 ALTER TABLE `asignacion_modulo`
   ADD CONSTRAINT `asignacion_modulo_ibfk_1` FOREIGN KEY (`id_usuario`) REFERENCES `usuarios` (`id_usuario`) ON DELETE CASCADE,
   ADD CONSTRAINT `asignacion_modulo_ibfk_2` FOREIGN KEY (`id_modulo`) REFERENCES `modulos` (`id_modulo`) ON DELETE CASCADE;
+
+--
+-- Filtros para la tabla `cart_items`
+--
+ALTER TABLE `cart_items`
+  ADD CONSTRAINT `cart_items_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `usuarios` (`id_usuario`) ON DELETE CASCADE;
 
 --
 -- Filtros para la tabla `citas`
