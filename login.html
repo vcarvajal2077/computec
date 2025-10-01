@@ -231,18 +231,8 @@
                     <input type="text" id="registerTelefono" name="telefono" placeholder="Ingresa tu teléfono">
                     <div class="input-focus-border"></div>
                 </div>
-                <div class="form-group">
-                    <label for="registerTipoUsuario"><i class="fas fa-users"></i> Tipo de usuario</label>
-                    <select id="registerTipoUsuario" name="id_tipo_usuario" required>
-                        <option value="1">Administrador</option>
-                        <option value="2">Vendedor</option>
-                        <option value="3">Técnico</option>
-                        <option value="4">Supervisor</option>
-                        <option value="5">Asistente Administrativo</option>
-                        <option value="6">Cliente</option>
-                    </select>
-                    <div class="input-focus-border"></div>
-                </div>
+                <!-- Campo oculto: Solo permite registro como Cliente (id_tipo_usuario = 5) -->
+                <input type="hidden" id="registerTipoUsuario" name="id_tipo_usuario" value="5">
                 <div class="form-actions">
                     <button type="button" class="btn-secondary" id="cancelRegister">Volver al Login</button>
                     <button type="submit" class="btn-primary">

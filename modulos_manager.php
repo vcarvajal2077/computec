@@ -123,14 +123,22 @@ class ModulosManager {
      * Asigna módulos por defecto según el tipo de usuario
      */
     public function asignarModulosPorDefecto($id_usuario, $id_tipo_usuario) {
-        // Definir módulos por tipo de usuario
+        // Definir módulos por tipo de usuario según la nueva arquitectura de roles
         $modulos_por_tipo = [
-            1 => [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 13, 14, 15, 16, 17, 20], // Administrador
-            2 => [1, 3, 4, 6, 7, 15, 17], // Vendedor
-            3 => [1, 3, 5, 7, 11, 12, 16, 17], // Técnico
-            4 => [1, 2, 3, 5, 6, 7, 9, 15, 17, 20], // Supervisor
-            5 => [1, 3, 8, 15, 16, 17], // Asistente Administrativo
-            6 => [1, 11, 16, 17, 18, 19] // Cliente
+            // Rol ID 1: Administrador (Acceso total)
+            1 => [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22],
+
+            // Rol ID 2: Gestor de Tienda (Productos, Servicios, Inventario, Ventas, Facturas)
+            2 => [1, 4, 5, 6, 7, 15, 17],
+
+            // Rol ID 3: Editor (Contenido, Soporte, Anuncios, Eventos)
+            3 => [1, 16, 17, 21, 22],
+
+            // Rol ID 4: Técnico (Sus servicios, reparaciones, soporte)
+            4 => [1, 11, 12, 16, 17],
+
+            // Rol ID 5: Cliente (Su portal, sus productos, soporte)
+            5 => [1, 16, 17, 18, 19]
         ];
         
         if (isset($modulos_por_tipo[$id_tipo_usuario])) {

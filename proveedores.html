@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestión de Proveedores - Computec</title>
+    <link rel="stylesheet" href="css/website-styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body { background: #f8fafc; font-family: 'Inter', sans-serif; margin: 0; padding: 0; padding-top: 5rem; }
+        .container { max-width: 1400px; margin: 0 auto; padding: 2rem; }
+        .header { background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%); color: white; padding: 1.5rem 2rem; border-radius: 12px; margin-bottom: 2rem; display: flex; justify-content: space-between; align-items: center; }
+        .header h1 { font-size: 1.8rem; margin: 0; display: flex; align-items: center; gap: 0.75rem; }
+        .btn { padding: 0.75rem 1.5rem; border: none; border-radius: 8px; cursor: pointer; font-weight: 500; display: inline-flex; align-items: center; gap: 0.5rem; }
+        .btn-primary { background: #6366f1; color: white; }
+        .btn-secondary { background: #6b7280; color: white; }
+        .btn-sm { padding: 0.5rem 1rem; font-size: 0.875rem; }
+        .filters-bar { background: white; padding: 1.5rem; border-radius: 12px; margin-bottom: 1.5rem; box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05); }
+        .search-bar { display: flex; gap: 1rem; }
+        .search-input { flex: 1; padding: 0.75rem 1rem; border: 1px solid #d1d5db; border-radius: 8px; }
+        table { width: 100%; border-collapse: collapse; background: white; border-radius: 12px; overflow: hidden; }
+        th, td { padding: 1rem; text-align: left; border-bottom: 1px solid #e5e7eb; }
+        th { background: #f8fafc; font-weight: 600; }
+        tr:hover { background: #f9fafb; }
+        .badge { padding: 0.25rem 0.75rem; border-radius: 20px; font-size: 0.875rem; font-weight: 500; }
+        .badge-activo { background: #d1fae5; color: #065f46; }
+        .badge-inactivo { background: #fee2e2; color: #991b1b; }
+        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.5); z-index: 1000; align-items: center; justify-content: center; }
+        .modal.active { display: flex; }
+        .modal-content { background: white; border-radius: 12px; padding: 2rem; max-width: 600px; width: 90%; }
+        .form-group { margin-bottom: 1.5rem; }
+        .form-group label { display: block; margin-bottom: 0.5rem; font-weight: 500; }
+        .form-control { width: 100%; padding: 0.75rem; border: 1px solid #d1d5db; border-radius: 8px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1><i class="fas fa-truck"></i> Gestión de Proveedores</h1>
+            <div style="display: flex; gap: 1rem;">
+                <button class="btn btn-primary" onclick="abrirModalNuevo()"><i class="fas fa-plus"></i> Nuevo Proveedor</button>
+                <button class="btn btn-secondary" onclick="window.location.href='panel.html'"><i class="fas fa-arrow-left"></i> Volver</button>
+            </div>
+        </div>
+        
+        <div class="filters-bar">
+            <div class="search-bar">
+                <input type="text" class="search-input" id="searchInput" placeholder="Buscar proveedores...">
+                <button class="btn btn-primary" onclick="buscarProveedores()"><i class="fas fa-search"></i> Buscar</button>
+            </div>
+        </div>
+        
+        <table>
+            <thead>
+                <tr>
+                    <th>Nombre</th>
+                    <th>Contacto</th>
+                    <th>Teléfono</th>
+                    <th>Email</th>
+                    <th>Dirección</th>
+                    <th>Estado</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody id="proveedoresTable">
+                <tr><td colspan="7" style="text-align: center; padding: 2rem;"><i class="fas fa-spinner fa-spin"></i> Cargando...</td></tr>
+            </tbody>
+        </table>
+    </div>
+    
+    <div id="modalProveedor" class="modal">
+        <div class="modal-content">
+            <h2 id="modalTitle">Nuevo Proveedor</h2>
+            <form id="formProveedor" onsubmit="guardarProveedor(event)">
+                <input type="hidden" id="proveedorId">
+                <div class="form-group">
+                    <label>Nombre *</label>
+                    <input type="text" class="form-control" id="nombre" required>
+                </div>
+                <div class="form-group">
+                    <label>Contacto</label>
+                    <input type="text" class="form-control" id="contacto">
+                </div>
+                <div class="form-group">
+                    <label>Teléfono</label>
+                    <input type="text" class="form-control" id="telefono">
+                </div>
+                <div class="form-group">
+                    <label>Email</label>
+                    <input type="email" class="form-control" id="email">
+                </div>
+                <div class="form-group">
+                    <label>Dirección</label>
+                    <textarea class="form-control" id="direccion"></textarea>
+                </div>
+                <div class="form-group">
+                    <label>Estado</label>
+                    <select class="form-control" id="activo">
+                        <option value="1">Activo</option>
+                        <option value="0">Inactivo</option>
+                    </select>
+                </div>
+                <div style="display: flex; gap: 1rem; justify-content: flex-end;">
+                    <button type="button" class="btn btn-secondary" onclick="cerrarModal()">Cancelar</button>
+                    <button type="submit" class="btn btn-primary">Guardar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    
+    <script src="js/proveedores.js"></script>
+</body>
+</html>

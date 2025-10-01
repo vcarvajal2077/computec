@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Facturación - Computec</title>
+    <link rel="stylesheet" href="css/website-styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body { background: #f8fafc; font-family: 'Inter', sans-serif; margin: 0; padding: 0; padding-top: 10rem; }
+        .container { max-width: 1600px; margin: 0 auto; padding: 2rem; }
+        .header { background: linear-gradient(135deg, #ec4899 0%, #db2777 100%); color: white; padding: 1.5rem 2rem; border-radius: 12px; margin-bottom: 2rem; display: flex; justify-content: space-between; align-items: center; }
+        .header h1 { font-size: 1.8rem; margin: 0; display: flex; align-items: center; gap: 0.75rem; }
+        .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem; margin-bottom: 2rem; }
+        .stat-card { background: white; padding: 1.5rem; border-radius: 12px; box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05); border-left: 4px solid #ec4899; }
+        .stat-card h3 { font-size: 0.9rem; color: #6b7280; margin: 0 0 0.5rem 0; text-transform: uppercase; }
+        .stat-card .value { font-size: 2rem; font-weight: 700; color: #1f2937; }
+        .btn { padding: 0.75rem 1.5rem; border: none; border-radius: 8px; cursor: pointer; font-weight: 500; display: inline-flex; align-items: center; gap: 0.5rem; }
+        .btn-primary { background: #ec4899; color: white; }
+        .btn-secondary { background: #6b7280; color: white; }
+        .btn-sm { padding: 0.5rem 1rem; font-size: 0.875rem; }
+        .filters-bar { background: white; padding: 1.5rem; border-radius: 12px; margin-bottom: 1.5rem; box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05); display: flex; gap: 1rem; }
+        .search-input { flex: 1; padding: 0.75rem 1rem; border: 1px solid #d1d5db; border-radius: 8px; }
+        table { width: 100%; border-collapse: collapse; background: white; border-radius: 12px; overflow: hidden; }
+        th, td { padding: 1rem; text-align: left; border-bottom: 1px solid #e5e7eb; }
+        th { background: #f8fafc; font-weight: 600; }
+        tr:hover { background: #f9fafb; }
+        .badge { padding: 0.25rem 0.75rem; border-radius: 20px; font-size: 0.875rem; font-weight: 500; }
+        .badge-pagada { background: #d1fae5; color: #065f46; }
+        .badge-pendiente { background: #fef3c7; color: #92400e; }
+        .badge-cancelada { background: #fee2e2; color: #991b1b; }
+        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.5); z-index: 1000; align-items: center; justify-content: center; }
+        .modal.active { display: flex; }
+        .modal-content { background: white; border-radius: 12px; padding: 2rem; max-width: 800px; width: 90%; max-height: 90vh; overflow-y: auto; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1><i class="fas fa-file-invoice-dollar"></i> Facturación</h1>
+            <button class="btn btn-secondary" onclick="window.location.href='panel.html'"><i class="fas fa-arrow-left"></i> Volver</button>
+        </div>
+        
+        <div class="stats-grid">
+            <div class="stat-card">
+                <h3>Total Facturado</h3>
+                <div class="value" id="statTotal">$0</div>
+            </div>
+            <div class="stat-card">
+                <h3>Facturas Pagadas</h3>
+                <div class="value" id="statPagadas">0</div>
+            </div>
+            <div class="stat-card">
+                <h3>Facturas Pendientes</h3>
+                <div class="value" id="statPendientes">0</div>
+            </div>
+        </div>
+        
+        <div class="filters-bar">
+            <input type="text" class="search-input" id="searchInput" placeholder="Buscar facturas...">
+            <select id="filterEstado" onchange="aplicarFiltros()" style="padding: 0.75rem; border: 1px solid #d1d5db; border-radius: 8px;">
+                <option value="">Todos los estados</option>
+                <option value="pagada">Pagada</option>
+                <option value="pendiente">Pendiente</option>
+                <option value="cancelada">Cancelada</option>
+            </select>
+            <button class="btn btn-primary" onclick="buscarFacturas()"><i class="fas fa-search"></i> Buscar</button>
+        </div>
+        
+        <table>
+            <thead>
+                <tr>
+                    <th>N° Factura</th>
+                    <th>Cliente</th>
+                    <th>Fecha</th>
+                    <th>Total</th>
+                    <th>Estado</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody id="facturasTable">
+                <tr><td colspan="6" style="text-align: center; padding: 2rem;"><i class="fas fa-spinner fa-spin"></i> Cargando...</td></tr>
+            </tbody>
+        </table>
+    </div>
+    
+    <div id="modalDetalle" class="modal">
+        <div class="modal-content">
+            <h2>Detalle de Factura</h2>
+            <div id="detalleContent"></div>
+            <button class="btn btn-secondary" onclick="cerrarModal()" style="margin-top: 1rem;">Cerrar</button>
+        </div>
+    </div>
+    
+    <script src="js/facturas.js"></script>
+</body>
+</html>

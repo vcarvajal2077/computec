@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mi Portal - Computec</title>
+    <link rel="stylesheet" href="css/website-styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            background: #f8fafc;
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            padding: 0;
+            padding-top: 5rem;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem;
+            margin-top: 9rem;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 2rem;
+            border-radius: 12px;
+            margin-bottom: 2rem;
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
+        }
+        
+        .header h1 {
+            font-size: 2rem;
+            margin: 0 0 0.5rem 0;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+        
+        .header p {
+            margin: 0;
+            opacity: 0.9;
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        
+        .stat-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 12px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            border-left: 4px solid;
+        }
+        
+        .stat-card.primary { border-color: #667eea; }
+        .stat-card.success { border-color: #16a34a; }
+        .stat-card.warning { border-color: #d97706; }
+        .stat-card.info { border-color: #2563eb; }
+        
+        .stat-card h3 {
+            font-size: 0.9rem;
+            color: #6b7280;
+            margin: 0 0 0.5rem 0;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .stat-card .value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #1f2937;
+        }
+        
+        .tabs {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            overflow: hidden;
+        }
+        
+        .tab-buttons {
+            display: flex;
+            border-bottom: 2px solid #e5e7eb;
+            background: #f8fafc;
+        }
+        
+        .tab-btn {
+            flex: 1;
+            padding: 1rem 1.5rem;
+            border: none;
+            background: transparent;
+            cursor: pointer;
+            font-weight: 500;
+            color: #6b7280;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+        
+        .tab-btn:hover {
+            background: #f3f4f6;
+        }
+        
+        .tab-btn.active {
+            color: #667eea;
+            background: white;
+            border-bottom: 3px solid #667eea;
+        }
+        
+        .tab-content {
+            display: none;
+            padding: 2rem;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        .service-card {
+            background: #f8fafc;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            border-left: 4px solid #667eea;
+        }
+        
+        .service-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: start;
+            margin-bottom: 1rem;
+        }
+        
+        .service-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #1f2937;
+            margin-bottom: 0.25rem;
+        }
+        
+        .service-date {
+            font-size: 0.875rem;
+            color: #6b7280;
+        }
+        
+        .badge {
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.875rem;
+            font-weight: 500;
+        }
+        
+        .badge-recibido { background: #fef3c7; color: #92400e; }
+        .badge-en_proceso { background: #dbeafe; color: #1e40af; }
+        .badge-esperando_repuestos { background: #fce7f3; color: #9f1239; }
+        .badge-terminado { background: #d1fae5; color: #065f46; }
+        .badge-entregado { background: #d1fae5; color: #065f46; }
+        .badge-cancelado { background: #fee2e2; color: #991b1b; }
+        
+        .service-details {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px solid #e5e7eb;
+        }
+        
+        .detail-item {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .detail-label {
+            font-size: 0.75rem;
+            color: #6b7280;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 0.25rem;
+        }
+        
+        .detail-value {
+            font-weight: 500;
+            color: #1f2937;
+        }
+        
+        .price-display {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #16a34a;
+        }
+        
+        .btn {
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .btn-secondary {
+            background: #6b7280;
+            color: white;
+        }
+        
+        .btn-secondary:hover {
+            background: #4b5563;
+        }
+        
+        .empty-state {
+            text-align: center;
+            padding: 3rem;
+            color: #6b7280;
+        }
+        
+        .empty-state i {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            opacity: 0.3;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        th, td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid #e5e7eb;
+        }
+        
+        th {
+            background: #f8fafc;
+            font-weight: 600;
+            color: #374151;
+        }
+        
+        tr:hover {
+            background: #f9fafb;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <h1>
+                <i class="fas fa-user-circle"></i>
+                Mi Portal
+            </h1>
+            <p>Bienvenido, <strong id="clienteName">Cliente</strong></p>
+        </div>
+        
+        <!-- Stats Cards -->
+        <div class="stats-grid">
+            <div class="stat-card primary">
+                <h3>Servicios Activos</h3>
+                <div class="value" id="statServiciosActivos">0</div>
+            </div>
+            <div class="stat-card success">
+                <h3>Servicios Completados</h3>
+                <div class="value" id="statServiciosCompletados">0</div>
+            </div>
+            <div class="stat-card warning">
+                <h3>Total Compras</h3>
+                <div class="value" id="statTotalCompras">$0</div>
+            </div>
+            <div class="stat-card info">
+                <h3>Total Gastado</h3>
+                <div class="value" id="statTotalGastado">$0</div>
+            </div>
+        </div>
+        
+        <!-- Tabs -->
+        <div class="tabs">
+            <div class="tab-buttons">
+                <button class="tab-btn active" onclick="cambiarTab('servicios')">
+                    <i class="fas fa-tools"></i>
+                    Mis Servicios
+                </button>
+                <button class="tab-btn" onclick="cambiarTab('compras')">
+                    <i class="fas fa-shopping-cart"></i>
+                    Mis Compras
+                </button>
+                <button class="tab-btn" onclick="cambiarTab('facturas')">
+                    <i class="fas fa-file-invoice-dollar"></i>
+                    Facturación
+                </button>
+            </div>
+            
+            <!-- Tab: Mis Servicios -->
+            <div id="tab-servicios" class="tab-content active">
+                <h2 style="margin-top: 0;">Mis Servicios y Reparaciones</h2>
+                <div id="serviciosContainer">
+                    <div class="empty-state">
+                        <i class="fas fa-spinner fa-spin"></i>
+                        <p>Cargando servicios...</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Tab: Mis Compras -->
+            <div id="tab-compras" class="tab-content">
+                <h2 style="margin-top: 0;">Historial de Compras</h2>
+                <div id="comprasContainer">
+                    <div class="empty-state">
+                        <i class="fas fa-spinner fa-spin"></i>
+                        <p>Cargando compras...</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Tab: Facturas -->
+            <div id="tab-facturas" class="tab-content">
+                <h2 style="margin-top: 0;">Facturación y Detalles</h2>
+                <div id="facturasContainer">
+                    <div class="empty-state">
+                        <i class="fas fa-spinner fa-spin"></i>
+                        <p>Cargando facturas...</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div style="margin-top: 2rem; text-align: center;">
+            <button class="btn btn-secondary" onclick="window.location.href='panel.html'">
+                <i class="fas fa-arrow-left"></i>
+                Volver al Panel
+            </button>
+        </div>
+    </div>
+    
+    <script src="js/portal-cliente.js"></script>
+</body>
+</html>

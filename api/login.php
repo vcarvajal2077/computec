@@ -45,8 +45,8 @@ try {
     
     // Buscar usuario por email
     $stmt = $pdo->prepare("
-        SELECT u.id_usuario, u.nombre, u.apellido, u.email, u.password, u.activo, 
-               t.nombre_tipo as rol, c.id_cliente
+        SELECT u.id_usuario, u.nombre, u.apellido, u.email, u.password, u.telefono, u.activo, 
+               u.id_tipo_usuario, t.nombre_tipo as rol, c.id_cliente
         FROM usuarios u
         JOIN tipo_usuario t ON u.id_tipo_usuario = t.id_tipo_usuario
         LEFT JOIN clientes c ON u.id_usuario = c.id_usuario
@@ -73,6 +73,19 @@ try {
     $updateStmt = $pdo->prepare("UPDATE usuarios SET ultimo_acceso = NOW() WHERE id_usuario = ?");
     $updateStmt->execute([$user['id_usuario']]);
 
+    // --- INICIO DE MODIFICACIÓN: Cargar módulos de usuario en la sesión ---
+
+    // Obtener los módulos asignados al usuario
+    $modulesStmt = $pdo->prepare("
+        SELECT m.id_modulo, m.nombre_modulo, m.url, m.icono
+        FROM modulos m
+        INNER JOIN asignacion_modulo am ON m.id_modulo = am.id_modulo
+        WHERE am.id_usuario = ? AND am.activo = 1 AND m.activo = 1
+        ORDER BY m.orden ASC
+    ");
+    $modulesStmt->execute([$user['id_usuario']]);
+    $modules = $modulesStmt->fetchAll(PDO::FETCH_ASSOC);
+
     // Iniciar sesión y guardar datos del usuario
     if (session_status() === PHP_SESSION_NONE) {
         session_start();
@@ -80,22 +93,28 @@ try {
     $_SESSION['user_id'] = $user['id_usuario'];
     $_SESSION['user_name'] = $user['nombre'] . ' ' . $user['apellido'];
     $_SESSION['user_rol'] = $user['rol'];
-    
+    $_SESSION['user_modules'] = $modules; // Guardar módulos en la sesión
+
     // Preparar respuesta
     $response = [
         'success' => true,
         'message' => 'Login exitoso',
         'userData' => [
             'id' => $user['id_usuario'],
+            'id_tipo_usuario' => $user['id_tipo_usuario'],
             'name' => $user['nombre'] . ' ' . $user['apellido'],
             'email' => $user['email'],
             'rol' => $user['rol'],
             'id_cliente' => $user['id_cliente'],
-            'loggedIn' => true
+            'telefono' => $user['telefono'] ?? '',
+            'loggedIn' => true,
+            'modules' => $modules // Enviar módulos al frontend
         ]
     ];
     
     echo json_encode($response);
+
+    // --- FIN DE MODIFICACIÓN ---
     
 } catch (PDOException $e) {
     error_log("Error de base de datos: " . $e->getMessage());

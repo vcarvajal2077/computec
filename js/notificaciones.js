@@ -41,22 +41,54 @@ class NotificacionesManager {
     }
     
     iniciarPolling() {
+        // Solo iniciar polling si hay usuario logueado
+        const userData = localStorage.getItem('usuario_logueado');
+        if (!userData) {
+            return;
+        }
+        
         // Verificar notificaciones cada 30 segundos
         this.intervalo = setInterval(() => {
             this.verificarNotificaciones();
         }, 30000);
+        
+        // Primera verificación inmediata
+        this.verificarNotificaciones();
     }
     
     async verificarNotificaciones() {
         try {
+            // Verificar si hay usuario logueado
+            const userData = localStorage.getItem('usuario_logueado');
+            if (!userData) {
+                // Si no hay usuario, detener el polling
+                if (this.intervalo) {
+                    clearInterval(this.intervalo);
+                    this.intervalo = null;
+                }
+                return;
+            }
+            
             const response = await fetch(`${this.apiBase}?action=historial&limite=5`);
+            
+            // Verificar si la respuesta es JSON válida
+            const contentType = response.headers.get('content-type');
+            if (!contentType || !contentType.includes('application/json')) {
+                console.warn('API de notificaciones no disponible o devolvió respuesta no-JSON');
+                return;
+            }
+            
             const data = await response.json();
             
             if (data.success) {
                 this.procesarNotificaciones(data.data.notificaciones);
             }
         } catch (error) {
-            console.error('Error verificando notificaciones:', error);
+            // Silenciar errores si no hay usuario logueado
+            const userData = localStorage.getItem('usuario_logueado');
+            if (userData) {
+                console.error('Error verificando notificaciones:', error);
+            }
         }
     }
     

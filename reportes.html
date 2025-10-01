@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reportes y Estadísticas - Computec</title>
+    <link rel="stylesheet" href="css/website-styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body {
+            background: #f8fafc;
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            padding: 0;
+            padding-top: 10rem;
+        }
+        
+        .container {
+            max-width: 1600px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #3b82f6 0%, #1e40af 100%);
+            color: white;
+            padding: 2rem;
+            border-radius: 12px;
+            margin-bottom: 2rem;
+            box-shadow: 0 10px 30px rgba(59, 130, 246, 0.3);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .header h1 {
+            font-size: 2rem;
+            margin: 0 0 0.5rem 0;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+        
+        .header p {
+            margin: 0;
+            opacity: 0.9;
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        
+        .stat-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 12px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            border-left: 4px solid;
+            transition: transform 0.3s;
+        }
+        
+        .stat-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .stat-card.blue { border-color: #3b82f6; }
+        .stat-card.green { border-color: #16a34a; }
+        .stat-card.orange { border-color: #d97706; }
+        .stat-card.purple { border-color: #8b5cf6; }
+        
+        .stat-card h3 {
+            font-size: 0.9rem;
+            color: #6b7280;
+            margin: 0 0 0.5rem 0;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .stat-card .value {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #1f2937;
+            margin-bottom: 0.5rem;
+        }
+        
+        .stat-card .change {
+            font-size: 0.875rem;
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+        }
+        
+        .change.positive { color: #16a34a; }
+        .change.negative { color: #dc2626; }
+        
+        .charts-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        
+        .chart-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 12px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+        
+        .chart-card h2 {
+            font-size: 1.2rem;
+            color: #1f2937;
+            margin: 0 0 1.5rem 0;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .chart-container {
+            position: relative;
+            height: 300px;
+        }
+        
+        .table-card {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            overflow: hidden;
+        }
+        
+        .table-card h2 {
+            font-size: 1.2rem;
+            color: #1f2937;
+            margin: 0;
+            padding: 1.5rem;
+            border-bottom: 1px solid #e5e7eb;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        th, td {
+            padding: 1rem 1.5rem;
+            text-align: left;
+            border-bottom: 1px solid #e5e7eb;
+        }
+        
+        th {
+            background: #f8fafc;
+            font-weight: 600;
+            color: #374151;
+        }
+        
+        tr:hover {
+            background: #f9fafb;
+        }
+        
+        .btn {
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .btn-secondary {
+            background: #6b7280;
+            color: white;
+        }
+        
+        .btn-secondary:hover {
+            background: #4b5563;
+        }
+        
+        .filters {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 12px;
+            margin-bottom: 2rem;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+        
+        .filters select {
+            padding: 0.75rem;
+            border: 1px solid #d1d5db;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+        
+        .loading {
+            text-align: center;
+            padding: 3rem;
+            color: #6b7280;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <div>
+                <h1>
+                    <i class="fas fa-chart-line"></i>
+                    Reportes y Estadísticas
+                </h1>
+                <p>Dashboard de análisis y métricas del negocio</p>
+            </div>
+            <button class="btn btn-secondary" onclick="window.location.href='/Proyecto/panel.html'" style="background: rgba(255,255,255,0.2); color: white; padding: 0.75rem 1.5rem; border: none; border-radius: 8px; cursor: pointer; font-weight: 500; display: inline-flex; align-items: center; gap: 0.5rem;">
+                <i class="fas fa-arrow-left"></i>
+                Volver
+            </button>
+        </div>
+        
+        <!-- Filtros -->
+        <div class="filters">
+            <label><strong>Período:</strong></label>
+            <select id="filterPeriodo" onchange="cargarDatos()">
+                <option value="7">Últimos 7 días</option>
+                <option value="30" selected>Últimos 30 días</option>
+                <option value="90">Últimos 90 días</option>
+                <option value="365">Último año</option>
+            </select>
+        </div>
+        
+        <!-- Stats Cards -->
+        <div class="stats-grid">
+            <div class="stat-card blue">
+                <h3>Ventas Totales</h3>
+                <div class="value" id="statVentas">$0</div>
+                <div class="change positive" id="changeVentas">
+                    <i class="fas fa-arrow-up"></i> 0%
+                </div>
+            </div>
+            <div class="stat-card green">
+                <h3>Servicios Completados</h3>
+                <div class="value" id="statServicios">0</div>
+                <div class="change positive" id="changeServicios">
+                    <i class="fas fa-arrow-up"></i> 0%
+                </div>
+            </div>
+            <div class="stat-card orange">
+                <h3>Nuevos Clientes</h3>
+                <div class="value" id="statClientes">0</div>
+                <div class="change positive" id="changeClientes">
+                    <i class="fas fa-arrow-up"></i> 0%
+                </div>
+            </div>
+            <div class="stat-card purple">
+                <h3>Productos Vendidos</h3>
+                <div class="value" id="statProductos">0</div>
+                <div class="change positive" id="changeProductos">
+                    <i class="fas fa-arrow-up"></i> 0%
+                </div>
+            </div>
+        </div>
+        
+        <!-- Charts -->
+        <div class="charts-grid">
+            <div class="chart-card">
+                <h2><i class="fas fa-chart-line"></i> Ventas por Día</h2>
+                <div class="chart-container">
+                    <canvas id="chartVentas"></canvas>
+                </div>
+            </div>
+            
+            <div class="chart-card">
+                <h2><i class="fas fa-chart-pie"></i> Servicios por Estado</h2>
+                <div class="chart-container">
+                    <canvas id="chartServicios"></canvas>
+                </div>
+            </div>
+        </div>
+        
+        <div class="charts-grid">
+            <div class="chart-card">
+                <h2><i class="fas fa-chart-bar"></i> Productos Más Vendidos</h2>
+                <div class="chart-container">
+                    <canvas id="chartProductos"></canvas>
+                </div>
+            </div>
+            
+            <div class="chart-card">
+                <h2><i class="fas fa-chart-area"></i> Ingresos Mensuales</h2>
+                <div class="chart-container">
+                    <canvas id="chartIngresos"></canvas>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Top Clientes -->
+        <div class="table-card">
+            <h2><i class="fas fa-users"></i> Clientes Frecuentes</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Cliente</th>
+                        <th>Servicios</th>
+                        <th>Compras</th>
+                        <th>Total Gastado</th>
+                    </tr>
+                </thead>
+                <tbody id="topClientesTable">
+                    <tr>
+                        <td colspan="4" class="loading">
+                            <i class="fas fa-spinner fa-spin"></i> Cargando datos...
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        
+        <div style="margin-top: 2rem; text-align: center;">
+            <button class="btn btn-secondary" onclick="window.location.href='panel.html'">
+                <i class="fas fa-arrow-left"></i>
+                Volver al Panel
+            </button>
+        </div>
+    </div>
+    
+    <script src="js/reportes.js"></script>
+</body>
+</html>

@@ -357,8 +357,10 @@ function submitForm() {
             const apellido = nameParts.join(' ') || '';
 
             const userData = {
+                id: res.userData.id,
                 id_usuario: res.userData.id,
                 id_cliente: res.userData.id_cliente,
+                id_tipo_usuario: res.userData.id_tipo_usuario,
                 nombre: nombre,
                 apellido: apellido,
                 email: res.userData.email,

@@ -8,267 +8,106 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
         body {
             background: #f8fafc;
             font-family: 'Inter', sans-serif;
-            margin: 0;
-            padding: 0;
         }
         
         .panel-container {
-            display: flex;
             min-height: 100vh;
-        }
-        
-        /* Sidebar */
-        .sidebar {
-            width: 280px;
-            background: white;
-            box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
-            position: fixed;
-            height: 100vh;
-            overflow-y: auto;
-        }
-        
-        .sidebar-header {
             padding: 2rem;
-            border-bottom: 1px solid #e5e7eb;
-            text-align: center;
+            max-width: 1400px;
+            margin: 0 auto;
         }
         
-        .sidebar-logo {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 1rem;
-        }
-        
-        .sidebar-logo i {
-            font-size: 2rem;
-            color: #2563eb;
-            margin-right: 0.5rem;
-        }
-        
-        .sidebar-logo span {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: #1f2937;
-        }
-        
-        .user-info {
-            display: flex;
-            align-items: center;
-            padding: 1rem;
-            background: #f8fafc;
-            border-radius: 10px;
-            margin-bottom: 1rem;
-        }
-        
-        .user-avatar {
-            width: 40px;
-            height: 40px;
-            background: #2563eb;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-weight: 600;
-            margin-right: 0.75rem;
-        }
-        
-        .user-details h4 {
-            margin: 0;
-            font-size: 0.9rem;
-            color: #1f2937;
-        }
-        
-        .user-details p {
-            margin: 0;
-            font-size: 0.8rem;
-            color: #6b7280;
-        }
-        
-        .nav-menu {
-            padding: 1rem 0;
-            display: flex;
-            flex-direction: column;
-        }
-        
-        .nav-item {
-            margin-bottom: 0.5rem;
-            width: 100%;
-        }
-        
-        .nav-link {
-            display: flex;
-            align-items: center;
-            padding: 0.75rem 2rem;
-            color: #6b7280;
-            text-decoration: none;
-            transition: all 0.3s ease;
-            border-left: 3px solid transparent;
-            width: 100%;
-        }
-        
-        .nav-link:hover {
-            background: #f3f4f6;
-            color: #2563eb;
-            border-left-color: #2563eb;
-        }
-        
-        .nav-link.active {
-            background: #eff6ff;
-            color: #2563eb;
-            border-left-color: #2563eb;
-            font-weight: 600;
-        }
-        
-        .nav-link i {
-            width: 20px;
-            margin-right: 0.75rem;
-        }
-        
-        /* Main Content */
-        .main-content {
-            flex: 1;
-            margin-left: 280px;
-            padding: 2rem;
-        }
-        
+        /* Header */
         .content-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
             margin-bottom: 2rem;
-            padding-bottom: 1rem;
-            border-bottom: 1px solid #e5e7eb;
-        }
-        
-        .content-title {
-            font-size: 2rem;
-            font-weight: 700;
-            color: #1f2937;
-        }
-        
-        .logout-btn {
-            background: #ef4444;
-            color: white;
-            border: none;
-            padding: 0.5rem 1rem;
-            border-radius: 8px;
-            cursor: pointer;
-            font-weight: 500;
-            transition: background 0.3s ease;
-        }
-        
-        .logout-btn:hover {
-            background: #dc2626;
-        }
-        
-        /* Botón de menú */
-        .menu-btn {
-            background: #2563eb;
-            color: white;
-            border: none;
-            padding: 0.5rem 1rem;
-            border-radius: 8px;
-            cursor: pointer;
-            font-weight: 500;
-            transition: background 0.3s ease;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-        
-        .menu-btn:hover {
-            background: #1d4ed8;
-        }
-        
-        .menu-btn i {
-            font-size: 1rem;
-        }
-        
-        /* Dashboard Cards */
-        .dashboard-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 1.5rem;
-            margin-bottom: 2rem;
-        }
-        
-        .dashboard-card {
+            padding: 1.5rem 2rem;
             background: white;
             border-radius: 12px;
-            padding: 1.5rem;
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
-            border: 1px solid #e5e7eb;
         }
         
-        .card-header {
+        .header-left {
             display: flex;
             align-items: center;
-            margin-bottom: 1rem;
+            gap: 1.5rem;
         }
         
-        .card-icon {
-            width: 50px;
-            height: 50px;
-            border-radius: 12px;
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            background: #f8fafc;
+            padding: 0.75rem 1.5rem;
+            border-radius: 10px;
+        }
+        
+        .user-avatar {
+            width: 45px;
+            height: 45px;
+            background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+            border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            margin-right: 1rem;
-            font-size: 1.5rem;
-        }
-        
-        .card-icon.primary {
-            background: #eff6ff;
-            color: #2563eb;
-        }
-        
-        .card-icon.success {
-            background: #f0fdf4;
-            color: #16a34a;
-        }
-        
-        .card-icon.warning {
-            background: #fffbeb;
-            color: #d97706;
-        }
-        
-        .card-icon.danger {
-            background: #fef2f2;
-            color: #dc2626;
-        }
-        
-        .card-title {
-            font-size: 1.1rem;
-            font-weight: 600;
-            color: #1f2937;
-            margin: 0;
-        }
-        
-        .card-value {
-            font-size: 2rem;
+            color: white;
             font-weight: 700;
-            color: #1f2937;
-            margin: 0.5rem 0;
+            font-size: 1.1rem;
         }
         
-        .card-description {
+        .user-details h4 {
+            font-size: 0.95rem;
+            color: #1f2937;
+            margin-bottom: 0.2rem;
+        }
+        
+        .user-details p {
+            font-size: 0.8rem;
             color: #6b7280;
-            font-size: 0.9rem;
-            margin: 0;
+        }
+        
+        .content-title {
+            font-size: 1.8rem;
+            color: #1f2937;
+            font-weight: 700;
+        }
+        
+        .logout-btn {
+            padding: 0.75rem 1.5rem;
+            background: #dc2626;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.3s ease;
+        }
+        
+        .logout-btn:hover {
+            background: #b91c1c;
+            transform: translateY(-2px);
+        }
+        
+        .logout-btn[style*="background: #6b7280"]:hover {
+            background: #4b5563 !important;
         }
         
         /* Content Sections */
         .content-section {
-            background: white;
-            border-radius: 12px;
-            padding: 2rem;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
-            border: 1px solid #e5e7eb;
             margin-bottom: 2rem;
         }
         
@@ -279,99 +118,14 @@
             margin-bottom: 1.5rem;
             display: flex;
             align-items: center;
+            gap: 0.5rem;
         }
         
         .section-title i {
-            margin-right: 0.75rem;
             color: #2563eb;
         }
         
-        /* Tables */
-        .table-container {
-            overflow-x: auto;
-        }
-        
-        .data-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 1rem;
-        }
-        
-        .data-table th,
-        .data-table td {
-            padding: 1rem;
-            text-align: left;
-            border-bottom: 1px solid #e5e7eb;
-        }
-        
-        .data-table th {
-            background: #f8fafc;
-            font-weight: 600;
-            color: #374151;
-        }
-        
-        .data-table tr:hover {
-            background: #f9fafb;
-        }
-        
-        .status-badge {
-            padding: 0.25rem 0.75rem;
-            border-radius: 20px;
-            font-size: 0.8rem;
-            font-weight: 500;
-        }
-        
-        .status-pending {
-            background: #fef3c7;
-            color: #d97706;
-        }
-        
-        .status-active {
-            background: #d1fae5;
-            color: #065f46;
-        }
-        
-        .status-completed {
-            background: #dbeafe;
-            color: #1e40af;
-        }
-        
-        /* Buttons */
-        .btn {
-            padding: 0.5rem 1rem;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            font-weight: 500;
-            text-decoration: none;
-            display: inline-flex;
-            align-items: center;
-            transition: all 0.3s ease;
-        }
-        
-        .btn-primary {
-            background: #2563eb;
-            color: white;
-        }
-        
-        .btn-primary:hover {
-            background: #1d4ed8;
-        }
-        
-        .btn-secondary {
-            background: #6b7280;
-            color: white;
-        }
-        
-        .btn-secondary:hover {
-            background: #4b5563;
-        }
-        
-        .btn i {
-            margin-right: 0.5rem;
-        }
-        
-        /* Módulos Cards */
+        /* Module Cards */
         .module-card {
             background: white;
             border-radius: 12px;
@@ -386,253 +140,188 @@
         }
         
         .module-card:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(37, 99, 235, 0.15);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(37, 99, 235, 0.15);
             border-color: #2563eb;
         }
         
         .module-icon {
             width: 60px;
             height: 60px;
+            background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
             border-radius: 12px;
-            background: #eff6ff;
-            color: #2563eb;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.5rem;
+            color: white;
+            font-size: 1.8rem;
             flex-shrink: 0;
         }
         
+        .module-content {
+            flex: 1;
+        }
+        
         .module-content h3 {
-            margin: 0 0 0.5rem 0;
-            color: #1f2937;
             font-size: 1.1rem;
-            font-weight: 600;
+            color: #1f2937;
+            margin-bottom: 0.3rem;
         }
         
         .module-content p {
-            margin: 0;
-            color: #6b7280;
             font-size: 0.9rem;
+            color: #6b7280;
+            margin: 0;
         }
         
-        /* Responsive */
-        @media (max-width: 768px) {
-            .sidebar {
-                transform: translateX(-100%);
-                transition: transform 0.3s ease;
-                z-index: 1000;
-            }
-            
-            .sidebar.open {
-                transform: translateX(0);
-            }
-            
-            .main-content {
-                margin-left: 0;
-            }
-            
-            .dashboard-grid {
-                grid-template-columns: 1fr;
-            }
-            
-            .menu-btn {
-                display: flex;
-            }
+        /* Welcome Banner */
+        .welcome-banner {
+            background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+            color: white;
+            padding: 3rem 2rem;
+            border-radius: 12px;
+            text-align: center;
+            margin-bottom: 2rem;
         }
         
-        @media (min-width: 769px) {
-            .menu-btn {
-                display: none;
-            }
+        .welcome-banner h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+        
+        .welcome-banner p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        /* Info Cards */
+        .info-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        
+        .info-card {
+            background: #f8fafc;
+            padding: 1.5rem;
+            border-radius: 12px;
+            border-left: 4px solid;
+        }
+        
+        .info-card.primary {
+            border-color: #2563eb;
+        }
+        
+        .info-card.success {
+            border-color: #16a34a;
+        }
+        
+        .info-card.warning {
+            border-color: #d97706;
+        }
+        
+        .info-card.danger {
+            border-color: #dc2626;
+        }
+        
+        .info-card h3 {
+            margin-bottom: 0.5rem;
+        }
+        
+        .info-card.primary h3 {
+            color: #2563eb;
+        }
+        
+        .info-card.success h3 {
+            color: #16a34a;
+        }
+        
+        .info-card.warning h3 {
+            color: #d97706;
+        }
+        
+        .info-card.danger h3 {
+            color: #dc2626;
+        }
+        
+        .info-card p {
+            color: #6b7280;
+            margin: 0;
+        }
+        
+        /* Modules Grid */
+        .modules-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
         }
     </style>
 </head>
 <body>
     <div class="panel-container">
-        <!-- Sidebar -->
-        <div class="sidebar" id="sidebar">
-            <div class="sidebar-header">
-                <div class="sidebar-logo">
-                    <i class="fas fa-laptop-code"></i>
-                    <span>Computec</span>
-                </div>
+        <!-- Header -->
+        <div class="content-header">
+            <div class="header-left">
                 <div class="user-info">
-                    <div class="user-avatar" id="userAvatar">
-                        JP
-                    </div>
+                    <div class="user-avatar" id="userAvatar">U</div>
                     <div class="user-details">
                         <h4 id="userName">Usuario</h4>
                         <p id="userEmail">usuario@test.com</p>
                     </div>
                 </div>
+                <h1 class="content-title" id="pageTitle">Panel de Control</h1>
             </div>
-            
-            <nav class="nav-menu" id="navMenu">
-                <!-- Menú dinámico se cargará aquí -->
-            </nav>
-        </div>
-        
-        <!-- Main Content -->
-        <div class="main-content">
-            <div class="content-header">
-                <div style="display: flex; align-items: center; gap: 1rem;">
-                    <button class="menu-btn" onclick="toggleSidebar()">
-                        <i class="fas fa-bars"></i>
-                        Menú
-                    </button>
-                    <h1 class="content-title" id="pageTitle">Panel</h1>
-                </div>
+            <div style="display: flex; gap: 1rem;">
+                <button class="logout-btn" style="background: #6b7280;" onclick="window.location.href='index.html'">
+                    <i class="fas fa-home"></i>
+                    Volver a la Plataforma
+                </button>
                 <button class="logout-btn" onclick="logout()">
                     <i class="fas fa-sign-out-alt"></i>
                     Cerrar Sesión
                 </button>
             </div>
-            
-            <!-- Menu Section -->
-            <div id="menu" class="content-section active-section">
-                <!-- Bienvenida -->
-                <div class="content-section" style="background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%); color: white; margin-bottom: 2rem;">
-                    <div style="text-align: center; padding: 2rem;">
-                        <h1 style="font-size: 2.5rem; font-weight: 700; margin-bottom: 1rem;">
-                            ¡Bienvenido, <span id="welcomeUserName">Usuario</span>!
-                        </h1>
-                        <p style="font-size: 1.2rem; opacity: 0.9; max-width: 600px; margin: 0 auto;">
-                            Esta es tu interfaz personalizada donde puedes gestionar todas tus funciones de manera fácil y rápida.
-                        </p>
-                    </div>
-                </div>
-
-                <!-- Información de la interfaz -->
-                <div class="content-section" style="margin-bottom: 2rem;">
-                    <h2 class="section-title">
-                        <i class="fas fa-info-circle"></i>
-                        ¿Qué puedes hacer aquí?
-                    </h2>
-                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem;">
-                        <div style="background: #f8fafc; padding: 1.5rem; border-radius: 12px; border-left: 4px solid #2563eb;">
-                            <h3 style="color: #2563eb; margin-bottom: 0.5rem;">📊 Dashboard</h3>
-                            <p style="color: #6b7280; margin: 0;">Visualiza un resumen de tus actividades y estadísticas importantes.</p>
-                        </div>
-                        <div style="background: #f8fafc; padding: 1.5rem; border-radius: 12px; border-left: 4px solid #16a34a;">
-                            <h3 style="color: #16a34a; margin-bottom: 0.5rem;">🔧 Gestión</h3>
-                            <p style="color: #6b7280; margin: 0;">Accede a todas las herramientas y módulos asignados a tu rol.</p>
-                        </div>
-                        <div style="background: #f8fafc; padding: 1.5rem; border-radius: 12px; border-left: 4px solid #d97706;">
-                            <h3 style="color: #d97706; margin-bottom: 0.5rem;">📞 Soporte</h3>
-                            <p style="color: #6b7280; margin: 0;">Obtén ayuda técnica y crea tickets de soporte cuando lo necesites.</p>
-                        </div>
-                        <div style="background: #f8fafc; padding: 1.5rem; border-radius: 12px; border-left: 4px solid #dc2626;">
-                            <h3 style="color: #dc2626; margin-bottom: 0.5rem;">👤 Perfil</h3>
-                            <p style="color: #6b7280; margin: 0;">Gestiona tu información personal y configuración de cuenta.</p>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Módulos -->
-                <div class="content-section">
-                    <h2 class="section-title">
-                        <i class="fas fa-th-large"></i>
-                        Acceso Rápido a Módulos
-                    </h2>
-                    <div id="moduleCardsContainer" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem;">
-                        <!-- Los módulos se cargarán dinámicamente aquí -->
-                    </div>
-                </div>
+        </div>
+        
+        <!-- Welcome Banner -->
+        <div class="welcome-banner">
+            <h1>¡Bienvenido, <span id="welcomeUserName">Usuario</span>!</h1>
+            <p>Esta es tu interfaz personalizada donde puedes gestionar todas tus funciones de manera fácil y rápida.</p>
+        </div>
+        
+        <!-- Info Cards -->
+        <div class="info-cards">
+            <div class="info-card primary">
+                <h3>📊 Dashboard</h3>
+                <p>Visualiza un resumen de tus actividades y estadísticas importantes.</p>
             </div>
-            
-            <!-- Dashboard Section -->
-            <div id="dashboard" class="content-section" style="display: none;">
-                <div class="dashboard-grid">
-                    <div class="dashboard-card">
-                        <div class="card-header">
-                            <div class="card-icon primary">
-                                <i class="fas fa-tachometer-alt"></i>
-                            </div>
-                            <div>
-                                <h3 class="card-title">Actividad Reciente</h3>
-                                <p class="card-value">5</p>
-                                <p class="card-description">Actividades hoy</p>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="dashboard-card">
-                        <div class="card-header">
-                            <div class="card-icon success">
-                                <i class="fas fa-check-circle"></i>
-                            </div>
-                            <div>
-                                <h3 class="card-title">Tareas Completadas</h3>
-                                <p class="card-value">12</p>
-                                <p class="card-description">Esta semana</p>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="dashboard-card">
-                        <div class="card-header">
-                            <div class="card-icon warning">
-                                <i class="fas fa-clock"></i>
-                            </div>
-                            <div>
-                                <h3 class="card-title">Pendientes</h3>
-                                <p class="card-value">3</p>
-                                <p class="card-description">Por completar</p>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="dashboard-card">
-                        <div class="card-header">
-                            <div class="card-icon danger">
-                                <i class="fas fa-exclamation-triangle"></i>
-                            </div>
-                            <div>
-                                <h3 class="card-title">Alertas</h3>
-                                <p class="card-value">1</p>
-                                <p class="card-description">Requieren atención</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="content-section">
-                    <h2 class="section-title">
-                        <i class="fas fa-clock"></i>
-                        Actividad Reciente
-                    </h2>
-                    <div class="table-container">
-                        <table class="data-table">
-                            <thead>
-                                <tr>
-                                    <th>Actividad</th>
-                                    <th>Fecha</th>
-                                    <th>Estado</th>
-                                    <th>Acciones</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>Acceso al sistema</td>
-                                    <td>Hoy</td>
-                                    <td><span class="status-badge status-active">Completado</span></td>
-                                    <td><a href="#" class="btn btn-primary btn-sm">Ver Detalles</a></td>
-                                </tr>
-                                <tr>
-                                    <td>Actualización de perfil</td>
-                                    <td>Ayer</td>
-                                    <td><span class="status-badge status-completed">Completado</span></td>
-                                    <td><a href="#" class="btn btn-secondary btn-sm">Ver Cambios</a></td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
+            <div class="info-card success">
+                <h3>🔧 Gestión</h3>
+                <p>Accede a todas las herramientas y módulos asignados a tu rol.</p>
             </div>
-            
-            <!-- Otras secciones se cargarán dinámicamente según los módulos -->
+            <div class="info-card warning">
+                <h3>📞 Soporte</h3>
+                <p>Obtén ayuda técnica y crea tickets de soporte cuando lo necesites.</p>
+            </div>
+            <div class="info-card danger">
+                <h3>👤 Perfil</h3>
+                <p>Gestiona tu información personal y configuración de cuenta.</p>
+            </div>
+        </div>
+        
+        <!-- Modules Section -->
+        <div class="content-section">
+            <h2 class="section-title">
+                <i class="fas fa-th-large"></i>
+                Acceso Rápido a Módulos
+            </h2>
+            <div class="modules-grid" id="moduleCardsContainer">
+                <!-- Los módulos se cargarán dinámicamente aquí -->
+            </div>
         </div>
     </div>
 
@@ -640,37 +329,9 @@
     <script src="js/modulos.js"></script>
     
     <script>
-        // Configuración de temas por tipo de usuario
-        const temasConfig = {
-            'Administrador': {
-                titulo: 'Interfaz Administrador',
-                descripcion: 'Gestión completa del sistema'
-            },
-            'Vendedor': {
-                titulo: 'Interfaz Vendedor',
-                descripcion: 'Gestión de ventas y clientes'
-            },
-            'Técnico': {
-                titulo: 'Interfaz Técnico',
-                descripcion: 'Gestión de servicios y reparaciones'
-            },
-            'Supervisor': {
-                titulo: 'Interfaz Supervisor',
-                descripcion: 'Supervisión y reportes'
-            },
-            'Asistente Administrativo': {
-                titulo: 'Interfaz Asistente',
-                descripcion: 'Gestión de citas y documentos'
-            },
-            'Cliente': {
-                titulo: 'Interfaz Cliente',
-                descripcion: 'Portal personal de servicios'
-            }
-        };
-
         // Verificar sesión al cargar
         document.addEventListener('DOMContentLoaded', async function() {
-            const userData = JSON.parse(localStorage.getItem('userData') || 'null');
+            const userData = JSON.parse(localStorage.getItem('usuario_logueado') || 'null');
             
             if (!userData || !userData.loggedIn) {
                 alert('Debes iniciar sesión para acceder al panel');
@@ -679,167 +340,77 @@
             }
             
             // Actualizar información del usuario
-            document.getElementById('userName').textContent = userData.name;
-            document.getElementById('userEmail').textContent = userData.email;
-            document.getElementById('userAvatar').textContent = userData.name.split(' ').map(n => n[0]).join('');
-            document.getElementById('welcomeUserName').textContent = userData.name;
+            const fullName = `${userData.nombre || ''} ${userData.apellido || ''}`.trim() || 'Usuario';
+            document.getElementById('userName').textContent = fullName;
+            document.getElementById('userEmail').textContent = userData.email || 'usuario@test.com';
             
-            // Actualizar título y descripción según el tipo de usuario
-            const config = temasConfig[userData.rol] || temasConfig['Cliente'];
-            document.getElementById('pageTitle').textContent = config.titulo;
-            document.title = `${config.titulo} - Computec`;
+            // Crear iniciales para el avatar
+            const initials = (userData.nombre ? userData.nombre[0] : '') + (userData.apellido ? userData.apellido[0] : '');
+            document.getElementById('userAvatar').textContent = initials || 'U';
+            document.getElementById('welcomeUserName').textContent = userData.nombre || 'Usuario';
             
-            // Actualizar descripción en la bienvenida
-            const descripcionElement = document.querySelector('.content-section p');
-            if (descripcionElement) {
-                descripcionElement.textContent = config.descripcion;
+            // Actualizar título según el tipo de usuario
+            const tipoUsuario = userData.rol || 'Usuario';
+            document.getElementById('pageTitle').textContent = `Panel ${tipoUsuario}`;
+            document.title = `Panel ${tipoUsuario} - Computec`;
+            
+            // Inicializar el sistema de módulos dinámico
+            try {
+                console.log('Intentando inicializar ModulosFrontend...');
+                const modulosFrontend = new ModulosFrontend();
+                console.log('Instancia creada:', modulosFrontend);
+                await modulosFrontend.actualizarSeccionModulos();
+                console.log('Sistema de módulos inicializado correctamente');
+            } catch (error) {
+                console.error('Error al inicializar módulos:', error);
             }
-            
-                    // Inicializar el sistema de módulos dinámico
-        try {
-            console.log('Intentando inicializar ModulosFrontend...');
-            const modulosFrontend = new ModulosFrontend();
-            console.log('Instancia creada:', modulosFrontend);
-            await modulosFrontend.inicializar();
-            console.log('Sistema de módulos inicializado correctamente');
-        } catch (error) {
-            console.error('Error al inicializar módulos:', error);
-            console.log('Usando fallback: menú estático');
-            // Fallback: usar menú estático si falla la carga dinámica
-            inicializarMenuEstatico();
-        }
         });
-        
-        // Función para toggle del sidebar
-        function toggleSidebar() {
-            const sidebar = document.getElementById('sidebar');
-            sidebar.classList.toggle('open');
-        }
         
         // Función de logout
         function logout() {
-            localStorage.removeItem('userData');
+            localStorage.removeItem('usuario_logueado');
             alert('Sesión cerrada exitosamente');
             window.location.href = 'index.html';
         }
 
-        // Función para navegar a una sección específica
+        // Función para navegar a una sección específica (módulos externos)
         function navigateToSection(sectionId) {
-            const navLinks = document.querySelectorAll('.nav-link');
-            const sections = document.querySelectorAll('.content-section');
-            const pageTitle = document.getElementById('pageTitle');
-
-            // Remover clase active de todos los links
-            navLinks.forEach(link => link.classList.remove('active'));
+            // Mapeo de IDs a nombres de archivos reales
+            const modulosPaginas = {
+                'gestión-de-usuarios': 'gestion-usuarios.html',
+                'gestión-de-módulos': 'gestion-modulos.html',
+                'gestion-de-usuarios': 'gestion-usuarios.html',
+                'gestion-de-modulos': 'gestion-modulos.html',
+                'mi-perfil': 'mi-perfil.html',
+                'configuración': 'mi-perfil.html?from=configuracion',
+                'configuracion': 'mi-perfil.html?from=configuracion',
+                'perfil': 'mi-perfil.html',
+                'clientes': 'gestion-clientes.html',
+                'productos': 'gestion-productos.html',
+                'servicios': 'gestion-servicios.html',
+                'reparaciones': 'gestion-servicios.html',
+                'portal-cliente': 'portal-cliente.html',
+                'mi-portal': 'portal-cliente.html',
+                'reportes': 'reportes.html',
+                'estadisticas': 'reportes.html',
+                'estadísticas': 'reportes.html',
+                'inventario': 'inventario.html',
+                'proveedores': 'proveedores.html',
+                'facturas': 'facturas.html',
+                'facturación': 'facturas.html',
+                'facturacion': 'facturas.html',
+                'notificaciones': 'notificaciones.html',
+                'agenda': 'agenda.html',
+                'citas': 'agenda.html',
+                'cotizaciones': 'cotizaciones.html',
+                'tickets': 'tickets.html',
+                'soporte': 'tickets.html'
+            };
             
-            // Agregar clase active al link correspondiente
-            const targetLink = document.querySelector(`.nav-link[data-section="${sectionId}"]`);
-            if (targetLink) {
-                targetLink.classList.add('active');
-            }
-
-            // Ocultar todas las secciones
-            sections.forEach(section => {
-                section.style.display = 'none';
-                section.classList.remove('active-section');
-            });
-            
-            // Mostrar la sección correspondiente
-            const targetElement = document.getElementById(sectionId);
-            if (targetElement) {
-                targetElement.style.display = 'block';
-                targetElement.classList.add('active-section');
-            }
-
-            // Actualizar título de la página
-            if (pageTitle && targetLink) {
-                pageTitle.textContent = targetLink.textContent.trim();
-            }
+            // Si existe un mapeo específico, usarlo; sino, intentar con el sectionId
+            const pagina = modulosPaginas[sectionId] || sectionId + '.html';
+            window.location.href = pagina;
         }
-        
-        // Función fallback para menú estático
-        function inicializarMenuEstatico() {
-            const navMenu = document.getElementById('navMenu');
-            const userData = JSON.parse(localStorage.getItem('userData') || 'null');
-            
-            if (!userData) return;
-            
-            // Menú básico según el tipo de usuario
-            const menuItems = [
-                { id: 'menu', nombre: 'Menú', icono: 'fas fa-bars' },
-                { id: 'dashboard', nombre: 'Dashboard', icono: 'fas fa-tachometer-alt' }
-            ];
-            
-            // Agregar módulos específicos según el rol
-            if (userData.rol === 'Cliente') {
-                menuItems.push(
-                    { id: 'mis-servicios', nombre: 'Mis Servicios', icono: 'fas fa-tools' },
-                    { id: 'mis-productos', nombre: 'Mis Productos', icono: 'fas fa-shopping-bag' },
-                    { id: 'soporte-tecnico', nombre: 'Soporte Técnico', icono: 'fas fa-headset' },
-                    { id: 'perfil', nombre: 'Mi Perfil', icono: 'fas fa-user-cog' }
-                );
-            } else {
-                menuItems.push(
-                    { id: 'clientes', nombre: 'Clientes', icono: 'fas fa-user-group' },
-                    { id: 'servicios', nombre: 'Servicios', icono: 'fas fa-tools' },
-                    { id: 'perfil', nombre: 'Mi Perfil', icono: 'fas fa-user-cog' }
-                );
-            }
-            
-            // Construir menú
-            navMenu.innerHTML = menuItems.map((item, index) => `
-                <div class="nav-item">
-                    <a href="#${item.id}" class="nav-link ${index === 0 ? 'active' : ''}" data-section="${item.id}">
-                        <i class="${item.icono}"></i>
-                        ${item.nombre}
-                    </a>
-                </div>
-            `).join('');
-            
-            // Agregar event listeners
-            const navLinks = document.querySelectorAll('.nav-link');
-            navLinks.forEach(link => {
-                link.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    navigateToSection(this.getAttribute('data-section'));
-                });
-            });
-        }
-        
-        // Estilos adicionales para formularios
-        const style = document.createElement('style');
-        style.textContent = `
-            .form-group {
-                margin-bottom: 1.5rem;
-            }
-            
-            .form-group label {
-                display: block;
-                margin-bottom: 0.5rem;
-                font-weight: 500;
-                color: #374151;
-            }
-            
-            .form-control {
-                width: 100%;
-                padding: 0.75rem;
-                border: 1px solid #d1d5db;
-                border-radius: 8px;
-                font-size: 1rem;
-                transition: border-color 0.3s ease;
-            }
-            
-            .form-control:focus {
-                outline: none;
-                border-color: #2563eb;
-            }
-            
-            .btn-sm {
-                padding: 0.25rem 0.5rem;
-                font-size: 0.8rem;
-            }
-        `;
-        document.head.appendChild(style);
     </script>
 </body>
-</html> 
+</html>

@@ -32,28 +32,6 @@ class HeaderManager {
     }
 
     loadUserData() {
-        const userDataString = localStorage.getItem('userData');
-        this.userData = userDataString ? JSON.parse(userDataString) : { loggedIn: false, name: null };
-    }
-
-    async updateCartCount() {
-        if (!this.isAuthenticated() || !this.cartItemCount) return;
-
-        try {
-            const response = await fetch('api/cart.php');
-            if (response.ok) {
-                const items = await response.json();
-                this.cartItemCount.textContent = items.length;
-            } else {
-                this.cartItemCount.textContent = '0';
-            }
-        } catch (error) {
-            console.error('Error fetching cart count:', error);
-            this.cartItemCount.textContent = '0';
-        }
-    }
-
-    loadUserData() {
         const userDataString = localStorage.getItem('usuario_logueado');
         this.userData = userDataString ? JSON.parse(userDataString) : { loggedIn: false, name: null };
     }
@@ -91,7 +69,7 @@ class HeaderManager {
                             <i class="fas fa-tachometer-alt"></i>
                             Panel de Control
                         </a>
-                        <a href="configuracion.html" class="dropdown-item">
+                        <a href="mi-perfil.html?from=configuracion" class="dropdown-item">
                             <i class="fas fa-cog"></i>
                             Configuración
                         </a>
@@ -122,10 +100,6 @@ class HeaderManager {
         }
     }
 
-    getUserData() {
-        return this.userData;
-    }
-
     async logout() {
         if (confirm('¿Estás seguro de que quieres cerrar la sesión?')) {
             try {
@@ -140,7 +114,6 @@ class HeaderManager {
 
             // Limpiar datos de sesión del lado del cliente
             localStorage.removeItem('usuario_logueado');
-            localStorage.removeItem('userData');
 
             this.userData = { loggedIn: false, name: null };
 
@@ -165,18 +138,6 @@ class HeaderManager {
 
     isAuthenticated() {
         return this.userData && this.userData.loggedIn;
-    }
-
-    getCurrentUser() {
-        return this.userData;
-    }
-
-    // Método para simular login (para testing)
-    simulateLogin(userData) {
-        this.userData = { ...userData, loggedIn: true };
-        localStorage.setItem('userData', JSON.stringify(this.userData));
-        this.renderDropdown();
-        this.updateCartCount();
     }
 }
 

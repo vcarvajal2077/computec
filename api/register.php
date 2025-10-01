@@ -32,7 +32,7 @@ try {
     }
     
     // Validar campos requeridos
-    $required_fields = ['nombre', 'apellido', 'email', 'password', 'id_tipo_usuario'];
+    $required_fields = ['nombre', 'apellido', 'email', 'password'];
     foreach ($required_fields as $field) {
         if (empty($input[$field])) {
             throw new Exception("El campo '$field' es requerido");
@@ -66,7 +66,7 @@ try {
         'apellido' => trim($input['apellido']),
         'email' => trim($input['email']),
         'password' => $hashedPassword,
-        'id_tipo_usuario' => (int)$input['id_tipo_usuario'],
+        'id_tipo_usuario' => isset($input['id_tipo_usuario']) ? (int)$input['id_tipo_usuario'] : 5, // Cliente por defecto (ID: 5)
         'telefono' => !empty($input['telefono']) ? trim($input['telefono']) : null,
         'fecha_registro' => date('Y-m-d H:i:s'),
         'activo' => 1
@@ -75,38 +75,31 @@ try {
     // Insertar usuario
     $sql = "INSERT INTO usuarios (nombre, apellido, email, password, id_tipo_usuario, telefono, fecha_registro, activo) 
             VALUES (:nombre, :apellido, :email, :password, :id_tipo_usuario, :telefono, :fecha_registro, :activo)";
-    
+
     $stmt = $pdo->prepare($sql);
     $stmt->execute($userData);
     
     $userId = $pdo->lastInsertId();
     
-    // Si es un cliente, crear también el registro en la tabla clientes
-    if ($input['id_tipo_usuario'] == 6) { // 6 = Cliente
-        $clientData = [
-            'nombre' => $userData['nombre'],
-            'apellido' => $userData['apellido'],
-            'email' => $userData['email'],
-            'telefono' => $userData['telefono'],
-            'fecha_registro' => $userData['fecha_registro'],
-            'tipo_cliente' => 'persona',
-            'id_usuario' => $userId,
-            'activo' => 1
-        ];
-        
-        $clientSql = "INSERT INTO clientes (nombre, apellido, email, telefono, fecha_registro, tipo_cliente, id_usuario, activo) 
-                      VALUES (:nombre, :apellido, :email, :telefono, :fecha_registro, :tipo_cliente, :id_usuario, :activo)";
-        
-        $clientStmt = $pdo->prepare($clientSql);
-        $clientStmt->execute($clientData);
-        
-        $clientId = $pdo->lastInsertId();
-        
-        // Actualizar el usuario con el id_cliente
-        $updateSql = "UPDATE usuarios SET id_cliente = ? WHERE id_usuario = ?";
-        $updateStmt = $pdo->prepare($updateSql);
-        $updateStmt->execute([$clientId, $userId]);
-    }
+    // Como todos los usuarios registrados son clientes, crear el registro en la tabla clientes
+    $clientData = [
+        'nombre' => $userData['nombre'],
+        'apellido' => $userData['apellido'],
+        'email' => $userData['email'],
+        'telefono' => $userData['telefono'],
+        'fecha_registro' => $userData['fecha_registro'],
+        'tipo_cliente' => 'persona',
+        'id_usuario' => $userId,
+        'activo' => 1
+    ];
+    
+    $clientSql = "INSERT INTO clientes (nombre, apellido, email, telefono, fecha_registro, tipo_cliente, id_usuario, activo) 
+                  VALUES (:nombre, :apellido, :email, :telefono, :fecha_registro, :tipo_cliente, :id_usuario, :activo)";
+    
+    $clientStmt = $pdo->prepare($clientSql);
+    $clientStmt->execute($clientData);
+    
+    // La consulta UPDATE fue eliminada porque la columna `id_cliente` no existe en la tabla `usuarios`.
     
     // Respuesta exitosa
     echo json_encode([
@@ -117,7 +110,7 @@ try {
             'nombre' => $userData['nombre'],
             'apellido' => $userData['apellido'],
             'email' => $userData['email'],
-            'tipo_usuario' => $input['id_tipo_usuario']
+            'tipo_usuario' => 6
         ]
     ]);
     

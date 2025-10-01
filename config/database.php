@@ -1,9 +1,21 @@
 <?php
-// Configuración de la base de datos
-$host = 'localhost';
-$dbname = 'sistema_computec';
-$username = 'root';
-$password_db = '';
+// Detectar si estamos en localhost o en producción
+$isLocalhost = ($_SERVER['SERVER_NAME'] === 'localhost' || $_SERVER['SERVER_ADDR'] === '127.0.0.1');
+
+if ($isLocalhost) {
+    // Configuración para LOCALHOST (XAMPP)
+    $host = 'localhost';
+    $dbname = 'sistema_computec';
+    $username = 'root';
+    $password_db = '';
+} else {
+    // Configuración para PRODUCCIÓN (Hosting)
+    // IMPORTANTE: Cambia estos valores con los datos de tu hosting
+    $host = 'localhost'; // O la IP del servidor MySQL
+    $dbname = 'tu_usuario_sistema_computec'; // Nombre de la BD en el hosting
+    $username = 'tu_usuario_mysql'; // Usuario MySQL del hosting
+    $password_db = 'tu_password_mysql'; // Contraseña MySQL del hosting
+}
 
 // Configuración adicional
 $charset = 'utf8mb4';

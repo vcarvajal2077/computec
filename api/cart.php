@@ -11,25 +11,58 @@ if (!isset($_SESSION['user_id'])) {
 }
 $userId = $_SESSION['user_id'];
 
+// Obtener id_cliente del usuario
+function getClienteId($pdo, $userId) {
+    $stmt = $pdo->prepare("SELECT id_cliente FROM clientes WHERE id_usuario = ?");
+    $stmt->execute([$userId]);
+    return $stmt->fetchColumn();
+}
+
+// Obtener o crear carrito activo
+function getOrCreateCarrito($pdo, $clienteId) {
+    // Buscar carrito pendiente
+    $stmt = $pdo->prepare("SELECT id_carrito FROM carrito WHERE id_cliente = ? AND estado = 'pendiente' LIMIT 1");
+    $stmt->execute([$clienteId]);
+    $carritoId = $stmt->fetchColumn();
+    
+    if (!$carritoId) {
+        // Crear nuevo carrito
+        $stmt = $pdo->prepare("INSERT INTO carrito (id_cliente, total, estado) VALUES (?, 0, 'pendiente')");
+        $stmt->execute([$clienteId]);
+        $carritoId = $pdo->lastInsertId();
+    }
+    
+    return $carritoId;
+}
+
 $method = $_SERVER['REQUEST_METHOD'];
 
 try {
     $pdo = getDatabaseConnection();
 
+    $clienteId = getClienteId($pdo, $userId);
+    if (!$clienteId) {
+        http_response_code(404);
+        echo json_encode(['success' => false, 'error' => 'Cliente no encontrado']);
+        exit();
+    }
+
     switch ($method) {
         case 'GET':
+            $carritoId = getOrCreateCarrito($pdo, $clienteId);
+            
             $stmt = $pdo->prepare("
                 SELECT 
-                    ci.id, ci.item_id, ci.item_type, ci.quantity, 
+                    ci.id, ci.item_id, ci.item_type, ci.cantidad as quantity, ci.precio,
                     IF(ci.item_type = 'product', p.nombre, sc.nombre) as item_name,
                     IF(ci.item_type = 'product', p.precio_venta, sc.precio_base) as item_price,
                     IF(ci.item_type = 'product', p.imagen, sc.imagen) as item_image
-                FROM cart_items ci
+                FROM carrito_items ci
                 LEFT JOIN productos p ON ci.item_id = p.id_producto AND ci.item_type = 'product'
                 LEFT JOIN servicios_catalogo sc ON ci.item_id = sc.id AND ci.item_type = 'service'
-                WHERE ci.user_id = ?
+                WHERE ci.id_carrito = ?
             ");
-            $stmt->execute([$userId]);
+            $stmt->execute([$carritoId]);
             $cartItems = $stmt->fetchAll();
             echo json_encode(['success' => true, 'data' => $cartItems]);
             break;
@@ -49,42 +82,74 @@ try {
             $pdo->beginTransaction();
 
             try {
-                // Si es un producto, manejar el stock
+                $carritoId = getOrCreateCarrito($pdo, $clienteId);
+                
+                // Obtener precio del item y verificar stock
+                $newStock = null;
                 if ($itemType === 'product') {
-                    $stmt = $pdo->prepare("SELECT stock_actual FROM inventario WHERE id_producto = ? FOR UPDATE");
+                    $stmt = $pdo->prepare("SELECT p.precio_venta, IFNULL(i.stock_actual, 0) as stock FROM productos p LEFT JOIN inventario i ON p.id_producto = i.id_producto WHERE p.id_producto = ?");
                     $stmt->execute([$itemId]);
-                    $stock = $stmt->fetchColumn();
-
-                    if ($stock === false || $stock < $quantity) {
-                        throw new Exception('Stock insuficiente para el producto solicitado.');
+                    $producto = $stmt->fetch();
+                    $precio = $producto['precio_venta'];
+                    $newStock = $producto['stock'];
+                    
+                    if ($newStock < $quantity) {
+                        throw new Exception('Stock insuficiente. Disponible: ' . $newStock);
                     }
-
-                    $stmt = $pdo->prepare("UPDATE inventario SET stock_actual = stock_actual - ? WHERE id_producto = ?");
-                    $stmt->execute([$quantity, $itemId]);
+                } else {
+                    $stmt = $pdo->prepare("SELECT precio_base FROM servicios_catalogo WHERE id = ?");
+                    $stmt->execute([$itemId]);
+                    $precio = $stmt->fetchColumn();
                 }
 
                 // Verificar si el item ya está en el carrito
-                $stmt = $pdo->prepare("SELECT * FROM cart_items WHERE user_id = ? AND item_id = ? AND item_type = ?");
-                $stmt->execute([$userId, $itemId, $itemType]);
+                $stmt = $pdo->prepare("SELECT * FROM carrito_items WHERE id_carrito = ? AND item_id = ? AND item_type = ?");
+                $stmt->execute([$carritoId, $itemId, $itemType]);
                 $existingItem = $stmt->fetch();
 
                 if ($existingItem) {
-                    $newQuantity = $existingItem['quantity'] + $quantity;
-                    $stmt = $pdo->prepare("UPDATE cart_items SET quantity = ? WHERE id = ?");
+                    $newQuantity = $existingItem['cantidad'] + $quantity;
+                    
+                    // Verificar stock para la nueva cantidad si es producto
+                    if ($itemType === 'product') {
+                        $stmt = $pdo->prepare("SELECT IFNULL(stock_actual, 0) FROM inventario WHERE id_producto = ?");
+                        $stmt->execute([$itemId]);
+                        $stockActual = $stmt->fetchColumn();
+                        
+                        if ($stockActual < $quantity) {
+                            throw new Exception('Stock insuficiente. Disponible: ' . $stockActual);
+                        }
+                        
+                        // Descontar del inventario
+                        $stmt = $pdo->prepare("UPDATE inventario SET stock_actual = stock_actual - ? WHERE id_producto = ?");
+                        $stmt->execute([$quantity, $itemId]);
+                    }
+                    
+                    $stmt = $pdo->prepare("UPDATE carrito_items SET cantidad = ? WHERE id = ?");
                     $stmt->execute([$newQuantity, $existingItem['id']]);
                 } else {
-                    $stmt = $pdo->prepare("INSERT INTO cart_items (user_id, item_id, item_type, quantity) VALUES (?, ?, ?, ?)");
-                    $stmt->execute([$userId, $itemId, $itemType, $quantity]);
+                    // Descontar del inventario si es producto
+                    if ($itemType === 'product') {
+                        $stmt = $pdo->prepare("UPDATE inventario SET stock_actual = stock_actual - ? WHERE id_producto = ?");
+                        $stmt->execute([$quantity, $itemId]);
+                    }
+                    
+                    $stmt = $pdo->prepare("INSERT INTO carrito_items (id_carrito, item_id, item_type, cantidad, precio) VALUES (?, ?, ?, ?, ?)");
+                    $stmt->execute([$carritoId, $itemId, $itemType, $quantity, $precio]);
                 }
-
-                $pdo->commit();
-
-                $newStock = null;
+                
+                // Actualizar total del carrito
+                $stmt = $pdo->prepare("UPDATE carrito SET total = (SELECT SUM(cantidad * precio) FROM carrito_items WHERE id_carrito = ?) WHERE id_carrito = ?");
+                $stmt->execute([$carritoId, $carritoId]);
+                
+                // Obtener stock actualizado si es producto
                 if ($itemType === 'product') {
-                    $stmt = $pdo->prepare("SELECT stock_actual FROM inventario WHERE id_producto = ?");
+                    $stmt = $pdo->prepare("SELECT IFNULL(stock_actual, 0) FROM inventario WHERE id_producto = ?");
                     $stmt->execute([$itemId]);
                     $newStock = $stmt->fetchColumn();
                 }
+
+                $pdo->commit();
 
                 http_response_code(201);
                 echo json_encode([
@@ -95,7 +160,7 @@ try {
 
             } catch (Exception $e) {
                 $pdo->rollBack();
-                http_response_code(409); // Conflict
+                http_response_code(409);
                 echo json_encode(['success' => false, 'error' => $e->getMessage()]);
             }
             break;
@@ -114,38 +179,56 @@ try {
             $pdo->beginTransaction();
 
             try {
-                $stmt = $pdo->prepare("SELECT * FROM cart_items WHERE id = ? AND user_id = ?");
-                $stmt->execute([$cartItemId, $userId]);
+                $carritoId = getOrCreateCarrito($pdo, $clienteId);
+                
+                $stmt = $pdo->prepare("SELECT * FROM carrito_items WHERE id = ? AND id_carrito = ?");
+                $stmt->execute([$cartItemId, $carritoId]);
                 $item = $stmt->fetch();
 
                 if (!$item) {
                     throw new Exception('El item no se encuentra en el carrito.');
                 }
 
+                // Ajustar stock si es producto
                 if ($item['item_type'] === 'product') {
-                    $quantityDiff = $newQuantity - $item['quantity'];
-
-                    if ($quantityDiff > 0) { // Si se añaden unidades
-                        $stmt = $pdo->prepare("SELECT stock_actual FROM inventario WHERE id_producto = ? FOR UPDATE");
-                        $stmt->execute([$item['item_id']]);
-                        $stock = $stmt->fetchColumn();
-                        if ($stock < $quantityDiff) {
-                            throw new Exception('Stock insuficiente para aumentar la cantidad.');
-                        }
-                    }
+                    $cantidadDiff = $newQuantity - $item['cantidad'];
                     
-                    // Actualizar stock (funciona para añadir y quitar)
-                    $stmt = $pdo->prepare("UPDATE inventario SET stock_actual = stock_actual - ? WHERE id_producto = ?");
-                    $stmt->execute([$quantityDiff, $item['item_id']]);
+                    if ($cantidadDiff > 0) {
+                        // Se aumenta cantidad: verificar y descontar stock
+                        $stmt = $pdo->prepare("SELECT IFNULL(stock_actual, 0) FROM inventario WHERE id_producto = ?");
+                        $stmt->execute([$item['item_id']]);
+                        $stockActual = $stmt->fetchColumn();
+                        
+                        if ($stockActual < $cantidadDiff) {
+                            throw new Exception('Stock insuficiente. Disponible: ' . $stockActual);
+                        }
+                        
+                        $stmt = $pdo->prepare("UPDATE inventario SET stock_actual = stock_actual - ? WHERE id_producto = ?");
+                        $stmt->execute([$cantidadDiff, $item['item_id']]);
+                    } else if ($cantidadDiff < 0) {
+                        // Se reduce cantidad: devolver stock
+                        $stmt = $pdo->prepare("UPDATE inventario SET stock_actual = stock_actual + ? WHERE id_producto = ?");
+                        $stmt->execute([abs($cantidadDiff), $item['item_id']]);
+                    }
                 }
 
                 if ($newQuantity > 0) {
-                    $stmt = $pdo->prepare("UPDATE cart_items SET quantity = ? WHERE id = ? AND user_id = ?");
-                    $stmt->execute([$newQuantity, $cartItemId, $userId]);
+                    $stmt = $pdo->prepare("UPDATE carrito_items SET cantidad = ? WHERE id = ?");
+                    $stmt->execute([$newQuantity, $cartItemId]);
                 } else {
-                    $stmt = $pdo->prepare("DELETE FROM cart_items WHERE id = ? AND user_id = ?");
-                    $stmt->execute([$cartItemId, $userId]);
+                    // Si la cantidad es 0, devolver todo el stock
+                    if ($item['item_type'] === 'product') {
+                        $stmt = $pdo->prepare("UPDATE inventario SET stock_actual = stock_actual + ? WHERE id_producto = ?");
+                        $stmt->execute([$item['cantidad'], $item['item_id']]);
+                    }
+                    
+                    $stmt = $pdo->prepare("DELETE FROM carrito_items WHERE id = ?");
+                    $stmt->execute([$cartItemId]);
                 }
+                
+                // Actualizar total del carrito
+                $stmt = $pdo->prepare("UPDATE carrito SET total = (SELECT IFNULL(SUM(cantidad * precio), 0) FROM carrito_items WHERE id_carrito = ?) WHERE id_carrito = ?");
+                $stmt->execute([$carritoId, $carritoId]);
                 
                 $pdo->commit();
                 echo json_encode(['success' => true, 'message' => 'Carrito actualizado']);
@@ -170,19 +253,25 @@ try {
             $pdo->beginTransaction();
 
             try {
-                $stmt = $pdo->prepare("SELECT * FROM cart_items WHERE id = ? AND user_id = ?");
-                $stmt->execute([$cartItemId, $userId]);
+                $carritoId = getOrCreateCarrito($pdo, $clienteId);
+                
+                $stmt = $pdo->prepare("SELECT * FROM carrito_items WHERE id = ? AND id_carrito = ?");
+                $stmt->execute([$cartItemId, $carritoId]);
                 $item = $stmt->fetch();
 
                 if ($item) {
+                    // Devolver stock al inventario si es producto
                     if ($item['item_type'] === 'product') {
-                        // Devolver el stock al inventario
                         $stmt = $pdo->prepare("UPDATE inventario SET stock_actual = stock_actual + ? WHERE id_producto = ?");
-                        $stmt->execute([$item['quantity'], $item['item_id']]);
+                        $stmt->execute([$item['cantidad'], $item['item_id']]);
                     }
-
-                    $stmt = $pdo->prepare("DELETE FROM cart_items WHERE id = ? AND user_id = ?");
-                    $stmt->execute([$cartItemId, $userId]);
+                    
+                    $stmt = $pdo->prepare("DELETE FROM carrito_items WHERE id = ?");
+                    $stmt->execute([$cartItemId]);
+                    
+                    // Actualizar total del carrito
+                    $stmt = $pdo->prepare("UPDATE carrito SET total = (SELECT IFNULL(SUM(cantidad * precio), 0) FROM carrito_items WHERE id_carrito = ?) WHERE id_carrito = ?");
+                    $stmt->execute([$carritoId, $carritoId]);
                 }
                 
                 $pdo->commit();
