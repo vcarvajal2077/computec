@@ -1,0 +1,20 @@
+-- Inserción de servicios de ejemplo en el catálogo
+
+-- Categoría: Mantenimiento (ID: 9)
+INSERT INTO `servicios_catalogo` (`categoria_id`, `nombre`, `descripcion`, `descripcion_detallada`, `precio_base`, `tiempo_estimado`, `garantia`, `estado`, `caracteristicas`) VALUES
+(9, 'Mantenimiento Preventivo PC', 'Limpieza interna y externa, optimización de software y revisión de componentes.', 'Un servicio completo que incluye limpieza de polvo de todos los componentes internos, cambio de pasta térmica del procesador, optimización del sistema operativo para un arranque más rápido y una revisión general del estado del hardware.', 150000, '2-3 horas', '30 días', 'disponible', '["Limpieza de hardware", "Optimización de SO", "Revisión de componentes"]'),
+(9, 'Optimización de Rendimiento', 'Análisis y mejora de la velocidad y eficiencia de tu sistema operativo.', 'Se realiza un análisis profundo del software instalado, servicios en segundo plano y configuración del sistema para maximizar el rendimiento. Incluye limpieza de archivos temporales y desfragmentación de disco (si aplica).', 90000, '1-2 horas', 'N/A', 'disponible', '["Análisis de software", "Limpieza de sistema", "Optimización de arranque"]');
+
+-- Categoría: Reparación (ID: 10)
+INSERT INTO `servicios_catalogo` (`categoria_id`, `nombre`, `descripcion`, `descripcion_detallada`, `precio_base`, `tiempo_estimado`, `garantia`, `estado`, `caracteristicas`) VALUES
+(10, 'Diagnóstico de Fallas', 'Identificación precisa de problemas de hardware o software.', 'Si tu equipo no enciende, se reinicia o muestra errores, nuestros técnicos realizarán un diagnóstico completo para encontrar la causa raíz del problema y ofrecerte la mejor solución.', 70000, '1 hora', 'N/A', 'disponible', '["Test de hardware", "Análisis de sistema", "Informe de fallas"]'),
+(10, 'Reemplazo de Componentes', 'Instalación y configuración de nuevos componentes como RAM, discos duros, etc.', 'Servicio de reemplazo para componentes dañados o para actualizar tu equipo. El precio base no incluye el costo del componente. Nos aseguramos de la compatibilidad y correcta instalación.', 85000, '1-2 horas', '90 días (en instalación)', 'disponible', '["Instalación profesional", "Test de compatibilidad", "Configuración inicial"]');
+
+-- Categoría: Instalación (ID: 11)
+INSERT INTO `servicios_catalogo` (`categoria_id`, `nombre`, `descripcion`, `descripcion_detallada`, `precio_base`, `tiempo_estimado`, `garantia`, `estado`, `caracteristicas`) VALUES
+(11, 'Instalación de Sistema Operativo', 'Formateo e instalación limpia de Windows, Linux o macOS.', 'Instalamos la versión más reciente y estable del sistema operativo que elijas, junto con todos los controladores necesarios para el correcto funcionamiento de tu hardware. Incluye paquete de software básico (navegador, lector PDF).', 120000, '2-3 horas', '30 días', 'disponible', '["Instalación limpia", "Instalación de drivers", "Paquete de software básico"]'),
+(11, 'Ensamblaje de PC Completo', 'Armado profesional de tu computadora desde cero con tus componentes.', 'Ensamblamos tu PC pieza por pieza, asegurando una gestión de cables limpia y un flujo de aire óptimo para el mejor rendimiento y estética. Realizamos pruebas de estrés para garantizar la estabilidad del sistema.', 250000, '4-6 horas', '180 días (en ensamblaje)', 'disponible', '["Gestión de cables pro", "Pruebas de estrés", "Optimización de BIOS"]');
+
+-- Categoría: Consultoría (ID: 12)
+INSERT INTO `servicios_catalogo` (`categoria_id`, `nombre`, `descripcion`, `descripcion_detallada`, `precio_base`, `tiempo_estimado`, `garantia`, `estado`, `caracteristicas`) VALUES
+(12, 'Asesoría para Compra de PC', 'Te ayudamos a elegir los mejores componentes según tu presupuesto y necesidades.', 'Una sesión de una hora con un técnico experto que te guiará en la selección de componentes para tu nueva PC, ya sea para gaming, trabajo profesional o uso doméstico, asegurando la mejor relación calidad-precio.', 80000, '1 hora', 'N/A', 'disponible', '["Análisis de necesidades", "Comparativa de componentes", "Optimización de presupuesto"]');

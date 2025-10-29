@@ -145,6 +145,7 @@ function abrirModalNuevo() {
     document.getElementById('modalTitle').textContent = 'Nuevo Producto';
     document.getElementById('formProducto').reset();
     document.getElementById('productoId').value = '';
+    document.getElementById('imagenPreview').style.display = 'none';
     document.getElementById('modalProducto').classList.add('active');
 }
 
@@ -166,6 +167,14 @@ function editarProducto(id) {
     document.getElementById('stock_minimo').value = productoEditando.stock_minimo;
     document.getElementById('garantia').value = productoEditando.garantia || 0;
     document.getElementById('activo').value = productoEditando.activo;
+    
+    // Mostrar imagen actual si existe
+    if (productoEditando.imagen) {
+        document.getElementById('imagenPreview').style.display = 'block';
+        document.getElementById('imagenPreviewImg').src = productoEditando.imagen;
+    } else {
+        document.getElementById('imagenPreview').style.display = 'none';
+    }
     
     document.getElementById('modalProducto').classList.add('active');
 }
@@ -201,6 +210,13 @@ async function guardarProducto(event) {
         const data = await response.json();
         
         if (data.success) {
+            // Si hay una imagen seleccionada, subirla
+            const imagenInput = document.getElementById('imagen');
+            if (imagenInput.files.length > 0) {
+                const idProducto = productoId || data.id_producto;
+                await subirImagen(idProducto, imagenInput.files[0]);
+            }
+            
             alert('✅ ' + data.message);
             cerrarModal();
             cargarProductos();
@@ -210,6 +226,27 @@ async function guardarProducto(event) {
     } catch (error) {
         console.error('Error:', error);
         alert('❌ Error de conexión');
+    }
+}
+
+async function subirImagen(idProducto, file) {
+    const formData = new FormData();
+    formData.append('imagen', file);
+    formData.append('id_producto', idProducto);
+    
+    try {
+        const response = await fetch('api/upload-imagen.php', {
+            method: 'POST',
+            body: formData
+        });
+        
+        const data = await response.json();
+        
+        if (!data.success) {
+            console.error('Error al subir imagen:', data.message);
+        }
+    } catch (error) {
+        console.error('Error al subir imagen:', error);
     }
 }
 
@@ -248,4 +285,17 @@ document.getElementById('modalProducto').addEventListener('click', function(e) {
 
 document.getElementById('searchInput').addEventListener('keypress', function(e) {
     if (e.key === 'Enter') buscarProductos();
+});
+
+// Preview de imagen al seleccionar
+document.getElementById('imagen').addEventListener('change', function(e) {
+    const file = e.target.files[0];
+    if (file) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            document.getElementById('imagenPreview').style.display = 'block';
+            document.getElementById('imagenPreviewImg').src = e.target.result;
+        };
+        reader.readAsDataURL(file);
+    }
 });

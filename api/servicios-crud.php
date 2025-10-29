@@ -103,8 +103,8 @@ function crearServicio($conn) {
     $stmt = $conn->prepare("
         INSERT INTO servicios (
             id_cliente, id_usuario, tipo_servicio, descripcion, 
-            costo, fecha_entrega, estado, observaciones
-        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+            costo, fecha_entrega, estado, observaciones, marca_modelo, diagnostico
+        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
     ");
     
     $id_cliente = $input['id_cliente'];
@@ -115,11 +115,13 @@ function crearServicio($conn) {
     $fecha_entrega = !empty($input['fecha_entrega']) ? $input['fecha_entrega'] : null;
     $estado = strtolower(str_replace(' ', '_', $input['estado'] ?? 'Pendiente'));
     $observaciones = $input['notas'] ?? '';
+    $marca_modelo = $input['marca_modelo'] ?? '';
+    $diagnostico = $input['diagnostico'] ?? '';
     
     $stmt->bind_param(
-        'iissdss',
+        'iissdssss',
         $id_cliente, $id_usuario, $tipo_servicio, $descripcion,
-        $costo, $fecha_entrega, $estado, $observaciones
+        $costo, $fecha_entrega, $estado, $observaciones, $marca_modelo, $diagnostico
     );
     
     if (!$stmt->execute()) {
@@ -190,6 +192,18 @@ function actualizarServicio($conn) {
         $campos[] = 'observaciones = ?';
         $tipos .= 's';
         $valores[] = $input['notas'];
+    }
+    
+    if (isset($input['marca_modelo'])) {
+        $campos[] = 'marca_modelo = ?';
+        $tipos .= 's';
+        $valores[] = $input['marca_modelo'];
+    }
+    
+    if (isset($input['diagnostico'])) {
+        $campos[] = 'diagnostico = ?';
+        $tipos .= 's';
+        $valores[] = $input['diagnostico'];
     }
     
     if (empty($campos)) {
